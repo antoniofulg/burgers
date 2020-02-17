@@ -22,7 +22,7 @@ class AuthController extends Controller
         if($validation->fails()){
             return [
                 'concluded' => false,
-                'message' => 'Preencha os campos corretamente!',
+                'message' => 'Não foi possível realizar o login',
                 'validation' => $validation->errors()
             ];
         }
@@ -54,7 +54,7 @@ class AuthController extends Controller
         if($validation->fails()){
             return [
                 'concluded' => false,
-                'message' => 'Preencha os campos corretamente!',
+                'message' => 'Não foi possível concluir o cadastro',
                 'validation' => $validation->errors()
             ];
         }

@@ -2008,15 +2008,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     endpoint: function endpoint() {
       return "/api/login";
-    },
-    isInvalid: function isInvalid() {
-      return this.email.length < 1 || this.password.length < 1; // return this.email.length < 10 || this.password.length < 8;
     }
+  },
+  components: {
+    Alert: Alert
   },
   created: function created() {
     console.log(this.$store.getters.getUser);
@@ -2031,30 +2050,36 @@ __webpack_require__.r(__webpack_exports__);
     login: function login() {
       var _this = this;
 
-      axios.post(this.endpoint, {
-        email: this.email,
-        password: this.password
-      }).then(function (response) {
-        console.log(response);
+      if (!this.$v.$invalid) {
+        axios.post(this.endpoint, {
+          email: this.email,
+          password: this.password
+        }).then(function (response) {
+          console.log(response);
 
-        if (response.data.concluded) {
-          _this.$store.commit('setUser', response.data.user);
+          if (response.data.concluded) {
+            _this.$store.commit('setUser', response.data.user);
 
-          sessionStorage.setItem('user', JSON.stringify(response.data.user));
+            sessionStorage.setItem('user', JSON.stringify(response.data.user));
 
-          _this.$router.push({
-            name: 'dashboard'
-          });
-        } else {}
-      })["catch"](function (e) {
-        console.log(e);
-      });
+            _this.$router.push({
+              name: 'dashboard'
+            });
+          } else {}
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      } else {
+        this.$v.$touch();
+      }
     }
+  },
+  mounted: function mounted() {// $('.alert').alert()
   },
   validations: {
     email: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
-      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(8)
+      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["email"]
     },
     password: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
@@ -2073,6 +2098,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2105,6 +2132,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     endpoint: function endpoint() {
@@ -2126,26 +2185,46 @@ __webpack_require__.r(__webpack_exports__);
     register: function register() {
       var _this = this;
 
-      axios.post(this.endpoint, {
-        email: this.email,
-        password: this.password,
-        password_confirmation: this.password_confirmation,
-        name: this.name
-      }).then(function (response) {
-        console.log(response);
+      if (!this.$v.$invalid) {
+        axios.post(this.endpoint, {
+          email: this.email,
+          password: this.password,
+          password_confirmation: this.password_confirmation,
+          name: this.name
+        }).then(function (response) {
+          console.log(response);
 
-        if (response.data.concluded) {
-          _this.$store.commit('setUser', response.data.user);
+          if (response.data.concluded) {
+            _this.$store.commit('setUser', response.data.user);
 
-          sessionStorage.setItem('user', JSON.stringify(response.data.user));
+            sessionStorage.setItem('user', JSON.stringify(response.data.user));
 
-          _this.$router.push({
-            name: 'dashboard'
-          });
-        } else {}
-      })["catch"](function (e) {
-        console.log(e);
-      });
+            _this.$router.push({
+              name: 'dashboard'
+            });
+          } else {}
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      } else {
+        this.$v.$touch();
+      }
+    }
+  },
+  validations: {
+    name: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    email: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["email"]
+    },
+    password: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
+    },
+    password_confirmation: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+      sameAsPassword: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["sameAs"])('password')
     }
   }
 });
@@ -37728,7 +37807,7 @@ var render = function() {
       "div",
       { staticClass: "row align-middle d-flex justify-content-center" },
       [
-        _c("div", { staticClass: "col-sm-12 col-md-8" }, [
+        _c("div", { staticClass: "col-sm-12 col-md-8 col-lg-6" }, [
           _c("div", { staticClass: "card" }, [
             _c(
               "div",
@@ -37747,37 +37826,94 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      type: "email",
-                      id: "email",
-                      "aria-describedby": "emailHelp"
+                    class: {
+                      "is-invalid": _vm.$v.email.$dirty && _vm.$v.email.$invalid
                     },
+                    attrs: { type: "email", id: "email", required: "" },
                     domProps: { value: _vm.email },
                     on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.email = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.$v.email.$touch()
                         }
-                        _vm.email = $event.target.value
-                      }
+                      ]
                     }
                   }),
                   _vm._v(" "),
                   _c(
-                    "small",
-                    {
-                      staticClass: "form-text text-muted",
-                      attrs: { id: "emailHelp" }
-                    },
-                    [_vm._v("Nunca compartilhe sua senha com ninguém!")]
+                    "div",
+                    { ref: "invalid_email", staticClass: "invalid-feedback" },
+                    [
+                      _vm._v(
+                        "\n                            Por favor, insira um e-mail válido.\n                        "
+                      )
+                    ]
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(0),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Senha")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password,
+                        expression: "password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid":
+                        _vm.$v.password.$dirty && _vm.$v.password.$invalid
+                    },
+                    attrs: { type: "password", id: "password", required: "" },
+                    domProps: { value: _vm.password },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.$v.password.$touch()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      ref: "invalid_password",
+                      staticClass: "invalid-feedback"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Por favor, preencha o campo de senha.\n                        "
+                      )
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-success btn-block btn-large" },
+                  {
+                    staticClass: "btn btn-success btn-block btn-large",
+                    attrs: { disabled: _vm.$v.$invalid },
+                    on: { click: _vm.login }
+                  },
                   [_vm._v("Entrar")]
                 ),
                 _vm._v(" "),
@@ -37786,7 +37922,7 @@ var render = function() {
                 _c(
                   "small",
                   {
-                    staticClass: "form-text text-muted text-center mb-2",
+                    staticClass: "form-text text-muted text-center mb-1",
                     attrs: { id: "emailHelp" }
                   },
                   [_vm._v("Não publicaremos nada em suas redes sociais!")]
@@ -37833,21 +37969,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "password" } }, [_vm._v("Senha")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "password", id: "password" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37880,17 +38002,202 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _vm._m(0),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.$v.name.$dirty && _vm.$v.name.$invalid
+                    },
+                    attrs: { type: "text", id: "name" },
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.name = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.$v.name.$touch()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { ref: "invalid_name", staticClass: "invalid-feedback" },
+                    [
+                      _vm._v(
+                        "\n                            Por favor, insira nome e sobrenome.\n                        "
+                      )
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
-                _vm._m(1),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.email,
+                        expression: "email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.$v.email.$dirty && _vm.$v.email.$invalid
+                    },
+                    attrs: { type: "email", id: "email" },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.email = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.$v.email.$touch()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { ref: "invalid_email", staticClass: "invalid-feedback" },
+                    [
+                      _vm._v(
+                        "\n                            Por favor, insira um e-mail válido.\n                        "
+                      )
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Senha")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password,
+                        expression: "password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid":
+                        _vm.$v.password.$dirty && _vm.$v.password.$invalid
+                    },
+                    attrs: { type: "password", id: "password" },
+                    domProps: { value: _vm.password },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.$v.password.$touch()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      ref: "invalid_password",
+                      staticClass: "invalid-feedback"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Por favor, preencha o campo de senha.\n                        "
+                      )
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
-                _vm._m(3),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password_confirmation" } }, [
+                    _vm._v("Confirmar senha")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password_confirmation,
+                        expression: "password_confirmation"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid":
+                        _vm.$v.password_confirmation.$dirty &&
+                        _vm.$v.password_confirmation.$invalid
+                    },
+                    attrs: { type: "password", id: "password_confirmation" },
+                    domProps: { value: _vm.password_confirmation },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password_confirmation = $event.target.value
+                        },
+                        function($event) {
+                          return _vm.$v.password_confirmation.$touch()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      ref: "invalid_password",
+                      staticClass: "invalid-feedback"
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Por favor, confirme sua senha.\n                        "
+                      )
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
                   "button",
-                  { staticClass: "btn btn-success btn-block btn-large" },
+                  {
+                    staticClass: "btn btn-success btn-block btn-large",
+                    attrs: { disabled: _vm.$v.$invalid },
+                    on: { click: _vm.register }
+                  },
                   [_vm._v("Registrar")]
                 ),
                 _vm._v(" "),
@@ -37913,62 +38220,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "name" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "email", id: "email" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "password" } }, [_vm._v("Senha")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "password", id: "password" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "password_confirmation" } }, [
-        _vm._v("Confirmar senha")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "password", id: "password_confirmation" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
