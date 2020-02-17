@@ -48,16 +48,13 @@
 
 <script>
 import { required, email } from "vuelidate/lib/validators"
+import Toast from "../../mixins/toasts"
 
 export default {
     computed: {
         endpoint () {
             return `/api/login`
         }
-    },
-
-    components: {
-        Alert
     },
     
     created() {
@@ -68,6 +65,10 @@ export default {
         return {
             email: '',
             password: '',
+            messages: {
+                title: 'Deu certo',
+                message: 'Agora vamos mandar as mensagens'
+            }
         }
     },
 
@@ -84,20 +85,18 @@ export default {
                         sessionStorage.setItem('user', JSON.stringify(response.data.user))
                         this.$router.push({name: 'dashboard'})
                     } else {
-
-                    }
+                        this.toast('Erro!', response.data.message)
+                    }this.toast('Erro!', response.data.message)
                 }).catch(e => {
                     console.log(e)
                 })
             } else {
                 this.$v.$touch()
             }
-        }
+        },
     },
 
-    mounted () {
-        // $('.alert').alert()
-    },
+    mixins: [Toast],
 
     validations: {
        email: {

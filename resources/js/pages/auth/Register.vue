@@ -63,6 +63,7 @@
 
 <script>
 import { required, email, sameAs } from "vuelidate/lib/validators";
+import Toast from "../../mixins/toasts"
 
 export default {
     computed: {
@@ -99,7 +100,7 @@ export default {
                         sessionStorage.setItem('user', JSON.stringify(response.data.user))
                         this.$router.push({name: 'dashboard'})
                     } else {
-
+                        this.toast('Erro!', response.data.message)
                     }
                 }).catch(e => {
                     console.log(e)
@@ -109,6 +110,8 @@ export default {
             }
         }
     },
+
+    mixins: [Toast],
 
     validations: {
         name: {

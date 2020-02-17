@@ -12,8 +12,17 @@ import App from './App'
 import store from './vuex'
 import router from './router'
 import Vuelidate from 'vuelidate'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// Install Vuelidate
 Vue.use(Vuelidate)
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+
 
 /**
  * The following block of code may be used to automatically register your
