@@ -1,42 +1,28 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="card col s12 l4 offset-l4">
-                <div class="card-content white-text">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input v-model="name" id="nome" type="text" class="validate" ref="name">
-                            <label for="nome">Nome</label>
-                            <span class="helper-text" data-error="Preencha adequadamente!" data-success="" ref="m_name"></span>
+    <div class="container pt-5 pb-5">
+        <div class="row align-middle d-flex justify-content-center">
+            <div class="col-sm-12 col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" class="form-control" id="name">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input v-model="email" id="email" type="email" class="validate" ref="email">
-                            <label for="email">E-mail</label>
-                            <span class="helper-text" data-error="Preencha adequadamente!" data-success="" ref="m_email"></span>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input v-model="password" id="password" type="password" class="validate" ref="password">
+                        <div class="form-group">
                             <label for="password">Senha</label>
-                            <span class="helper-text" data-error="Preencha adequadamente!" data-success="" ref="m_password"></span>
+                            <input type="password" class="form-control" id="password">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input v-model="password_confirmation" id="password_confirmation" type="password"  class="validate" ref="password">
+                        <div class="form-group">
                             <label for="password_confirmation">Confirmar senha</label>
-                            <span class="helper-text" data-error="Preencha adequadamente!" data-success="" ref="m_password"></span>
+                            <input type="password" class="form-control" id="password_confirmation">
                         </div>
-                    </div>
-                    <div class="row">
-                        <button @click="register" :disabled="isInvalid" class="waves-effect waves-light btn-large gray col s12">Cadastrar conta</button>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <router-link class="waves-effect waves-light btn-large yellow darken-2 col s12" :to="{name: 'login'}">Já possui uma conta?</router-link>
+                        <button class="btn btn-success btn-block btn-large">Registrar</button>
+                        <hr>
+                        <router-link :to="{name: 'login'}" class="btn btn-secondary btn-block btn-large">Já possui uma conta?</router-link>
                     </div>
                 </div>
             </div>
@@ -45,16 +31,10 @@
 </template>
 
 <script>
-import validate from '../../mixins/validate'
-
 export default {
     computed: {
         endpoint () {
             return `/api/register`;
-        },
-
-        isInvalid () {
-            return this.name.length < 5 ||this.email.length < 10 || this.password.length < 8 || this.password_confirmation.length < 8;
         }
     },
     
@@ -85,17 +65,12 @@ export default {
                     sessionStorage.setItem('user', JSON.stringify(response.data.user))
                     this.$router.push({name: 'dashboard'})
                 } else {
-                    //Melhorar resposta para validacao
-                    M.toast({html: `${response.data.message}`})
-                    this.showValidation(response.data.validation)
                 }
             }).catch(e => {
                 console.log(e)
             })
         }
     },
-
-    mixins: [validate],
 }
 
 </script>

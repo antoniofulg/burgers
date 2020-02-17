@@ -1,37 +1,25 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="card col s12 l4 offset-l4">
-                <div class="card-content white-text">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input v-model="email" id="email" type="text" class="validate" ref="email">
-                            <label for="email">E-mail</label>
-                            <span class="helper-text" data-error="Preencha adequadamente!" data-success="" ref="m_email"></span>
+    <div class="container pt-5 pb-5">
+        <div class="row align-middle d-flex justify-content-center">
+            <div class="col-sm-12 col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input v-model="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                            <small id="emailHelp" class="form-text text-muted">Nunca compartilhe sua senha com ninguém!</small>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input v-model="password" id="senha" type="password" class="validate" ref="password">
-                            <label for="senha">Senha</label>
-                            <span class="helper-text" data-error="Preencha adequadamente!" data-success="" ref="m_password"></span>
+                        <div class="form-group">
+                            <label for="password">Senha</label>
+                            <input type="password" class="form-control" id="password">
                         </div>
-                    </div>
-                    <div class="row">
-                        <button @click="login" :disabled="isInvalid" class="waves-effect waves-light btn-large yellow darken-2 col s12">Entrar</button>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <a class="waves-effect waves-light btn-large red col s12 disabled">Entrar com o google</a>
-                    </div>
-                    <div class="row">
-                        <a class="waves-effect waves-light btn-large blue col s12 disabled">Entrar com o facebook</a>
-                    </div>
-                    <div class="row">
-                        <p class="center-align grey-text text-darken-3">ou</p>
-                    </div>
-                    <div class="row">
-                        <router-link class="waves-effect waves-light btn-large gray col s12" :to="{name: 'register'}">Criar uma conta</router-link>
+                        <button class="btn btn-success btn-block btn-large">Entrar</button>
+                        <hr>
+                        <small id="emailHelp" class="form-text text-muted text-center mb-2">Não publicaremos nada em suas redes sociais!</small>
+                        <button class="btn btn-danger btn-block btn-large" disabled>Entrar com o Google</button>
+                        <button class="btn btn-primary btn-block btn-large" disabled>Entrar com o Facebook</button>
+                        <small class="form-text text-center text-muted mt-2 mb-2">ou</small>
+                        <router-link :to="{name: 'register'}" class="btn btn-secondary btn-block btn-large">Criar uma nova conta</router-link>
                     </div>
                 </div>
             </div>
@@ -40,7 +28,7 @@
 </template>
 
 <script>
-import validate from '../../mixins/validate'
+import { required, email, minLength } from "vuelidate/lib/validators";
 
 export default {
     computed: {
@@ -77,8 +65,7 @@ export default {
                     sessionStorage.setItem('user', JSON.stringify(response.data.user))
                     this.$router.push({name: 'dashboard'})
                 } else {
-                    M.toast({html: `${response.data.message}`})
-                    this.showValidation(response.data.validation)
+
                 }
             }).catch(e => {
                 console.log(e)
@@ -86,7 +73,15 @@ export default {
         }
     },
 
-    mixins: [validate],
+    validations: {
+       email: {
+            required,
+            minLength: minLength(8)
+        },
+        password: {
+            required
+        },
+    }
 }
 
 </script>

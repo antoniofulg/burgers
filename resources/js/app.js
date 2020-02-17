@@ -11,6 +11,9 @@ window.Vue = require('vue');
 import App from './App'
 import store from './vuex'
 import router from './router'
+import Vuelidate from 'vuelidate'
+
+Vue.use(Vuelidate)
 
 /**
  * The following block of code may be used to automatically register your
