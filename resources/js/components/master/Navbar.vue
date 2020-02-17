@@ -8,20 +8,24 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Dashboard</a>
+          <li class="nav-item">
+            <router-link tag="a" exact :to="{name: 'master.dashboard'}" class="nav-link">Dashboard</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pedidos</a>
+            <router-link tag="a" exact :to="{name: 'master.orders'}" class="nav-link">Pedidos</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Usuários</a>
+            <router-link tag="a" exact :to="{name: 'master.users'}" class="nav-link">Usuários</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Alimentos
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <router-link tag="a" exact :to="{name: 'master.ingredients'}" class="dropdown-item">Ingredientes</router-link>
+              <router-link tag="a" exact :to="{name: 'master.burguers'}" class="dropdown-item">Hambúrguers</router-link>
+              <router-link tag="a" exact :to="{name: 'master.foods'}" class="dropdown-item">Acompanhamentos</router-link>
+              <router-link tag="a" exact :to="{name: 'master.ingredients'}" class="dropdown-item">Bebidas</router-link>
               <a class="dropdown-item" href="#">Ingredientes</a>
               <a class="dropdown-item" href="#">Hambúrguers</a>
               <a class="dropdown-item" href="#">Acompanhamentos</a>

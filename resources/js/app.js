@@ -17,7 +17,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Install Vuelidate
 Vue.use(Vuelidate)
-
 // Install BootstrapVue
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin

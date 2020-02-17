@@ -98,7 +98,7 @@ export default {
                     if (response.data.concluded) {
                         this.$store.commit('setUser', response.data.user)
                         sessionStorage.setItem('user', JSON.stringify(response.data.user))
-                        this.$router.push({name: 'dashboard'})
+                        this.$router.push({name: 'master.dashboard'})
                     } else {
                         this.toast('Erro!', response.data.message)
                         // Informar em quais campos ocorreu problema
