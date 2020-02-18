@@ -1986,7 +1986,10 @@ __webpack_require__.r(__webpack_exports__);
           sessionStorage.clear();
 
           _this.$router.push({
-            name: 'login'
+            name: 'login',
+            params: {
+              message: response.data.message
+            }
           });
         } else {
           _this.warningToast('Ação não concluída!', response.data.message);
@@ -2126,6 +2129,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2164,7 +2169,7 @@ __webpack_require__.r(__webpack_exports__);
             sessionStorage.setItem('user', JSON.stringify(response.data.user));
 
             _this.$router.push({
-              name: 'master.dashboard'
+              name: 'profile'
             });
           } else {
             _this.dangerToast('Não foi possível realizar o login', response.data.message); // Informar em quais campos ocorreu problema
@@ -2267,6 +2272,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2305,7 +2312,7 @@ __webpack_require__.r(__webpack_exports__);
             sessionStorage.setItem('user', JSON.stringify(response.data.user));
 
             _this.$router.push({
-              name: 'master.dashboard'
+              name: 'profile'
             });
           } else {
             _this.toast('Erro!', response.data.message); // Informar em quais campos ocorreu problema
@@ -2337,6 +2344,35 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/auth/Unauthorized.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/auth/Unauthorized.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -72990,108 +73026,130 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.email,
-                        expression: "email"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: {
-                      "is-invalid": _vm.$v.email.$dirty && _vm.$v.email.$invalid
-                    },
-                    attrs: { type: "email", id: "email", required: "" },
-                    domProps: { value: _vm.email },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.email = $event.target.value
-                        },
-                        function($event) {
-                          return _vm.$v.email.$touch()
-                        }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { ref: "invalid_email", staticClass: "invalid-feedback" },
-                    [
-                      _vm._v(
-                        "\n                            Por favor, insira um e-mail válido.\n                        "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "password" } }, [
-                    _vm._v("Senha")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.password,
-                        expression: "password"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: {
-                      "is-invalid":
-                        _vm.$v.password.$dirty && _vm.$v.password.$invalid
-                    },
-                    attrs: { type: "password", id: "password", required: "" },
-                    domProps: { value: _vm.password },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.password = $event.target.value
-                        },
-                        function($event) {
-                          return _vm.$v.password.$touch()
-                        }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      ref: "invalid_password",
-                      staticClass: "invalid-feedback"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            Por favor, preencha o campo de senha.\n                        "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
                 _c(
-                  "button",
+                  "form",
                   {
-                    staticClass: "btn btn-success btn-block btn-large",
-                    attrs: { disabled: _vm.$v.$invalid },
-                    on: { click: _vm.login }
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                      }
+                    }
                   },
-                  [_vm._v("Entrar")]
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v("Email")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.email,
+                            expression: "email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.$v.email.$dirty && _vm.$v.email.$invalid
+                        },
+                        attrs: { type: "email", id: "email", required: "" },
+                        domProps: { value: _vm.email },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.email = $event.target.value
+                            },
+                            function($event) {
+                              return _vm.$v.email.$touch()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          ref: "invalid_email",
+                          staticClass: "invalid-feedback"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Por favor, insira um e-mail válido.\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "password" } }, [
+                        _vm._v("Senha")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.password,
+                            expression: "password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.$v.password.$dirty && _vm.$v.password.$invalid
+                        },
+                        attrs: {
+                          type: "password",
+                          id: "password",
+                          required: ""
+                        },
+                        domProps: { value: _vm.password },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
+                            },
+                            function($event) {
+                              return _vm.$v.password.$touch()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          ref: "invalid_password",
+                          staticClass: "invalid-feedback"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Por favor, preencha o campo de senha.\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-block btn-large",
+                        attrs: { disabled: _vm.$v.$invalid },
+                        on: { click: _vm.login }
+                      },
+                      [_vm._v("Entrar")]
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _c("hr"),
@@ -73198,203 +73256,228 @@ var render = function() {
               "div",
               { staticClass: "card-body" },
               [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.name,
-                        expression: "name"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: {
-                      "is-invalid": _vm.$v.name.$dirty && _vm.$v.name.$invalid
-                    },
-                    attrs: { type: "text", id: "name" },
-                    domProps: { value: _vm.name },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.name = $event.target.value
-                        },
-                        function($event) {
-                          return _vm.$v.name.$touch()
-                        }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { ref: "invalid_name", staticClass: "invalid-feedback" },
-                    [
-                      _vm._v(
-                        "\n                            Por favor, insira nome e sobrenome.\n                        "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.email,
-                        expression: "email"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: {
-                      "is-invalid": _vm.$v.email.$dirty && _vm.$v.email.$invalid
-                    },
-                    attrs: { type: "email", id: "email" },
-                    domProps: { value: _vm.email },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.email = $event.target.value
-                        },
-                        function($event) {
-                          return _vm.$v.email.$touch()
-                        }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { ref: "invalid_email", staticClass: "invalid-feedback" },
-                    [
-                      _vm._v(
-                        "\n                            Por favor, insira um e-mail válido.\n                        "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "password" } }, [
-                    _vm._v("Senha")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.password,
-                        expression: "password"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: {
-                      "is-invalid":
-                        _vm.$v.password.$dirty && _vm.$v.password.$invalid
-                    },
-                    attrs: { type: "password", id: "password" },
-                    domProps: { value: _vm.password },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.password = $event.target.value
-                        },
-                        function($event) {
-                          return _vm.$v.password.$touch()
-                        }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      ref: "invalid_password",
-                      staticClass: "invalid-feedback"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            Por favor, preencha o campo de senha.\n                        "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "password_confirmation" } }, [
-                    _vm._v("Confirmar senha")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.password_confirmation,
-                        expression: "password_confirmation"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: {
-                      "is-invalid":
-                        _vm.$v.password_confirmation.$dirty &&
-                        _vm.$v.password_confirmation.$invalid
-                    },
-                    attrs: { type: "password", id: "password_confirmation" },
-                    domProps: { value: _vm.password_confirmation },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.password_confirmation = $event.target.value
-                        },
-                        function($event) {
-                          return _vm.$v.password_confirmation.$touch()
-                        }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      ref: "invalid_password",
-                      staticClass: "invalid-feedback"
-                    },
-                    [
-                      _vm._v(
-                        "\n                            Por favor, confirme sua senha.\n                        "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
                 _c(
-                  "button",
+                  "form",
                   {
-                    staticClass: "btn btn-success btn-block btn-large",
-                    attrs: { disabled: _vm.$v.$invalid },
-                    on: { click: _vm.register }
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                      }
+                    }
                   },
-                  [_vm._v("Registrar")]
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.name,
+                            expression: "name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.$v.name.$dirty && _vm.$v.name.$invalid
+                        },
+                        attrs: { type: "text", id: "name" },
+                        domProps: { value: _vm.name },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.name = $event.target.value
+                            },
+                            function($event) {
+                              return _vm.$v.name.$touch()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          ref: "invalid_name",
+                          staticClass: "invalid-feedback"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Por favor, insira nome e sobrenome.\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v("Email")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.email,
+                            expression: "email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.$v.email.$dirty && _vm.$v.email.$invalid
+                        },
+                        attrs: { type: "email", id: "email" },
+                        domProps: { value: _vm.email },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.email = $event.target.value
+                            },
+                            function($event) {
+                              return _vm.$v.email.$touch()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          ref: "invalid_email",
+                          staticClass: "invalid-feedback"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Por favor, insira um e-mail válido.\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "password" } }, [
+                        _vm._v("Senha")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.password,
+                            expression: "password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.$v.password.$dirty && _vm.$v.password.$invalid
+                        },
+                        attrs: { type: "password", id: "password" },
+                        domProps: { value: _vm.password },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
+                            },
+                            function($event) {
+                              return _vm.$v.password.$touch()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          ref: "invalid_password",
+                          staticClass: "invalid-feedback"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Por favor, preencha o campo de senha.\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "password_confirmation" } }, [
+                        _vm._v("Confirmar senha")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.password_confirmation,
+                            expression: "password_confirmation"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.$v.password_confirmation.$dirty &&
+                            _vm.$v.password_confirmation.$invalid
+                        },
+                        attrs: {
+                          type: "password",
+                          id: "password_confirmation"
+                        },
+                        domProps: { value: _vm.password_confirmation },
+                        on: {
+                          input: [
+                            function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password_confirmation = $event.target.value
+                            },
+                            function($event) {
+                              return _vm.$v.password_confirmation.$touch()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          ref: "invalid_password",
+                          staticClass: "invalid-feedback"
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Por favor, confirme sua senha.\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success btn-block btn-large",
+                        attrs: { disabled: _vm.$v.$invalid },
+                        on: { click: _vm.register }
+                      },
+                      [_vm._v("Registrar")]
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _c("hr"),
@@ -73413,6 +73496,54 @@ var render = function() {
           ])
         ])
       ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/auth/Unauthorized.vue?vue&type=template&id=75bb52fc&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/auth/Unauthorized.vue?vue&type=template&id=75bb52fc& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container text-center mt-5" }, [
+    _c(
+      "div",
+      { staticClass: "jumbotron" },
+      [
+        _c("h1", { staticClass: "display-4" }, [_vm._v("Unauthorized")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "lead" }, [
+          _vm._v("Você não possui acesso a este recurso!")
+        ]),
+        _vm._v(" "),
+        _c("hr", { staticClass: "my-4" }),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "btn btn-primary btn-lg",
+            attrs: { to: { name: "profile" } }
+          },
+          [_vm._v("Voltar para pagina inicial")]
+        )
+      ],
+      1
     )
   ])
 }
@@ -92052,9 +92183,11 @@ _router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, n
   }) && !roles.isMaster) {
     console.log('getACL: ' + _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
     console.log('Esta página é restrita ao usuário master');
-    isGuest ? _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+    roles.isGuest ? _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
       name: 'login'
-    }) : null;
+    }) : _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+      name: 'unauthorized'
+    });
     return;
   }
 
@@ -92063,9 +92196,11 @@ _router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, n
   }) && !roles.isAdmin) {
     console.log('getACL: ' + _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
     console.log('Esta página é restrita a administradores');
-    isGuest ? _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+    roles.isGuest ? _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
       name: 'login'
-    }) : null;
+    }) : _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+      name: 'unauthorized'
+    });
     return;
   }
 
@@ -92356,6 +92491,15 @@ __webpack_require__.r(__webpack_exports__);
         variant: 'danger'
       });
     },
+    infoToast: function infoToast(title, body) {
+      this.$bvToast.toast("".concat(body), {
+        title: "".concat(title),
+        toaster: 'b-toaster-top-right',
+        solid: true,
+        appendToast: false,
+        variant: 'info'
+      });
+    },
     successToast: function successToast(title, body) {
       this.$bvToast.toast("".concat(body), {
         title: "".concat(title),
@@ -92374,7 +92518,11 @@ __webpack_require__.r(__webpack_exports__);
         variant: 'warning'
       });
     }
-  }
+  },
+  mounted: function mounted() {
+    this.message ? this.infoToast('Informação!', this.message) : null;
+  },
+  props: ['message']
 });
 
 /***/ }),
@@ -92512,6 +92660,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Register_vue_vue_type_template_id_2ebeb09e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Register_vue_vue_type_template_id_2ebeb09e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/auth/Unauthorized.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/pages/auth/Unauthorized.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Unauthorized_vue_vue_type_template_id_75bb52fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Unauthorized.vue?vue&type=template&id=75bb52fc& */ "./resources/js/pages/auth/Unauthorized.vue?vue&type=template&id=75bb52fc&");
+/* harmony import */ var _Unauthorized_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Unauthorized.vue?vue&type=script&lang=js& */ "./resources/js/pages/auth/Unauthorized.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Unauthorized_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Unauthorized_vue_vue_type_template_id_75bb52fc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Unauthorized_vue_vue_type_template_id_75bb52fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/auth/Unauthorized.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/auth/Unauthorized.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/pages/auth/Unauthorized.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Unauthorized_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Unauthorized.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/auth/Unauthorized.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Unauthorized_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/auth/Unauthorized.vue?vue&type=template&id=75bb52fc&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/pages/auth/Unauthorized.vue?vue&type=template&id=75bb52fc& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Unauthorized_vue_vue_type_template_id_75bb52fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Unauthorized.vue?vue&type=template&id=75bb52fc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/auth/Unauthorized.vue?vue&type=template&id=75bb52fc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Unauthorized_vue_vue_type_template_id_75bb52fc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Unauthorized_vue_vue_type_template_id_75bb52fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -93037,13 +93254,15 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_auth_Login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pages/auth/Login */ "./resources/js/pages/auth/Login.vue");
 /* harmony import */ var _pages_auth_Register__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pages/auth/Register */ "./resources/js/pages/auth/Register.vue");
-/* harmony import */ var _pages_master_Burguers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/master/Burguers */ "./resources/js/pages/master/Burguers.vue");
-/* harmony import */ var _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/master/Dashboard */ "./resources/js/pages/master/Dashboard.vue");
-/* harmony import */ var _pages_master_Drinks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/master/Drinks */ "./resources/js/pages/master/Drinks.vue");
-/* harmony import */ var _pages_master_Ingredients__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/master/Ingredients */ "./resources/js/pages/master/Ingredients.vue");
-/* harmony import */ var _pages_master_Orders__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/master/Orders */ "./resources/js/pages/master/Orders.vue");
-/* harmony import */ var _pages_master_SideDishes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/master/SideDishes */ "./resources/js/pages/master/SideDishes.vue");
-/* harmony import */ var _pages_master_Users__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pages/master/Users */ "./resources/js/pages/master/Users.vue");
+/* harmony import */ var _pages_auth_Unauthorized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/auth/Unauthorized */ "./resources/js/pages/auth/Unauthorized.vue");
+/* harmony import */ var _pages_master_Burguers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/master/Burguers */ "./resources/js/pages/master/Burguers.vue");
+/* harmony import */ var _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/master/Dashboard */ "./resources/js/pages/master/Dashboard.vue");
+/* harmony import */ var _pages_master_Drinks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/master/Drinks */ "./resources/js/pages/master/Drinks.vue");
+/* harmony import */ var _pages_master_Ingredients__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/master/Ingredients */ "./resources/js/pages/master/Ingredients.vue");
+/* harmony import */ var _pages_master_Orders__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/master/Orders */ "./resources/js/pages/master/Orders.vue");
+/* harmony import */ var _pages_master_SideDishes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pages/master/SideDishes */ "./resources/js/pages/master/SideDishes.vue");
+/* harmony import */ var _pages_master_Users__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pages/master/Users */ "./resources/js/pages/master/Users.vue");
+
 
 
 
@@ -93064,6 +93283,7 @@ var routes = [{
   path: '/login',
   component: _pages_auth_Login__WEBPACK_IMPORTED_MODULE_0__["default"],
   name: 'login',
+  props: true,
   meta: {
     guest: true
   }
@@ -93076,63 +93296,65 @@ var routes = [{
   }
 }, {
   path: '/perfil',
-  component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"],
+  component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_4__["default"],
   name: 'profile',
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/dashboard',
-  component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"],
+  component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_4__["default"],
   name: 'master.dashboard',
+  props: true,
   meta: {
     admin: true
   }
 }, {
   path: '/pedidos',
-  component: _pages_master_Orders__WEBPACK_IMPORTED_MODULE_6__["default"],
+  component: _pages_master_Orders__WEBPACK_IMPORTED_MODULE_7__["default"],
   name: 'master.orders',
   meta: {
     admin: true
   }
 }, {
   path: '/usuarios',
-  component: _pages_master_Users__WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _pages_master_Users__WEBPACK_IMPORTED_MODULE_9__["default"],
   name: 'master.users',
   meta: {
     admin: true
   }
 }, {
   path: '/alimentos',
-  component: _pages_master_SideDishes__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _pages_master_SideDishes__WEBPACK_IMPORTED_MODULE_8__["default"],
   name: 'master.foods',
   meta: {
     admin: true
   }
 }, {
   path: '/alimentos/bebidas',
-  component: _pages_master_Drinks__WEBPACK_IMPORTED_MODULE_4__["default"],
+  component: _pages_master_Drinks__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'master.drinks',
   meta: {
     admin: true
   }
 }, {
   path: '/alimentos/hamburguers',
-  component: _pages_master_Burguers__WEBPACK_IMPORTED_MODULE_2__["default"],
+  component: _pages_master_Burguers__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: 'master.burguers',
   meta: {
     admin: true
   }
 }, {
   path: '/alimentos/ingredientes',
-  component: _pages_master_Ingredients__WEBPACK_IMPORTED_MODULE_5__["default"],
+  component: _pages_master_Ingredients__WEBPACK_IMPORTED_MODULE_6__["default"],
   name: 'master.ingredients',
   meta: {
     admin: true
   }
 }, {
-  path: '*',
-  component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_3__["default"]
+  path: '/unauthorized',
+  component: _pages_auth_Unauthorized__WEBPACK_IMPORTED_MODULE_2__["default"],
+  name: 'unauthorized'
 }];
 /* harmony default export */ __webpack_exports__["default"] = (routes);
 

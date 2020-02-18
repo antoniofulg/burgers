@@ -9,6 +9,15 @@ export default {
                 variant: 'danger'
             })
         },
+        infoToast(title, body) {
+            this.$bvToast.toast(`${body}`, {
+                title: `${title}`,
+                toaster: 'b-toaster-top-right',
+                solid: true,
+                appendToast: false,
+                variant: 'info'
+            })
+        },
         successToast(title, body) {
             this.$bvToast.toast(`${body}`, {
                 title: `${title}`,
@@ -27,5 +36,11 @@ export default {
                 variant: 'warning'
             })
         }
-    }
+    },
+
+    mounted () {
+        this.message ? this.infoToast('Informação!', this.message) : null
+    },
+
+    props: ['message'],
 }

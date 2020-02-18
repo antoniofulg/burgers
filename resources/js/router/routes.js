@@ -1,5 +1,6 @@
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
+import Unauthorized from '../pages/auth/Unauthorized'
 import MasterBurguers from '../pages/master/Burguers'
 import MasterDashboard from '../pages/master/Dashboard'
 import MasterDrinks from '../pages/master/Drinks'
@@ -21,6 +22,7 @@ const routes = [
         path: '/login',
         component: Login,
         name: 'login',
+        props: true,
         meta: {
             guest: true
         }
@@ -45,6 +47,7 @@ const routes = [
         path: '/dashboard',
         component: MasterDashboard,
         name: 'master.dashboard',
+        props: true,
         meta: {
             admin: true
         }
@@ -98,8 +101,9 @@ const routes = [
         }
     },
     {
-        path: '*',
-        component: MasterDashboard
+        path: '/unauthorized',
+        component: Unauthorized,
+        name: 'unauthorized'
     }
 ]
 
