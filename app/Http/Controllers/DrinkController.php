@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Ingredient;
+use App\Drink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class IngredientController extends Controller
+class DrinkController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::paginate(10);
+        $drink = Drink::paginate(10);
         return response()->json([
             'concluded' => true,
-            'ingredients' => $ingredients,
+            'drink' => $drink,
         ]);
     }
 
@@ -34,30 +34,32 @@ class IngredientController extends Controller
 
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
+            'type' => ['required', 'in:beer,juice,soda,water'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'type' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
-            'price' => ['required', 'numeric']
+            'price' => ['required', 'numeric'],
+            'volume' => ['required', 'numeric']
         ]);
     
         if($validation->fails()){
             return [
                 'concluded' => false,
-                'message' => 'Não foi possível cadastrar o ingrediente!',
+                'message' => 'Não foi possível cadastrar a bebida!',
                 'validation' => $validation->errors()
             ];
         }
 
-        $ingredient = Ingredient::create([
+        $drink = Drink::create([
             'name' => $request->name,
-            'status' => $request->status,
             'type' => $request->type,
+            'status' => $request->status,
             'price' => $request->price,
+            'volume' => $request->volume,
         ]);
 
         return response()->json([
             'concluded' => true,
-            'message' => 'Ingrediente cadastrado com sucesso!',
-            'ingredient' => $ingredient,
+            'message' => 'Bebida cadastrada com sucesso!',
+            'drink' => $drink,
         ]);
     }
 
@@ -69,7 +71,7 @@ class IngredientController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -85,32 +87,34 @@ class IngredientController extends Controller
 
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
+            'type' => ['required', 'in:beer,juice,soda,water'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'type' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
-            'price' => ['required', 'numeric']
+            'price' => ['required', 'numeric'],
+            'volume' => ['required', 'numeric']
         ]);
     
         if($validation->fails()){
             return [
                 'concluded' => false,
-                'message' => 'Não foi possível atualizar o ingrediente!',
+                'message' => 'Não foi possível atualizar a bebida!',
                 'validation' => $validation->errors()
             ];
         }
 
-        $ingredient = Ingredient::find($id);
+        $drink = Drink::find($id);
         
-        $ingredient->name = $request->name;
-        $ingredient->status = $request->status;
-        $ingredient->type = $request->type;
-        $ingredient->price = $request->price;
+        $drink->name = $request->name;
+        $drink->type = $request->type;
+        $drink->status = $request->status;
+        $drink->price = $request->price;
+        $drink->volume = $request->volume;
 
-        $ingredient->save();
+        $drink->save();
 
         return response()->json([
             'concluded' => true,
-            'message' => 'Ingrediente atualizado com sucesso!',
-            'ingredient' => $ingredient
+            'message' => 'Bebida atualizada com sucesso!',
+            'drink' => $drink
         ]);
     }
 
@@ -122,19 +126,19 @@ class IngredientController extends Controller
      */
     public function destroy($id)
     {
-        $ingredient = Ingredient::find($id);
+        $drink = Drink::find($id);
 
-        if ($ingredient) {
-            $ingredient->delete();
+        if ($drink) {
+            $drink->delete();
             return response()->json([
                 'concluded' => true,
-                'message' => 'Ingrediente excluído com sucesso!'
+                'message' => 'Bebida excluída com sucesso!'
             ]);
         }
         
         return response()->json([
             'concluded' => false,
-            'message' => 'Ingrediente não encontrado!'
+            'message' => 'Bebida não encontrada!'
         ]);
     }
 }

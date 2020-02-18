@@ -19,6 +19,8 @@ Route::post('/register', 'AuthController@register');
 
 Route::middleware(['auth:api'])->group(function() {
     Route::apiResource('/ingredients', 'IngredientController')->except('show');
+    Route::apiResource('/foods', 'FoodController')->except('show');
+    Route::apiResource('/drinks', 'DrinkController')->except('show');
     // Route::apiResource('/questions.answers', 'Api\AnswersController')->except('index');
     // Route::post('/questions/{question}/vote', 'Api\VoteQuestionController');
     // Route::post('/answers/{answer}/vote', 'Api\VoteAnswerController');

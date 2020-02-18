@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Ingredient;
+use App\Food;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class IngredientController extends Controller
+class FoodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::paginate(10);
+        $food = Food::paginate(10);
         return response()->json([
             'concluded' => true,
-            'ingredients' => $ingredients,
+            'food' => $food,
         ]);
     }
 
@@ -35,29 +35,27 @@ class IngredientController extends Controller
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'type' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
     
         if($validation->fails()){
             return [
                 'concluded' => false,
-                'message' => 'Não foi possível cadastrar o ingrediente!',
+                'message' => 'Não foi possível cadastrar o alimento!',
                 'validation' => $validation->errors()
             ];
         }
 
-        $ingredient = Ingredient::create([
+        $food = Food::create([
             'name' => $request->name,
             'status' => $request->status,
-            'type' => $request->type,
             'price' => $request->price,
         ]);
 
         return response()->json([
             'concluded' => true,
-            'message' => 'Ingrediente cadastrado com sucesso!',
-            'ingredient' => $ingredient,
+            'message' => 'Alimento cadastrado com sucesso!',
+            'food' => $food,
         ]);
     }
 
@@ -69,7 +67,7 @@ class IngredientController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -86,31 +84,29 @@ class IngredientController extends Controller
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'type' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
     
         if($validation->fails()){
             return [
                 'concluded' => false,
-                'message' => 'Não foi possível atualizar o ingrediente!',
+                'message' => 'Não foi possível atualizar o alimento!',
                 'validation' => $validation->errors()
             ];
         }
 
-        $ingredient = Ingredient::find($id);
+        $food = Food::find($id);
         
-        $ingredient->name = $request->name;
-        $ingredient->status = $request->status;
-        $ingredient->type = $request->type;
-        $ingredient->price = $request->price;
+        $food->name = $request->name;
+        $food->status = $request->status;
+        $food->price = $request->price;
 
-        $ingredient->save();
+        $food->save();
 
         return response()->json([
             'concluded' => true,
-            'message' => 'Ingrediente atualizado com sucesso!',
-            'ingredient' => $ingredient
+            'message' => 'Alimento atualizado com sucesso!',
+            'food' => $food
         ]);
     }
 
@@ -122,19 +118,19 @@ class IngredientController extends Controller
      */
     public function destroy($id)
     {
-        $ingredient = Ingredient::find($id);
+        $food = Food::find($id);
 
-        if ($ingredient) {
-            $ingredient->delete();
+        if ($food) {
+            $food->delete();
             return response()->json([
                 'concluded' => true,
-                'message' => 'Ingrediente excluído com sucesso!'
+                'message' => 'Alimento excluído com sucesso!'
             ]);
         }
         
         return response()->json([
             'concluded' => false,
-            'message' => 'Ingrediente não encontrado!'
+            'message' => 'Alimento não encontrado!'
         ]);
     }
 }
