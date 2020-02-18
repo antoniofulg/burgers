@@ -85,7 +85,7 @@ export default {
                         sessionStorage.setItem('user', JSON.stringify(response.data.user))
                         this.$router.push({name: 'master.dashboard'})
                     } else {
-                        this.toast('Erro!', response.data.message)
+                        this.dangerToast('Não foi possível realizar o login', response.data.message)
                         // Informar em quais campos ocorreu problema
                     }
                 }).catch(e => {

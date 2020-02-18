@@ -10,13 +10,13 @@
         <ul class="navbar-nav ml-auto">
           <slot/>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle btn btn-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-user-circle"></i> {{user.name}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <router-link tag="a" exact :to="{name: 'profile'}" class="dropdown-item">Meu perfil</router-link>
             <div class="dropdown-divider"></div>
-                <a @click="sair" class="dropdown-item" href="#">Sair</a>
+                <button @click="logout" class="dropdown-item" href="">Sair</button>
             </div>
           </li>
         </ul>
@@ -26,16 +26,39 @@
 </template>
 
 <script>
-export default {
-  props: ['user'],
+import Toast from "../../mixins/toasts"
 
+export default {
+  computed: {
+    endpoint () {
+      return `/api/logout`
+    },
+  },
+  
   methods: {
-    sair() {
-      this.$store.commit('setUser', null)
-      sessionStorage.clear()
-      this.usuario = false
-      this.$router.push({name: 'login'})
-    }
-  }
+    logout() {
+      axios.post(`${this.endpoint}`, {}, {"headers":
+        {"authorization":`Bearer ${this.$store.getters.getToken}`}
+      }).then(response => {
+        console.log(response)
+          if (response.data.concluded) {
+            this.$store.commit('setUser', null)
+            sessionStorage.clear()
+            this.$router.push({name: 'login'})
+          } else {
+            this.warningToast('Ação não concluída!', response.data.message)
+          }
+      }).catch(e => {
+        console.log(e)
+        this.warningToast('Ação não concluída!', 'Nenhuma sessão encontrada!')
+        this.$store.commit('setUser', null)
+        sessionStorage.clear()
+      })
+    },
+  },
+
+  mixins: [Toast],
+
+  props: ['user'],
 }
 </script>

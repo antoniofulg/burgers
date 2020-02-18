@@ -49,14 +49,17 @@ export default {
     methods: {
         getUsers () {
             axios.get(`${this.endpoint}`, {
-                "headers": {"authorization": `Bearer ${this.$store.getters.getToken}`}
+                "headers": {
+                    "authorization": `Bearer ${this.$store.getters.getToken}`,
+                    "Accept": "application/json"
+                }
             }).then(response => {
                     if (response.data.concluded) {
                         console.log(response.data.users)
                         this.$store.commit('setUsers', response.data.users.data)
                         this.users = response.data.users.data;
                     } else {
-                        this.toast('Erro!', response.data.message)
+                        this.warningToast('Ação não concluída!', response.data.message)
                     }
             }).catch(e => {
                 console.log(e)

@@ -18,6 +18,8 @@ Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
 
 Route::middleware(['auth:api'])->group(function() {
+    //Logout
+    Route::post('/logout', 'AuthController@logout');
     Route::apiResource('/ingredients', 'IngredientController')->except('show');
     Route::apiResource('/foods', 'FoodController')->except('show');
     Route::apiResource('/drinks', 'DrinkController')->except('show');

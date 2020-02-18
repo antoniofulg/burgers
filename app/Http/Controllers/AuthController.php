@@ -20,20 +20,20 @@ class AuthController extends Controller
         ]);
     
         if($validation->fails()){
-            return [
+            return response()->json([
                 'concluded' => false,
                 'message' => 'Não foi possível realizar o login',
                 'validation' => $validation->errors()
-            ];
+            ]);
         }
     
         if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
             $user = auth()->user();
             $user->token = $user->createToken($user->email)->accessToken; 
-            return [
+            return response()->json([
                 'concluded' => true,
                 'user' => $user
-            ];
+            ]);
         }
     
         return response()->json([
@@ -52,11 +52,11 @@ class AuthController extends Controller
         ]);
     
         if($validation->fails()){
-            return [
+            return response()->json([
                 'concluded' => false,
                 'message' => 'Não foi possível concluir o cadastro',
                 'validation' => $validation->errors()
-            ];
+            ]);
         }
 
         $user = User::create([
@@ -70,6 +70,18 @@ class AuthController extends Controller
         return response()->json([
             'concluded' => true,
             'user' => $user,
+        ]);
+    }
+
+    public function logout (Request $request) {
+
+        $token = $request->user()->token();
+        $token->revoke();
+    
+        return response()->json([
+            'concluded' => true,
+            'message' => 'Sua sessão foi encerrada com sucesso!',
+            'request' => $request
         ]);
     }
 }

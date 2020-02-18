@@ -1934,6 +1934,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
 //
 //
 //
@@ -1961,18 +1962,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  computed: {
+    endpoint: function endpoint() {
+      return "/api/logout";
+    }
+  },
   methods: {
-    sair: function sair() {
-      this.$store.commit('setUser', null);
-      sessionStorage.clear();
-      this.usuario = false;
-      this.$router.push({
-        name: 'login'
+    logout: function logout() {
+      var _this = this;
+
+      axios.post("".concat(this.endpoint), {}, {
+        "headers": {
+          "authorization": "Bearer ".concat(this.$store.getters.getToken)
+        }
+      }).then(function (response) {
+        console.log(response);
+
+        if (response.data.concluded) {
+          _this.$store.commit('setUser', null);
+
+          sessionStorage.clear();
+
+          _this.$router.push({
+            name: 'login'
+          });
+        } else {
+          _this.warningToast('Ação não concluída!', response.data.message);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+
+        _this.warningToast('Ação não concluída!', 'Nenhuma sessão encontrada!');
+
+        _this.$store.commit('setUser', null);
+
+        sessionStorage.clear();
       });
     }
-  }
+  },
+  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  props: ['user']
 });
 
 /***/ }),
@@ -2136,7 +2167,7 @@ __webpack_require__.r(__webpack_exports__);
               name: 'master.dashboard'
             });
           } else {
-            _this.toast('Erro!', response.data.message); // Informar em quais campos ocorreu problema
+            _this.dangerToast('Não foi possível realizar o login', response.data.message); // Informar em quais campos ocorreu problema
 
           }
         })["catch"](function (e) {
@@ -2593,7 +2624,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("".concat(this.endpoint), {
         "headers": {
-          "authorization": "Bearer ".concat(this.$store.getters.getToken)
+          "authorization": "Bearer ".concat(this.$store.getters.getToken),
+          "Accept": "application/json"
         }
       }).then(function (response) {
         if (response.data.concluded) {
@@ -2603,7 +2635,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.users = response.data.users.data;
         } else {
-          _this.toast('Erro!', response.data.message);
+          _this.warningToast('Ação não concluída!', response.data.message);
         }
       })["catch"](function (e) {
         console.log(e);
@@ -72676,8 +72708,7 @@ var render = function() {
                     _c(
                       "a",
                       {
-                        staticClass:
-                          "nav-link dropdown-toggle btn btn-secondary",
+                        staticClass: "nav-link dropdown-toggle",
                         attrs: {
                           href: "#",
                           id: "navbarDropdown",
@@ -72716,11 +72747,11 @@ var render = function() {
                         _c("div", { staticClass: "dropdown-divider" }),
                         _vm._v(" "),
                         _c(
-                          "a",
+                          "button",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { href: "#" },
-                            on: { click: _vm.sair }
+                            attrs: { href: "" },
+                            on: { click: _vm.logout }
                           },
                           [_vm._v("Sair")]
                         )
@@ -91986,34 +92017,19 @@ Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_3___default.a); // Install BootstrapV
 
 Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["BootstrapVue"]); // Optionally install the BootstrapVue icon components plugin
 
-Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["IconsPlugin"]);
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-// Permissões de usuário
-
-var roles = {
-  isMaster: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' ? true : false,
-  isAdmin: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'admin' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' ? true : false,
-  isAttendant: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'admin' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'attendant' ? true : false
-}; // Middleware access
+Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["IconsPlugin"]); // Middleware access
 
 _router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {
+  var roles = {
+    isGuest: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getUser ? false : true,
+    isMaster: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' ? true : false,
+    isAdmin: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'admin' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' ? true : false,
+    isAttendant: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'admin' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'attendant' ? true : false
+  };
+
   if (to.matched.some(function (r) {
     return r.meta.guest;
-  }) && _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getUser) {
+  }) && !roles.isGuest) {
     console.log('Você já está logado!');
     _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
       name: 'profile'
@@ -92023,7 +92039,7 @@ _router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, n
 
   if (to.matched.some(function (r) {
     return r.meta.requiresAuth;
-  }) && !_vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getUser) {
+  }) && roles.isGuest) {
     console.log('Você precisa estar autenticado para acessar esta página!');
     _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
       name: 'login'
@@ -92033,18 +92049,23 @@ _router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, n
 
   if (to.matched.some(function (r) {
     return r.meta.master;
-  }) && _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL != 'master') {
-    console.log(_vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
-    console.log(roles);
+  }) && !roles.isMaster) {
+    console.log('getACL: ' + _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
     console.log('Esta página é restrita ao usuário master');
+    isGuest ? _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+      name: 'login'
+    }) : null;
     return;
   }
 
   if (to.matched.some(function (r) {
     return r.meta.admin;
   }) && !roles.isAdmin) {
-    console.log(_vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
+    console.log('getACL: ' + _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
     console.log('Esta página é restrita a administradores');
+    isGuest ? _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+      name: 'login'
+    }) : null;
     return;
   }
 
@@ -92326,15 +92347,31 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    toast: function toast(title, body) {
-      var variant = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'danger';
-      var append = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+    dangerToast: function dangerToast(title, body) {
       this.$bvToast.toast("".concat(body), {
         title: "".concat(title),
-        toaster: 'b-toaster-top-center',
+        toaster: 'b-toaster-top-right',
         solid: true,
-        appendToast: append,
-        variant: variant
+        appendToast: false,
+        variant: 'danger'
+      });
+    },
+    successToast: function successToast(title, body) {
+      this.$bvToast.toast("".concat(body), {
+        title: "".concat(title),
+        toaster: 'b-toaster-top-right',
+        solid: true,
+        appendToast: false,
+        variant: 'success'
+      });
+    },
+    warningToast: function warningToast(title, body) {
+      this.$bvToast.toast("".concat(body), {
+        title: "".concat(title),
+        toaster: 'b-toaster-top-right',
+        solid: true,
+        appendToast: false,
+        variant: 'warning'
       });
     }
   }
