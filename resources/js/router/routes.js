@@ -1,6 +1,10 @@
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import MasterDashboard from '../pages/master/Dashboard'
+import MasterIngredients from '../pages/master/Ingredients'
+import MasterOrders from '../pages/master/Orders'
+import MasterUsers from '../pages/master/Users'
+import MasterBurguers from '../pages/master/Burguers'
 
 const routes = [
     {
@@ -19,6 +23,11 @@ const routes = [
         name: 'register'
     },
     {
+        path: '/perfil',
+        component: MasterDashboard,
+        name: 'profile'
+    },
+    {
         path: '/dashboard',
         component: MasterDashboard,
         name: 'master.dashboard',
@@ -28,7 +37,7 @@ const routes = [
     },
     {
         path: '/pedidos',
-        component: MasterDashboard,
+        component: MasterOrders,
         name: 'master.orders',
         // meta: {
         //     requiresAuth: true
@@ -36,7 +45,7 @@ const routes = [
     },
     {
         path: '/usuarios',
-        component: MasterDashboard,
+        component: MasterUsers,
         name: 'master.users',
         // meta: {
         //     requiresAuth: true
@@ -60,7 +69,7 @@ const routes = [
     },
     {
         path: '/alimentos/hamburguers',
-        component: MasterDashboard,
+        component: MasterBurguers,
         name: 'master.burguers',
         // meta: {
         //     requiresAuth: true
@@ -68,7 +77,7 @@ const routes = [
     },
     {
         path: '/alimentos/ingredientes',
-        component: MasterDashboard,
+        component: MasterIngredients,
         name: 'master.ingredients',
         // meta: {
         //     requiresAuth: true

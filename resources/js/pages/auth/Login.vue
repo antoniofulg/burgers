@@ -87,7 +87,7 @@ export default {
                     } else {
                         this.toast('Erro!', response.data.message)
                         // Informar em quais campos ocorreu problema
-                    }this.toast('Erro!', response.data.message)
+                    }
                 }).catch(e => {
                     console.log(e)
                 })

@@ -5,6 +5,9 @@ const getters = {
     getToken: state => {
         return state.user.token
     },
+    getUsers: state => {
+        return state.users
+    }
 }
 
 export default getters
