@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Drink extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'type', 'status', 'volume', 'price'
+    ];
+
+    public function orders() {
+        $this->belongsToMany('App/Order');
+    }
 }
