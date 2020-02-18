@@ -10,78 +10,90 @@ const routes = [
     {
         path: '/',
         component: Login,
-        name: 'index'
+        name: 'index',
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/login',
         component: Login,
-        name: 'login'
+        name: 'login',
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/register',
         component: Register,
-        name: 'register'
+        name: 'register',
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/perfil',
         component: MasterDashboard,
-        name: 'profile'
+        name: 'profile',
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/dashboard',
         component: MasterDashboard,
         name: 'master.dashboard',
-        // meta: {
-        //     requiresAuth: true
-        // }
+        meta: {
+            admin: true
+        }
     },
     {
         path: '/pedidos',
         component: MasterOrders,
         name: 'master.orders',
-        // meta: {
-        //     requiresAuth: true
-        // }
+        meta: {
+            admin: true
+        }
     },
     {
         path: '/usuarios',
         component: MasterUsers,
         name: 'master.users',
-        // meta: {
-        //     requiresAuth: true
-        // }
+        meta: {
+            admin: true
+        }
     },
     {
         path: '/alimentos',
         component: MasterDashboard,
         name: 'master.foods',
-        // meta: {
-        //     requiresAuth: true
-        // }
+        meta: {
+            admin: true
+        }
     },
     {
         path: '/alimentos/bebidas',
         component: MasterDashboard,
         name: 'master.drinks',
-        // meta: {
-        //     requiresAuth: true
-        // }
+        meta: {
+            admin: true
+        }
     },
     {
         path: '/alimentos/hamburguers',
         component: MasterBurguers,
         name: 'master.burguers',
-        // meta: {
-        //     requiresAuth: true
-        // }
+        meta: {
+            admin: true
+        }
     },
     {
         path: '/alimentos/ingredientes',
         component: MasterIngredients,
         name: 'master.ingredients',
-        // meta: {
-        //     requiresAuth: true
-        // }
+        meta: {
+            admin: true
+        }
     },
     {
         path: '*',

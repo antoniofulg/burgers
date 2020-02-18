@@ -91645,7 +91645,54 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["IconsPlugin"]);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+// Permissões de usuário
 
+var roles = {
+  isMaster: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' ? true : false,
+  isAdmin: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'admin' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' ? true : false,
+  isAttendant: _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'admin' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'master' || _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL == 'attendant' ? true : false
+}; // Middleware access
+
+_router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {
+  if (to.matched.some(function (r) {
+    return r.meta.guest;
+  }) && _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getUser) {
+    console.log('Você já está logado!');
+    _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+      name: 'profile'
+    });
+    return;
+  }
+
+  if (to.matched.some(function (r) {
+    return r.meta.requiresAuth;
+  }) && !_vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getUser) {
+    console.log('Você precisa estar autenticado para acessar esta página!');
+    _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+      name: 'login'
+    });
+    return;
+  }
+
+  if (to.matched.some(function (r) {
+    return r.meta.master;
+  }) && _vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL != 'master') {
+    console.log(_vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
+    console.log(roles);
+    console.log('Esta página é restrita ao usuário master');
+    return;
+  }
+
+  if (to.matched.some(function (r) {
+    return r.meta.admin;
+  }) && !roles.isAdmin) {
+    console.log(_vuex__WEBPACK_IMPORTED_MODULE_1__["default"].getters.getACL);
+    console.log('Esta página é restrita a administradores');
+    return;
+  }
+
+  next();
+});
 var app = new Vue({
   el: '#app',
   router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -92442,15 +92489,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   routes: _routes__WEBPACK_IMPORTED_MODULE_2__["default"],
   linkActiveClass: 'active'
-}); // Middleware example
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some(r => r.meta.requiresAuth) && !window.Auth.signedIn) {
-//         window.location = window.Urls.login
-//         return
-//     }
-//     next()
-// })
-
+});
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
@@ -92481,68 +92520,80 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/',
   component: _pages_auth_Login__WEBPACK_IMPORTED_MODULE_0__["default"],
-  name: 'index'
+  name: 'index',
+  meta: {
+    guest: true
+  }
 }, {
   path: '/login',
   component: _pages_auth_Login__WEBPACK_IMPORTED_MODULE_0__["default"],
-  name: 'login'
+  name: 'login',
+  meta: {
+    guest: true
+  }
 }, {
   path: '/register',
   component: _pages_auth_Register__WEBPACK_IMPORTED_MODULE_1__["default"],
-  name: 'register'
+  name: 'register',
+  meta: {
+    guest: true
+  }
 }, {
   path: '/perfil',
   component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_2__["default"],
-  name: 'profile'
+  name: 'profile',
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '/dashboard',
   component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_2__["default"],
-  name: 'master.dashboard' // meta: {
-  //     requiresAuth: true
-  // }
-
+  name: 'master.dashboard',
+  meta: {
+    admin: true
+  }
 }, {
   path: '/pedidos',
   component: _pages_master_Orders__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'master.orders' // meta: {
-  //     requiresAuth: true
-  // }
-
+  name: 'master.orders',
+  meta: {
+    admin: true
+  }
 }, {
   path: '/usuarios',
   component: _pages_master_Users__WEBPACK_IMPORTED_MODULE_5__["default"],
-  name: 'master.users' // meta: {
-  //     requiresAuth: true
-  // }
-
+  name: 'master.users',
+  meta: {
+    admin: true
+  }
 }, {
   path: '/alimentos',
   component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_2__["default"],
-  name: 'master.foods' // meta: {
-  //     requiresAuth: true
-  // }
-
+  name: 'master.foods',
+  meta: {
+    admin: true
+  }
 }, {
   path: '/alimentos/bebidas',
   component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_2__["default"],
-  name: 'master.drinks' // meta: {
-  //     requiresAuth: true
-  // }
-
+  name: 'master.drinks',
+  meta: {
+    admin: true
+  }
 }, {
   path: '/alimentos/hamburguers',
   component: _pages_master_Burguers__WEBPACK_IMPORTED_MODULE_6__["default"],
-  name: 'master.burguers' // meta: {
-  //     requiresAuth: true
-  // }
-
+  name: 'master.burguers',
+  meta: {
+    admin: true
+  }
 }, {
   path: '/alimentos/ingredientes',
   component: _pages_master_Ingredients__WEBPACK_IMPORTED_MODULE_3__["default"],
-  name: 'master.ingredients' // meta: {
-  //     requiresAuth: true
-  // }
-
+  name: 'master.ingredients',
+  meta: {
+    admin: true
+  }
 }, {
   path: '*',
   component: _pages_master_Dashboard__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -92564,8 +92615,11 @@ var getters = {
   getUser: function getUser(state) {
     return state.user;
   },
+  getACL: function getACL(state) {
+    return state.user ? state.user.access_level : null;
+  },
   getToken: function getToken(state) {
-    return state.user.token;
+    return state.user ? state.user.token : null;
   },
   getUsers: function getUsers(state) {
     return state.users;
