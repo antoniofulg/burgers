@@ -1,7 +1,7 @@
 <template>
     <admin-template>
         <div class="container mt-5">
-            <h1>Ingredientes</h1>
+            <h1>Acompanhamentos</h1>
             <ul class="list-group">
                 <li class="list-group-item">Cras justo odio</li>
                 <li class="list-group-item">Dapibus ac facilisis in</li>

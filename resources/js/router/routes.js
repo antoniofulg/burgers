@@ -1,10 +1,12 @@
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
+import MasterBurguers from '../pages/master/Burguers'
 import MasterDashboard from '../pages/master/Dashboard'
+import MasterDrinks from '../pages/master/Drinks'
 import MasterIngredients from '../pages/master/Ingredients'
 import MasterOrders from '../pages/master/Orders'
+import MasterSideDishes from '../pages/master/SideDishes'
 import MasterUsers from '../pages/master/Users'
-import MasterBurguers from '../pages/master/Burguers'
 
 const routes = [
     {
@@ -65,7 +67,7 @@ const routes = [
     },
     {
         path: '/alimentos',
-        component: MasterDashboard,
+        component: MasterSideDishes,
         name: 'master.foods',
         meta: {
             admin: true
@@ -73,7 +75,7 @@ const routes = [
     },
     {
         path: '/alimentos/bebidas',
-        component: MasterDashboard,
+        component: MasterDrinks,
         name: 'master.drinks',
         meta: {
             admin: true

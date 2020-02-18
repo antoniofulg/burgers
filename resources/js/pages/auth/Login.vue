@@ -35,8 +35,8 @@
                         <button @click="login" :disabled="$v.$invalid" class="btn btn-success btn-block btn-large">Entrar</button>
                         <hr>
                         <small id="emailHelp" class="form-text text-muted text-center mb-1">Não publicaremos nada em suas redes sociais!</small>
-                        <button class="btn btn-danger btn-block btn-large" disabled>Entrar com o Google</button>
-                        <button class="btn btn-primary btn-block btn-large" disabled>Entrar com o Facebook</button>
+                        <button class="btn btn-danger btn-block btn-large" disabled><i class="fab fa-google mr-2"></i>Entrar com o Google</button>
+                        <button class="btn btn-primary btn-block btn-large" disabled><i class="fab fa-facebook mr-2"></i>Entrar com o Facebook</button>
                         <small class="form-text text-center text-muted mt-2 mb-2">ou</small>
                         <router-link :to="{name: 'register'}" class="btn btn-secondary btn-block btn-large">Criar uma nova conta</router-link>
                     </div>
