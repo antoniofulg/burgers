@@ -17,7 +17,16 @@ use Illuminate\Http\Request;
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
 
-Route::middleware('auth:api')->get('/users', 'UserController@index');
+Route::middleware(['auth:api'])->group(function() {
+    Route::apiResource('/ingredients', 'IngredientController')->except('show');
+    // Route::apiResource('/questions.answers', 'Api\AnswersController')->except('index');
+    // Route::post('/questions/{question}/vote', 'Api\VoteQuestionController');
+    // Route::post('/answers/{answer}/vote', 'Api\VoteAnswerController');
+    // Route::post('/answers/{answer}/accept', 'Api\AcceptAnswerController');
+    // Route::post('/questions/{question}/favorites', 'Api\FavoritesController@store');
+    // Route::delete('/questions/{question}/favorites', 'Api\FavoritesController@destroy');
+    // Route::get('/my-posts', 'Api\MyPostsController');
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
