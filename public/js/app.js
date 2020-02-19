@@ -2472,7 +2472,128 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layouts/AdminTemplate */ "./resources/js/layouts/AdminTemplate.vue");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../layouts/AdminTemplate */ "./resources/js/layouts/AdminTemplate.vue");
+/* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2511,10 +2632,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    AdminTemplate: _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
+    AdminTemplate: _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  computed: {
+    endpoint: function endpoint() {
+      return "/api/ingredients";
+    },
+    ingredientsList: function ingredientsList() {
+      return this.$store.getters.getIngredients;
+    }
+  },
+  created: function created() {
+    this.getIngredients();
+  },
+  data: function data() {
+    return {
+      checked: [],
+      forms: {
+        insert: false,
+        update: false
+      },
+      new_ingredient: {
+        name: '',
+        type: '',
+        price: '',
+        status: ''
+      }
+    };
+  },
+  methods: {
+    checkItem: function checkItem() {},
+    changeForm: function changeForm() {
+      var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'table';
+
+      if (type === 'insert') {
+        this.forms.insert = true;
+        this.forms.update = false;
+      } else if (type === 'update') {
+        this.forms.insert = false;
+        this.forms.update = true;
+      } else {
+        this.forms.insert = false;
+        this.forms.update = false;
+      }
+    },
+    getIngredients: function getIngredients() {
+      var _this = this;
+
+      axios.get("".concat(this.endpoint), {
+        "headers": {
+          "authorization": "Bearer ".concat(this.$store.getters.getToken),
+          "Accept": "application/json"
+        }
+      }).then(function (response) {
+        if (response.data.concluded) {
+          console.log('request');
+          console.log(response.data);
+
+          _this.$store.commit('setIngredients', response.data.ingredients.data);
+        } else {
+          _this.warningToast('Ação não concluída!', response.data.message);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  },
+  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  validations: {}
 });
 
 /***/ }),
@@ -40526,7 +40715,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.dropdown-toggle[data-v-3781d1c4]::after {\n    content: none;\n}\n", ""]);
+exports.push([module.i, "\n.dropdown-toggle[data-v-3781d1c4]::after {\n    content: none;\n}\n.dropdown-item[data-v-3781d1c4], .pointer[data-v-3781d1c4],\ntbody > tr[data-v-3781d1c4] {\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -73701,118 +73890,719 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("admin-template", [
     _c("div", { staticClass: "container mt-5" }, [
-      _c("h1", [_vm._v("Ingredientes")]),
+      _c("h1", [
+        _vm._v("Ingredientes "),
+        _c("span", [
+          _c("i", { staticClass: "fas fa-question-circle text-info pointer" })
+        ])
+      ]),
       _vm._v(" "),
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-            }
-          }
-        },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "dropdown col-md-2" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary rounded-pill dropdown-toggle",
-                  attrs: {
-                    type: "button",
-                    id: "dropdownMenuButton",
-                    "data-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false"
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-sort" }),
-                  _vm._v(" Ordenar lista\n                    ")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "dropdown-menu",
-                  attrs: { "aria-labelledby": "dropdownMenuButton" }
-                },
-                [
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Action")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Another action")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    { staticClass: "dropdown-item", attrs: { href: "#" } },
-                    [_vm._v("Something else here")]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group col-md-4" }, [
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  placeholder: "Buscar ingredientes",
-                  "aria-label": "Recipient's username",
-                  "aria-describedby": "button-addon2"
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn shadow-sm btn-primary btn-block rounded-pill",
+              attrs: { disabled: _vm.forms.insert },
+              on: {
+                click: function($event) {
+                  return _vm.changeForm("insert")
                 }
-              }),
+              }
+            },
+            [_c("i", { staticClass: "fas fa-plus-circle" }), _vm._v(" Novo")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "dropdown col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "btn shadow-sm btn-success rounded-pill btn-block  dropdown-toggle",
+              attrs: {
+                type: "button",
+                "data-toggle": "dropdown",
+                "aria-haspopup": "true",
+                "aria-expanded": "false"
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-stream" }),
+              _vm._v(" Ordenar lista\n                    ")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-menu",
+              attrs: { "aria-labelledby": "dropdownMenuButton" }
+            },
+            [
+              _c("a", { staticClass: "dropdown-item" }, [
+                _c("i", { staticClass: "fas fa-sort-alpha-up-alt" }),
+                _vm._v(" Ordem alfabética")
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group-append" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-secondary",
-                    attrs: { type: "button" }
-                  },
-                  [_c("i", { staticClass: "fas fa-search" })]
-                )
+              _c("a", { staticClass: "dropdown-item" }, [
+                _c("i", { staticClass: "fas fa-chart-line" }),
+                _vm._v(" Mais pedidos")
+              ]),
+              _vm._v(" "),
+              _c("a", { staticClass: "dropdown-item" }, [
+                _c("i", { staticClass: "fas fa-calendar-alt" }),
+                _vm._v(" Adicionados recentemente")
               ])
-            ]),
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "input-group col-md-6",
+            on: {
+              submit: [
+                function($event) {
+                  $event.preventDefault()
+                },
+                function($event) {
+                  $event.preventDefault()
+                }
+              ]
+            }
+          },
+          [
+            _c("input", {
+              staticClass: "form-control shadow-sm",
+              attrs: { type: "text", placeholder: "Buscar ingredientes" }
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "input-group-append" }, [
               _c(
                 "button",
-                { staticClass: "btn btn-primary btn-block rounded-pill" },
-                [
-                  _c("i", { staticClass: "fas fa-plus-circle" }),
-                  _vm._v(" Novo ingrediente")
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
-              _c(
-                "button",
-                { staticClass: "btn btn-warning btn-block rounded-pill" },
-                [_c("i", { staticClass: "fas fa-trash" }), _vm._v(" Tornar")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
-              _c(
-                "button",
-                { staticClass: "btn btn-danger btn-block rounded-pill" },
-                [_c("i", { staticClass: "fas fa-trash" }), _vm._v(" Apagar")]
+                {
+                  staticClass: "btn shadow-sm btn-outline-secondary",
+                  attrs: { type: "submit" }
+                },
+                [_c("i", { staticClass: "fas fa-search" })]
               )
             ])
-          ])
-        ]
-      )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "dropdown col-md-2" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "btn shadow-sm btn-secondary rounded-pill btn-block dropdown-toggle",
+              attrs: {
+                type: "button",
+                "data-toggle": "dropdown",
+                "aria-haspopup": "true",
+                "aria-expanded": "false"
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-tools" }),
+              _vm._v(" Opções\n                    ")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-menu",
+              attrs: { "aria-labelledby": "dropdownMenuButton" }
+            },
+            [
+              _c("a", { staticClass: "dropdown-item" }, [
+                _c("i", { staticClass: "fas fa-exchange-alt" }),
+                _vm._v(" Alterar disponibilidade")
+              ]),
+              _vm._v(" "),
+              _c("a", { staticClass: "dropdown-item" }, [
+                _c("i", { staticClass: "fas fa-trash" }),
+                _vm._v(" Apagar")
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      !_vm.forms.insert && !_vm.forms.update
+        ? _c(
+            "table",
+            { staticClass: "shadow-sm table table-hover table-bordered" },
+            [
+              _c("thead", { staticClass: "thead-dark" }, [
+                _c("tr", { staticClass: "d-flex" }, [
+                  _c("th", { staticClass: "text-center col-1" }),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "col-3" }, [_vm._v("Nome")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "col-2" }, [_vm._v("Tipo")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "col-2" }, [_vm._v("Preço")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "col-2" }, [_vm._v("Status")]),
+                  _vm._v(" "),
+                  _c("th", { staticClass: "col-2" }, [_vm._v("Cadastrado em")])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.ingredientsList, function(ingredient) {
+                return _c("tbody", { key: ingredient.id }, [
+                  _c("tr", { staticClass: "d-flex" }, [
+                    _c(
+                      "th",
+                      {
+                        staticClass: "col-1 text-center",
+                        attrs: { scope: "row" }
+                      },
+                      [
+                        true
+                          ? _c("i", { staticClass: "far fa-square" })
+                          : undefined
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "col-3" }, [
+                      _vm._v(_vm._s(ingredient.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "col-2" }, [
+                      _vm._v(_vm._s(ingredient.type))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "col-2" }, [
+                      _vm._v(_vm._s(ingredient.price))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "col-2" }, [
+                      _vm._v(_vm._s(ingredient.status))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "col-2" }, [
+                      _vm._v(_vm._s(ingredient.created_at))
+                    ])
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        : _vm.forms.insert
+        ? _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "form-group col-sm-12 col-md-8" }, [
+                  _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.new_ingredient.name,
+                        expression: "new_ingredient.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "name" },
+                    domProps: { value: _vm.new_ingredient.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.new_ingredient,
+                          "name",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-sm-12 col-md-4" }, [
+                  _c("label", { attrs: { for: "type" } }, [_vm._v("Tipo")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_ingredient.type,
+                          expression: "new_ingredient.type"
+                        }
+                      ],
+                      staticClass: "custom-select",
+                      attrs: { id: "type" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_ingredient,
+                            "type",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { selected: "" } }, [
+                        _vm._v("Escolha...")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "side_dishes" } }, [
+                        _vm._v("Acompanhamentos")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "blend" } }, [
+                        _vm._v("Carne")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "bread" } }, [
+                        _vm._v("Pão")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "chesse" } }, [
+                        _vm._v("Queijo")
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "input-group col-md-4" }, [
+                  _c("label", { attrs: { for: "inputCity" } }, [
+                    _vm._v("Preço")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group mb-3" }, [
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "input-group-text",
+                          attrs: { id: "basic-addon1" }
+                        },
+                        [_vm._v("R$")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_ingredient.price,
+                          expression: "new_ingredient.price"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        value: "0,00",
+                        "aria-describedby": "basic-addon1"
+                      },
+                      domProps: { value: _vm.new_ingredient.price },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.new_ingredient,
+                            "price",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-4" }, [
+                  _c("label", { attrs: { for: "inputState" } }, [
+                    _vm._v("Status")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_ingredient.status,
+                          expression: "new_ingredient.status"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "inputState" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_ingredient,
+                            "status",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "avaliable", selected: "" } },
+                        [_vm._v("Disponível")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "unavaliable" } }, [
+                        _vm._v("Indisponível")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "desactivated" } }, [
+                        _vm._v("Desativado")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group col-md-2 d-flex flex-column" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn shadow-sm btn-block btn-danger mt-auto rounded-pill",
+                        on: {
+                          click: function($event) {
+                            return _vm.changeForm()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-undo-alt" }),
+                        _vm._v(" Cancelar")
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group col-md-2 d-flex flex-column" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn shadow-sm btn-block btn-success mt-auto rounded-pill"
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-plus-circle" }),
+                        _vm._v(" Cadastrar")
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]
+          )
+        : _vm.forms.update
+        ? _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "form-group col-sm-12 col-md-8" }, [
+                  _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.new_ingredient.name,
+                        expression: "new_ingredient.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "name" },
+                    domProps: { value: _vm.new_ingredient.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.new_ingredient,
+                          "name",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-sm-12 col-md-4" }, [
+                  _c("label", { attrs: { for: "type" } }, [_vm._v("Tipo")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_ingredient.type,
+                          expression: "new_ingredient.type"
+                        }
+                      ],
+                      staticClass: "custom-select",
+                      attrs: { id: "type" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_ingredient,
+                            "type",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { selected: "" } }, [
+                        _vm._v("Escolha...")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "side_dishes" } }, [
+                        _vm._v("Acompanhamentos")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "blend" } }, [
+                        _vm._v("Carne")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "bread" } }, [
+                        _vm._v("Pão")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "chesse" } }, [
+                        _vm._v("Queijo")
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "input-group col-md-4" }, [
+                  _c("label", { attrs: { for: "inputCity" } }, [
+                    _vm._v("Preço")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group mb-3" }, [
+                    _c("div", { staticClass: "input-group-prepend" }, [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "input-group-text",
+                          attrs: { id: "basic-addon1" }
+                        },
+                        [_vm._v("R$")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_ingredient.price,
+                          expression: "new_ingredient.price"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        value: "0,00",
+                        "aria-describedby": "basic-addon1"
+                      },
+                      domProps: { value: _vm.new_ingredient.price },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.new_ingredient,
+                            "price",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-md-4" }, [
+                  _c("label", { attrs: { for: "inputState" } }, [
+                    _vm._v("Status")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_ingredient.status,
+                          expression: "new_ingredient.status"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "inputState" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_ingredient,
+                            "status",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "avaliable", selected: "" } },
+                        [_vm._v("Disponível")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "unavaliable" } }, [
+                        _vm._v("Indisponível")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "desactivated" } }, [
+                        _vm._v("Desativado")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group col-md-2 d-flex flex-column" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn shadow-sm btn-block btn-danger mt-auto rounded-pill",
+                        on: {
+                          click: function($event) {
+                            return _vm.changeForm()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-undo-alt" }),
+                        _vm._v(" Cancelar")
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group col-md-2 d-flex flex-column" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn shadow-sm btn-block btn-success mt-auto rounded-pill"
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-plus-circle" }),
+                        _vm._v(" Cadastrar")
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]
+          )
+        : _vm._e()
     ])
   ])
 }
@@ -93326,6 +94116,7 @@ var routes = [{
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var getters = {
+  // Users
   getUser: function getUser(state) {
     return state.user;
   },
@@ -93337,6 +94128,10 @@ var getters = {
   },
   getUsers: function getUsers(state) {
     return state.users;
+  },
+  // Ingredientes
+  getIngredients: function getIngredients(state) {
+    return state.ingredients;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (getters);
@@ -93397,6 +94192,9 @@ var mutations = {
   },
   setUsers: function setUsers(state, n) {
     state.users = n;
+  },
+  setIngredients: function setIngredients(state, n) {
+    state.ingredients = n;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
@@ -93414,7 +94212,8 @@ var mutations = {
 __webpack_require__.r(__webpack_exports__);
 var state = {
   user: sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : null,
-  users: []
+  users: [],
+  ingredients: []
 };
 /* harmony default export */ __webpack_exports__["default"] = (state);
 

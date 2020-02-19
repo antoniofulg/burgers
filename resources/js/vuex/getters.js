@@ -1,4 +1,5 @@
 const getters = {
+    // Users
     getUser: state => {
         return state.user
     },
@@ -10,7 +11,13 @@ const getters = {
     },
     getUsers: state => {
         return state.users
+    },
+    
+    // Ingredientes
+    getIngredients: state => {
+        return state.ingredients
     }
+
 }
 
 export default getters
