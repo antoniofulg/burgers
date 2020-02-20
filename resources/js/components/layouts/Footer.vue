@@ -1,17 +1,22 @@
 <template>
-    <footer class="footer bg-dark">
-        <div class="container">
-            
+<footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">Antonio Fulgêncio &copy; 2020</small>
+            </div>
+            <div class="col-6 col-md">
+                <!-- <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">Cool stuff</a></li>
+                <li><a class="text-muted" href="#">Random feature</a></li>
+                <li><a class="text-muted" href="#">Team feature</a></li>
+                <li><a class="text-muted" href="#">Stuff for developers</a></li>
+                <li><a class="text-muted" href="#">Another one</a></li>
+                <li><a class="text-muted" href="#">Last time</a></li>
+                </ul> -->
+            </div>
         </div>
-    </footer>
+    </div>
+  </footer>
 </template>
-
-<style scoped>
-    .footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 60px; /* Set the fixed height of the footer here */
-        line-height: 60px; /* Vertically center the text there */
-    }  
-</style>

@@ -3,11 +3,8 @@
         <div class="container mt-5">
             <h1>Ingredientes <span><i class="fas fa-question-circle text-info pointer"></i></span></h1>
             <hr>
-            <div class="row">
-                <div class="col-md-2">
-                    <router-link tag="button" :to="{name: 'master.ingredients.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="fas fa-plus-circle"></i> Novo</router-link>
-                </div>      
-                <div class="dropdown col-md-2">
+            <div class="row">     
+                <div class="dropdown col-md-3">
                     <button class="btn shadow-sm btn-success rounded-pill btn-block  dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-stream"></i> Ordenar lista
                     </button>
@@ -24,37 +21,31 @@
                         <button class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                     </div>
                 </form>
-                <div class="dropdown col-md-2">
-                    <button class="btn shadow-sm btn-secondary rounded-pill btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-tools"></i> Opções
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item"><i class="fas fa-exchange-alt"></i> Alterar disponibilidade</a>
-                        <a class="dropdown-item"><i class="fas fa-trash"></i> Apagar</a>
-                    </div>
-                </div>
+                <div class="col-md-3">
+                    <router-link tag="button" :to="{name: 'master.ingredients.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="fas fa-plus-circle"></i> Novo ingrediente</router-link>
+                </div> 
             </div>
             <hr>
             <table class="shadow-sm table table-sm table-hover table-bordered">
                 <thead class="thead-dark">
                     <tr class="d-flex">
-                        <th class="text-center col-1"></th>
-                        <th class="col-3">Nome</th>
+                        <!-- <th class="text-center col-1"></th> -->
+                        <th class="col-4">Nome</th>
                         <th class="col-2">Tipo</th>
-                        <th class="col-2">Preço</th>
+                        <th class="col-2">Preço unitário</th>
                         <th class="col-2">Estado</th>
                         <th class="col-2">Cadastrado em</th>
                     </tr>
                 </thead>
                 <tbody v-for="ingredient in ingredientsList" :key="ingredient.id">
                     <tr class="d-flex">
-                        <th class="col-1 text-center" scope="row">
+                        <!-- <th class="col-1 text-center" scope="row">
                             <i v-if="true" class="far fa-square"></i>
                             <i v-else class="fas fa-check-square"></i>
-                        </th>
-                        <td @click="editIngredient(ingredient)" class="col-3">{{ingredient.name}}</td>
-                        <td @click="editIngredient(ingredient)" class="col-2">{{ingredient.type}}</td>
-                        <td @click="editIngredient(ingredient)" class="col-2">{{ingredient.price}}</td>
+                        </th> -->
+                        <td @click="editIngredient(ingredient)" class="col-4">{{ingredient.name}}</td>
+                        <td @click="editIngredient(ingredient)" class="col-2">{{typeName(ingredient.type)}}</td>
+                        <td @click="editIngredient(ingredient)" class="col-2">{{priceName(ingredient.price)}}</td>
                         <td class="col-2"><button
                             :class="{
                                 'btn-success': ingredient.status === 'avaliable',
@@ -127,7 +118,6 @@ export default {
         },
 
         getIngredients() {
-            console.log('chamado!!')
             axios.get(`${this.endpoint}`, {
                 "headers": {
                     "authorization": `Bearer ${this.$store.getters.getToken}`,
@@ -137,7 +127,7 @@ export default {
                 if (response.data.concluded) {
                     console.log('request')
                     console.log(response.data)
-                    this.$store.commit('setIngredients', response.data.ingredients.data)
+                    this.$store.commit('setIngredients', response.data.ingredients)
                 } else {
                     this.warningToast('Ação não concluída!', 'Não foi possível obter os ingredientes!')
                 }
@@ -146,9 +136,30 @@ export default {
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             })
         },
+
+        priceName(price) {
+            return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })}` : 'Grátis'
+        },
        
         statusName(status) {
             return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
+        },
+
+        typeName(type) {
+            if (type ===  'bread') {
+                return 'Pão'
+            } else if (type === 'blend') {
+                return 'Carne'
+            } else if (type === 'cheese') {
+                return 'Queijo'
+            } else if (type === 'salad') {
+                return 'Salada'
+            } else if (type === 'side_dishes') {
+                return 'Acompanhamento'
+            }
         },
 
         updateStatus(ingredient, status) {

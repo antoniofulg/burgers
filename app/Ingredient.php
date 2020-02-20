@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ingredient extends Model
 {
+    use SoftDeletes;
+
     protected $appends = [
         'creation_date'
     ];
@@ -19,6 +22,6 @@ class Ingredient extends Model
     ];
 
     public function getCreationDateAttribute() {
-        return $this->created_at->format('H:i:s d/m/Y');
+        return $this->created_at->format('d/m/Y');
     }
 }

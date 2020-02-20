@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->double('discount', 8, 2);
             $table->double('total', 8, 2);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');

@@ -15,7 +15,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::paginate(10);
+        $ingredients = Ingredient::orderBy('type', 'ASC')->orderBy('name', 'ASC')->get();
         return response()->json([
             'concluded' => true,
             'ingredients' => $ingredients,

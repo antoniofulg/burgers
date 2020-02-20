@@ -21,6 +21,7 @@ class CreateDrinksTable extends Migration
             $table->integer('volume'); //Volume em ml
             $table->double('price', 8, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

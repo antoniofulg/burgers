@@ -26,7 +26,7 @@
                         <div ref="invalid_type" class="invalid-feedback">
                             Por favor, selecione o tipo do ingrediente.
                         </div>
-                            <option value="side_dishes">Acompanhamentos</option>
+                            <option value="side_dishes">Acompanhamento</option>
                             <option value="blend">Carne</option>
                             <option value="bread">Pão</option>
                             <option value="chesse">Queijo</option>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-row">
                     <div class="input-group col-md-4">
-                        <label for="inputCity">Preço</label>
+                        <label for="inputCity">Preço unitário</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">R$</span>

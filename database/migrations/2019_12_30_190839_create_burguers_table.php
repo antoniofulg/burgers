@@ -19,6 +19,7 @@ class CreateBurguersTable extends Migration
             $table->enum('status', ['avaliable', 'unavaliable', 'desactivated']); //Status do hamburguer, se está disponível / indisponível / ou se não deve aparecer no cardápio;
             $table->double('price', 8, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

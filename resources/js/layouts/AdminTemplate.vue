@@ -23,7 +23,9 @@
             </li>
         </master-navbar>
 
-        <slot/>
+        <main role="main">
+            <slot/>
+        </main>
         
         <master-footer/>
     </span>

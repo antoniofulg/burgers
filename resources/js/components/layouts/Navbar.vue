@@ -46,13 +46,32 @@ export default {
             sessionStorage.clear()
             this.$router.push({name: 'login'})
           } else {
-            this.warningToast('Ação não concluída!', response.data.message)
+            this.$store.commit('setUser', null)
+            sessionStorage.clear()
+            this.$router.push({
+              name: 'login',
+              params: {
+                toast: {
+                  type: 'warning',
+                  title: 'Ação não concluída!',
+                  message: response.data.message
+                }
+              }
+            })
           }
       }).catch(e => {
-        console.log(e)
-        this.warningToast('Ação não concluída!', 'Nenhuma sessão encontrada!')
         this.$store.commit('setUser', null)
         sessionStorage.clear()
+        this.$router.push({
+          name: 'login',
+          params: {
+            toast: {
+              type: 'warning',
+              title: 'Ação não concluída!',
+              message: 'Sessão não encontrada!'
+            }
+          }
+        })
       })
     },
   },
