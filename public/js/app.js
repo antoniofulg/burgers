@@ -2323,7 +2323,7 @@ __webpack_require__.r(__webpack_exports__);
             sessionStorage.setItem('user', JSON.stringify(response.data.user));
 
             _this.$router.push({
-              name: 'master.dashboard'
+              name: 'profile'
             });
           } else {
             _this.toast('Erro!', response.data.message); // Informar em quais campos ocorreu problema
