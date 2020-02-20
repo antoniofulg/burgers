@@ -2769,6 +2769,7 @@ __webpack_require__.r(__webpack_exports__);
     getIngredients: function getIngredients() {
       var _this = this;
 
+      console.log('chamado!!');
       axios.get("".concat(this.endpoint), {
         "headers": {
           "authorization": "Bearer ".concat(this.$store.getters.getToken),
@@ -2791,6 +2792,31 @@ __webpack_require__.r(__webpack_exports__);
     },
     statusName: function statusName(status) {
       return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado";
+    },
+    updateStatus: function updateStatus(ingredient, status) {
+      var _this2 = this;
+
+      axios.put("".concat(this.endpoint, "/").concat(ingredient.id), {
+        name: ingredient.name,
+        type: ingredient.type,
+        price: ingredient.price,
+        status: status
+      }, {
+        "headers": {
+          "authorization": "Bearer ".concat(this.$store.getters.getToken),
+          "Accept": "application/json"
+        }
+      }).then(function (response) {
+        if (response.data.concluded) {
+          _this2.successToast('Ação concluída!', response.data.message);
+
+          _this2.getIngredients();
+        } else {
+          _this2.warningToast('Ação não concluída!', response.data.message);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+      });
     }
   },
   mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
@@ -74674,7 +74700,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "table",
-        { staticClass: "shadow-sm table table-hover table-bordered" },
+        { staticClass: "shadow-sm table table-sm table-hover table-bordered" },
         [
           _c("thead", { staticClass: "thead-dark" }, [
             _c("tr", { staticClass: "d-flex" }, [
@@ -74694,105 +74720,169 @@ var render = function() {
           _vm._v(" "),
           _vm._l(_vm.ingredientsList, function(ingredient) {
             return _c("tbody", { key: ingredient.id }, [
-              _c(
-                "tr",
-                {
-                  staticClass: "d-flex",
-                  on: {
-                    click: function($event) {
-                      return _vm.editIngredient(ingredient)
+              _c("tr", { staticClass: "d-flex" }, [
+                _c(
+                  "th",
+                  { staticClass: "col-1 text-center", attrs: { scope: "row" } },
+                  [
+                    true
+                      ? _c("i", { staticClass: "far fa-square" })
+                      : undefined
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "col-3",
+                    on: {
+                      click: function($event) {
+                        return _vm.editIngredient(ingredient)
+                      }
                     }
-                  }
-                },
-                [
+                  },
+                  [_vm._v(_vm._s(ingredient.name))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "col-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.editIngredient(ingredient)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(ingredient.type))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "col-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.editIngredient(ingredient)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(ingredient.price))]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "col-2" }, [
                   _c(
-                    "th",
+                    "button",
                     {
-                      staticClass: "col-1 text-center",
-                      attrs: { scope: "row" }
+                      staticClass:
+                        "btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle",
+                      class: {
+                        "btn-success": ingredient.status === "avaliable",
+                        "btn-warning": ingredient.status === "unavaliable",
+                        "btn-danger": ingredient.status === "desactivated"
+                      },
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "dropdown",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "false"
+                      }
                     },
                     [
-                      true
-                        ? _c("i", { staticClass: "far fa-square" })
-                        : undefined
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.statusName(ingredient.status)) +
+                          "\n                    "
+                      )
                     ]
                   ),
                   _vm._v(" "),
-                  _c("td", { staticClass: "col-3" }, [
-                    _vm._v(_vm._s(ingredient.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "col-2" }, [
-                    _vm._v(_vm._s(ingredient.type))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "col-2" }, [
-                    _vm._v(_vm._s(ingredient.price))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "col-2" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle",
-                        class: {
-                          "btn-success": ingredient.status === "avaliable",
-                          "btn-warning": ingredient.status === "unavaliable",
-                          "btn-danger": ingredient.status === "desactivated"
-                        },
-                        attrs: {
-                          type: "button",
-                          "data-toggle": "dropdown",
-                          "aria-haspopup": "true",
-                          "aria-expanded": "false"
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(_vm.statusName(ingredient.status)) +
-                            "\n                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "dropdown-menu",
-                        attrs: { "aria-labelledby": "dropdownMenuButton" }
-                      },
-                      [
-                        ingredient.status != "avaliable"
-                          ? _c("a", { staticClass: "dropdown-item" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dropdown-menu",
+                      attrs: { "aria-labelledby": "dropdownMenuButton" }
+                    },
+                    [
+                      ingredient.status != "avaliable"
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateStatus(
+                                    ingredient,
+                                    "avaliable"
+                                  )
+                                }
+                              }
+                            },
+                            [
                               _c("i", { staticClass: "fas fa-check-circle" }),
                               _vm._v(" Disponível")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        ingredient.status != "unavaliable"
-                          ? _c("a", { staticClass: "dropdown-item" }, [
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      ingredient.status != "unavaliable"
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateStatus(
+                                    ingredient,
+                                    "unavaliable"
+                                  )
+                                }
+                              }
+                            },
+                            [
                               _c("i", { staticClass: "fas fa-hourglass-half" }),
                               _vm._v(" Indisponível")
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        ingredient.status != "desactivated"
-                          ? _c("a", { staticClass: "dropdown-item" }, [
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      ingredient.status != "desactivated"
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateStatus(
+                                    ingredient,
+                                    "desactivated"
+                                  )
+                                }
+                              }
+                            },
+                            [
                               _c("i", { staticClass: "fas fa-ban" }),
                               _vm._v(" Desativado")
-                            ])
-                          : _vm._e()
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "col-2" }, [
-                    _vm._v(_vm._s(ingredient.creation_date))
-                  ])
-                ]
-              )
+                            ]
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "col-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.editIngredient(ingredient)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(ingredient.creation_date))]
+                )
+              ])
             ])
           })
         ],

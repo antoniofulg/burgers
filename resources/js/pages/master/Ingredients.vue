@@ -35,7 +35,7 @@
                 </div>
             </div>
             <hr>
-            <table class="shadow-sm table table-hover table-bordered">
+            <table class="shadow-sm table table-sm table-hover table-bordered">
                 <thead class="thead-dark">
                     <tr class="d-flex">
                         <th class="text-center col-1"></th>
@@ -47,14 +47,14 @@
                     </tr>
                 </thead>
                 <tbody v-for="ingredient in ingredientsList" :key="ingredient.id">
-                    <tr @click="editIngredient(ingredient)" class="d-flex">
+                    <tr class="d-flex">
                         <th class="col-1 text-center" scope="row">
                             <i v-if="true" class="far fa-square"></i>
                             <i v-else class="fas fa-check-square"></i>
                         </th>
-                        <td class="col-3">{{ingredient.name}}</td>
-                        <td class="col-2">{{ingredient.type}}</td>
-                        <td class="col-2">{{ingredient.price}}</td>
+                        <td @click="editIngredient(ingredient)" class="col-3">{{ingredient.name}}</td>
+                        <td @click="editIngredient(ingredient)" class="col-2">{{ingredient.type}}</td>
+                        <td @click="editIngredient(ingredient)" class="col-2">{{ingredient.price}}</td>
                         <td class="col-2"><button
                             :class="{
                                 'btn-success': ingredient.status === 'avaliable',
@@ -64,11 +64,11 @@
                             {{statusName(ingredient.status)}}
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a v-if="ingredient.status != 'avaliable'" class="dropdown-item"><i class="fas fa-check-circle"></i> Disponível</a>
-                            <a v-if="ingredient.status != 'unavaliable'" class="dropdown-item"><i class="fas fa-hourglass-half"></i> Indisponível</a>
-                            <a v-if="ingredient.status != 'desactivated'" class="dropdown-item"><i class="fas fa-ban"></i> Desativado</a>
+                            <a @click="updateStatus(ingredient, 'avaliable')" v-if="ingredient.status != 'avaliable'" class="dropdown-item"><i class="fas fa-check-circle"></i> Disponível</a>
+                            <a @click="updateStatus(ingredient, 'unavaliable')" v-if="ingredient.status != 'unavaliable'" class="dropdown-item"><i class="fas fa-hourglass-half"></i> Indisponível</a>
+                            <a @click="updateStatus(ingredient, 'desactivated')" v-if="ingredient.status != 'desactivated'" class="dropdown-item"><i class="fas fa-ban"></i> Desativado</a>
                         </div></td>
-                        <td class="col-2">{{ingredient.creation_date}}</td>
+                        <td @click="editIngredient(ingredient)" class="col-2">{{ingredient.creation_date}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -127,6 +127,7 @@ export default {
         },
 
         getIngredients() {
+            console.log('chamado!!')
             axios.get(`${this.endpoint}`, {
                 "headers": {
                     "authorization": `Bearer ${this.$store.getters.getToken}`,
@@ -148,6 +149,29 @@ export default {
        
         statusName(status) {
             return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
+        },
+
+        updateStatus(ingredient, status) {
+            axios.put(`${this.endpoint}/${ingredient.id}`, {
+                name: ingredient.name,
+                type: ingredient.type,
+                price: ingredient.price,
+                status: status,
+            }, {
+                "headers": {
+                    "authorization": `Bearer ${this.$store.getters.getToken}`,
+                    "Accept": "application/json"
+                }
+            }).then(response => {
+                if (response.data.concluded) {
+                    this.successToast('Ação concluída!', response.data.message)
+                    this.getIngredients()
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                }
+            }).catch(e => {
+                console.log(e)
+            })
         }
     },
 
