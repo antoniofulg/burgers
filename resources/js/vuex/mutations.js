@@ -5,6 +5,14 @@ const mutations = {
 
     setUsers(state, n) {
         state.users = n
+    },
+
+    setIngredients(state, n) {
+        state.ingredients = n
+    },
+
+    addIngredient(state, n) {
+        state.ingredients.push(n)
     }
 }
 
