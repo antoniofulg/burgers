@@ -9,6 +9,10 @@ const mutations = {
 
     setIngredients(state, n) {
         state.ingredients = n
+    },
+
+    addIngredient(state, n) {
+        state.ingredients.push(n)
     }
 }
 

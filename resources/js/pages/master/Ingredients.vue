@@ -8,23 +8,24 @@
                         <button @click="changeForm('insert')" :disabled="forms.insert" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="fas fa-plus-circle"></i> Novo</button>
                     </div>      
                     <div class="dropdown col-md-2">
-                        <button class="btn shadow-sm btn-success rounded-pill btn-block  dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button :disabled="forms.insert" class="btn shadow-sm btn-success rounded-pill btn-block  dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-stream"></i> Ordenar lista
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item"><i class="fas fa-sort-alpha-up-alt"></i> Ordem alfabética</a>
                             <a class="dropdown-item"><i class="fas fa-chart-line"></i> Mais pedidos</a>
+                            <a class="dropdown-item"><i class="fas fa-ellipsis-h"></i> Por tipos</a>
                             <a class="dropdown-item"><i class="fas fa-calendar-alt"></i> Adicionados recentemente</a>
                         </div>
                     </div>
-                    <form @submit.prevent @submit.prevent class="input-group col-md-6">
+                    <form @submit.prevent class="input-group col-md-6">
                         <input type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
                         <div class="input-group-append">
-                            <button class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                            <button :disabled="forms.insert" class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
                     <div class="dropdown col-md-2">
-                        <button class="btn shadow-sm btn-secondary rounded-pill btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button :disabled="forms.insert" class="btn shadow-sm btn-secondary rounded-pill btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-tools"></i> Opções
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -54,8 +55,20 @@
                         <td class="col-3">{{ingredient.name}}</td>
                         <td class="col-2">{{ingredient.type}}</td>
                         <td class="col-2">{{ingredient.price}}</td>
-                        <td class="col-2">{{ingredient.status}}</td>
-                        <td class="col-2">{{ingredient.created_at}}</td>
+                        <td class="col-2"><button
+                            :class="{
+                                'btn-success': ingredient.status === 'avaliable',
+                                'btn-warning': ingredient.status === 'unavaliable',
+                                'btn-danger': ingredient.status === 'desactivated'
+                            }" class="btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{statusName(ingredient.status)}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a v-if="ingredient.status != 'avaliable'" class="dropdown-item"><i class="fas fa-check-circle"></i> Disponível</a>
+                            <a v-if="ingredient.status != 'unavaliable'" class="dropdown-item"><i class="fas fa-hourglass-half"></i> Indisponível</a>
+                            <a v-if="ingredient.status != 'desactivated'" class="dropdown-item"><i class="fas fa-ban"></i> Desativado</a>
+                        </div></td>
+                        <td class="col-2">{{ingredient.creation_date}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -69,11 +82,11 @@
                     <div class="form-group col-sm-12 col-md-4">
                         <label for="type">Tipo</label>
                         <select v-model="new_ingredient.type" class="custom-select" id="type">
-                            <option selected>Escolha...</option>
                             <option value="side_dishes">Acompanhamentos</option>
                             <option value="blend">Carne</option>
                             <option value="bread">Pão</option>
                             <option value="chesse">Queijo</option>
+                            <option value="salad">Salada</option>
                         </select>
                     </div>
                 </div>
@@ -97,10 +110,10 @@
                         </select>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <button @click="changeForm()" class="btn shadow-sm btn-block btn-danger mt-auto rounded-pill"><i class="fas fa-undo-alt"></i> Cancelar</button>
+                        <button @click="changeForm" class="btn shadow-sm btn-block btn-danger mt-auto rounded-pill"><i class="fas fa-undo-alt"></i> Cancelar</button>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <button class="btn shadow-sm btn-block btn-success mt-auto rounded-pill"><i class="fas fa-plus-circle"></i> Cadastrar</button>
+                        <button @click="insertIngredient" class="btn shadow-sm btn-block btn-success mt-auto rounded-pill"><i class="fas fa-plus-circle"></i> Cadastrar</button>
                     </div>
                 </div>
             </form>
@@ -175,6 +188,7 @@ export default {
 
     created() {
         this.getIngredients()
+        console.log(this.$store.getters.getToken)
     },
 
     data () {
@@ -202,15 +216,16 @@ export default {
 
         changeForm(type = 'table') {
             if (type === 'insert') {
-                this.forms.insert = true;
-                this.forms.update = false;
+                this.forms.insert = true
+                this.forms.update = false
             } else if (type === 'update') {
-                this.forms.insert = false;
-                this.forms.update = true;
+                this.forms.insert = false
+                this.forms.update = true
             } else {
-                this.forms.insert = false;
-                this.forms.update = false;
+                this.forms.insert = false
+                this.forms.update = false
             }
+                this.resetForm()
         },
 
         getIngredients() {
@@ -231,12 +246,55 @@ export default {
                 console.log(e)
             })
         },
+
+        insertIngredient() {
+            axios.post(`${this.endpoint}`, {
+                name: this.new_ingredient.name,
+                type: this.new_ingredient.type,
+                price: this.new_ingredient.price,
+                status: this.new_ingredient.status,
+            }, {
+                "headers": {
+                    "authorization": `Bearer ${this.$store.getters.getToken}`,
+                    "Accept": "application/json"
+                }
+            }).then(response => {
+                if (response.data.concluded) {
+                    console.log(response.data)
+                    this.$store.commit('addIngredient', response.data.ingredient)
+                    this.successToast('Ação concluída!', response.data.message)
+                    this.resetForm()
+                    this.changeForm()
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                }
+            }).catch(e => {
+                console.log(e)
+            })
+        },
+
+        resetForm() {
+            this.new_ingredient.name = ''
+            this.new_ingredient.type = ''
+            this.new_ingredient.price = ''
+            this.new_ingredient.status = ''
+        },
+        
+        statusName(status) {
+            return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
+        }
     },
 
     mixins: [Toast],
 
     validations: {
 
+    },
+
+    watch: {
+        new_ingredient: () => {
+            console.log(new_ingredient)
+        }
     }
 }
 </script>

@@ -57,7 +57,7 @@ class IngredientController extends Controller
         return response()->json([
             'concluded' => true,
             'message' => 'Ingrediente cadastrado com sucesso!',
-            'ingredient' => $ingredient,
+            'ingredient' => $ingredient
         ]);
     }
 

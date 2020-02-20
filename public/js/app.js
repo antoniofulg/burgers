@@ -2631,6 +2631,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2648,6 +2661,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getIngredients();
+    console.log(this.$store.getters.getToken);
   },
   data: function data() {
     return {
@@ -2679,6 +2693,8 @@ __webpack_require__.r(__webpack_exports__);
         this.forms.insert = false;
         this.forms.update = false;
       }
+
+      this.resetForm();
     },
     getIngredients: function getIngredients() {
       var _this = this;
@@ -2700,10 +2716,65 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (e) {
         console.log(e);
       });
+    },
+    insertIngredient: function insertIngredient() {
+      var _this2 = this;
+
+      axios.post("".concat(this.endpoint), {
+        name: this.new_ingredient.name,
+        type: this.new_ingredient.type,
+        price: this.new_ingredient.price,
+        status: this.new_ingredient.status
+      }, {
+        "headers": {
+          "authorization": "Bearer ".concat(this.$store.getters.getToken),
+          "Accept": "application/json"
+        }
+      }).then(function (response) {
+        if (response.data.concluded) {
+          console.log(response.data);
+
+          _this2.$store.commit('addIngredient', response.data.ingredient);
+
+          _this2.successToast('Ação concluída!', response.data.message);
+
+          _this2.resetForm();
+
+          _this2.changeForm();
+        } else {
+          _this2.warningToast('Ação não concluída!', response.data.message);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    resetForm: function resetForm() {
+      this.new_ingredient.name = '';
+      this.new_ingredient.type = '';
+      this.new_ingredient.price = '';
+      this.new_ingredient.status = '';
+    },
+    statusName: function statusName(status) {
+      return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado";
     }
   },
   mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
-  validations: {}
+  validations: {},
+  watch: {
+    new_ingredient: function (_new_ingredient) {
+      function new_ingredient() {
+        return _new_ingredient.apply(this, arguments);
+      }
+
+      new_ingredient.toString = function () {
+        return _new_ingredient.toString();
+      };
+
+      return new_ingredient;
+    }(function () {
+      console.log(new_ingredient);
+    })
+  }
 });
 
 /***/ }),
@@ -73923,6 +73994,7 @@ var render = function() {
               staticClass:
                 "btn shadow-sm btn-success rounded-pill btn-block  dropdown-toggle",
               attrs: {
+                disabled: _vm.forms.insert,
                 type: "button",
                 "data-toggle": "dropdown",
                 "aria-haspopup": "true",
@@ -73953,6 +74025,11 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("a", { staticClass: "dropdown-item" }, [
+                _c("i", { staticClass: "fas fa-ellipsis-h" }),
+                _vm._v(" Por tipos")
+              ]),
+              _vm._v(" "),
+              _c("a", { staticClass: "dropdown-item" }, [
                 _c("i", { staticClass: "fas fa-calendar-alt" }),
                 _vm._v(" Adicionados recentemente")
               ])
@@ -73965,14 +74042,9 @@ var render = function() {
           {
             staticClass: "input-group col-md-6",
             on: {
-              submit: [
-                function($event) {
-                  $event.preventDefault()
-                },
-                function($event) {
-                  $event.preventDefault()
-                }
-              ]
+              submit: function($event) {
+                $event.preventDefault()
+              }
             }
           },
           [
@@ -73986,7 +74058,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn shadow-sm btn-outline-secondary",
-                  attrs: { type: "submit" }
+                  attrs: { disabled: _vm.forms.insert, type: "submit" }
                 },
                 [_c("i", { staticClass: "fas fa-search" })]
               )
@@ -74001,6 +74073,7 @@ var render = function() {
               staticClass:
                 "btn shadow-sm btn-secondary rounded-pill btn-block dropdown-toggle",
               attrs: {
+                disabled: _vm.forms.insert,
                 type: "button",
                 "data-toggle": "dropdown",
                 "aria-haspopup": "true",
@@ -74086,11 +74159,67 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "col-2" }, [
-                      _vm._v(_vm._s(ingredient.status))
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle",
+                          class: {
+                            "btn-success": ingredient.status === "avaliable",
+                            "btn-warning": ingredient.status === "unavaliable",
+                            "btn-danger": ingredient.status === "desactivated"
+                          },
+                          attrs: {
+                            type: "button",
+                            "data-toggle": "dropdown",
+                            "aria-haspopup": "true",
+                            "aria-expanded": "false"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.statusName(ingredient.status)) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "dropdown-menu",
+                          attrs: { "aria-labelledby": "dropdownMenuButton" }
+                        },
+                        [
+                          ingredient.status != "avaliable"
+                            ? _c("a", { staticClass: "dropdown-item" }, [
+                                _c("i", { staticClass: "fas fa-check-circle" }),
+                                _vm._v(" Disponível")
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          ingredient.status != "unavaliable"
+                            ? _c("a", { staticClass: "dropdown-item" }, [
+                                _c("i", {
+                                  staticClass: "fas fa-hourglass-half"
+                                }),
+                                _vm._v(" Indisponível")
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          ingredient.status != "desactivated"
+                            ? _c("a", { staticClass: "dropdown-item" }, [
+                                _c("i", { staticClass: "fas fa-ban" }),
+                                _vm._v(" Desativado")
+                              ])
+                            : _vm._e()
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "col-2" }, [
-                      _vm._v(_vm._s(ingredient.created_at))
+                      _vm._v(_vm._s(ingredient.creation_date))
                     ])
                   ])
                 ])
@@ -74177,10 +74306,6 @@ var render = function() {
                       }
                     },
                     [
-                      _c("option", { attrs: { selected: "" } }, [
-                        _vm._v("Escolha...")
-                      ]),
-                      _vm._v(" "),
                       _c("option", { attrs: { value: "side_dishes" } }, [
                         _vm._v("Acompanhamentos")
                       ]),
@@ -74195,6 +74320,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("option", { attrs: { value: "chesse" } }, [
                         _vm._v("Queijo")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "salad" } }, [
+                        _vm._v("Salada")
                       ])
                     ]
                   )
@@ -74316,11 +74445,7 @@ var render = function() {
                       {
                         staticClass:
                           "btn shadow-sm btn-block btn-danger mt-auto rounded-pill",
-                        on: {
-                          click: function($event) {
-                            return _vm.changeForm()
-                          }
-                        }
+                        on: { click: _vm.changeForm }
                       },
                       [
                         _c("i", { staticClass: "fas fa-undo-alt" }),
@@ -74338,7 +74463,8 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "btn shadow-sm btn-block btn-success mt-auto rounded-pill"
+                          "btn shadow-sm btn-block btn-success mt-auto rounded-pill",
+                        on: { click: _vm.insertIngredient }
                       },
                       [
                         _c("i", { staticClass: "fas fa-plus-circle" }),
@@ -94164,15 +94290,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
   getters: _getters__WEBPACK_IMPORTED_MODULE_3__["default"],
   mutations: _mutations__WEBPACK_IMPORTED_MODULE_4__["default"]
-}); // Middleware example
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some(r => r.meta.requiresAuth) && !window.Auth.signedIn) {
-//         window.location = window.Urls.login
-//         return
-//     }
-//     next()
-// })
-
+});
 /* harmony default export */ __webpack_exports__["default"] = (store);
 
 /***/ }),
@@ -94195,6 +94313,9 @@ var mutations = {
   },
   setIngredients: function setIngredients(state, n) {
     state.ingredients = n;
+  },
+  addIngredient: function addIngredient(state, n) {
+    state.ingredients.push(n);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
