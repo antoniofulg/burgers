@@ -65,10 +65,6 @@ export default {
         return {
             email: '',
             password: '',
-            messages: {
-                title: 'Deu certo',
-                message: 'Agora vamos mandar as mensagens'
-            }
         }
     },
 

@@ -27,5 +27,17 @@ export default {
                 variant: 'warning'
             })
         }
-    }
+    },
+
+    mounted () {
+        if (this.toast) {
+            if (this.toast.type === 'success') {
+                this.successToast(this.toast.title, this.toast.message)
+            } else if (this.toast.type === 'warning') {
+                this.warningToast(this.toast.title, this.toast.message)
+            } else if (this.toast.type === 'danger') {
+                this.dangerToast(this.toast.title, this.toast.message)
+            }
+        }
+    },
 }

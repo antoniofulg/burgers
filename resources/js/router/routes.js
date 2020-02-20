@@ -4,6 +4,8 @@ import MasterBurguers from '../pages/master/Burguers'
 import MasterDashboard from '../pages/master/Dashboard'
 import MasterDrinks from '../pages/master/Drinks'
 import MasterIngredients from '../pages/master/Ingredients'
+import MasterAddIngredient from '../pages/master/AddIngredient'
+import MasterUpdateIngredient from '../pages/master/UpdateIngredient'
 import MasterOrders from '../pages/master/Orders'
 import MasterSideDishes from '../pages/master/SideDishes'
 import MasterUsers from '../pages/master/Users'
@@ -13,6 +15,7 @@ const routes = [
         path: '/',
         component: Login,
         name: 'index',
+        props: true,
         meta: {
             guest: true
         }
@@ -21,6 +24,7 @@ const routes = [
         path: '/login',
         component: Login,
         name: 'login',
+        props: true,
         meta: {
             guest: true
         }
@@ -74,7 +78,7 @@ const routes = [
         }
     },
     {
-        path: '/alimentos/bebidas',
+        path: '/bebidas',
         component: MasterDrinks,
         name: 'master.drinks',
         meta: {
@@ -82,7 +86,7 @@ const routes = [
         }
     },
     {
-        path: '/alimentos/hamburguers',
+        path: '/hamburguers',
         component: MasterBurguers,
         name: 'master.burguers',
         meta: {
@@ -90,9 +94,27 @@ const routes = [
         }
     },
     {
-        path: '/alimentos/ingredientes',
+        path: '/ingredientes',
         component: MasterIngredients,
         name: 'master.ingredients',
+        props: true,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/ingredientes/add',
+        component: MasterAddIngredient,
+        name: 'master.ingredients.add',
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/ingredientes/update/:id',
+        component: MasterUpdateIngredient,
+        name: 'master.ingredients.update',
+        props: true,
         meta: {
             admin: true
         }

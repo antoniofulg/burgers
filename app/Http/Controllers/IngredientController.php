@@ -56,8 +56,7 @@ class IngredientController extends Controller
 
         return response()->json([
             'concluded' => true,
-            'message' => 'Ingrediente cadastrado com sucesso!',
-            'ingredient' => $ingredient
+            'message' => 'Ingrediente cadastrado com sucesso!'
         ]);
     }
 
@@ -69,7 +68,19 @@ class IngredientController extends Controller
      */
     public function show($id)
     {
-        
+        $ingredient = Ingredient::find($id);
+
+        if ($ingredient) {
+            return response()->json([
+                'concluded' => true,
+                'ingredient' => $ingredient
+            ]);
+        }
+        return response()->json([
+            'concluded' => true,
+            'message' => 'Ingrediente não encontrado!'
+        ]);
+
     }
 
     /**
@@ -109,8 +120,7 @@ class IngredientController extends Controller
 
         return response()->json([
             'concluded' => true,
-            'message' => 'Ingrediente atualizado com sucesso!',
-            'ingredient' => $ingredient
+            'message' => 'Ingrediente atualizado com sucesso!'
         ]);
     }
 
