@@ -15,54 +15,53 @@
                         <a class="dropdown-item"><i class="fas fa-calendar-alt"></i> Adicionados recentemente</a>
                     </div>
                 </div>
-                <form @submit.prevent class="input-group col-md-6">
+                <form @submit.prevent class="input-group col-md-6 my-2 my-md-0">
                     <input type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
                     <div class="input-group-append">
                         <button class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                     </div>
                 </form>
                 <div class="col-md-3">
-                    <router-link tag="button" :to="{name: 'master.ingredients.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="fas fa-plus-circle"></i> Novo ingrediente</router-link>
+                    <router-link tag="button" :to="{name: 'master.ingredients.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="fas fa-plus-circle"></i> Novo</router-link>
                 </div> 
             </div>
             <hr>
-            <table class="shadow-sm table table-sm table-hover table-bordered">
-                <thead class="thead-dark">
-                    <tr class="d-flex">
-                        <!-- <th class="text-center col-1"></th> -->
-                        <th class="col-4">Nome</th>
-                        <th class="col-2">Tipo</th>
-                        <th class="col-2">Preço unitário</th>
-                        <th class="col-2">Estado</th>
-                        <th class="col-2">Cadastrado em</th>
-                    </tr>
-                </thead>
-                <tbody v-for="ingredient in ingredientsList" :key="ingredient.id">
-                    <tr class="d-flex">
-                        <!-- <th class="col-1 text-center" scope="row">
-                            <i v-if="true" class="far fa-square"></i>
-                            <i v-else class="fas fa-check-square"></i>
-                        </th> -->
-                        <td @click="editIngredient(ingredient)" class="col-4">{{ingredient.name}}</td>
-                        <td @click="editIngredient(ingredient)" class="col-2">{{typeName(ingredient.type)}}</td>
-                        <td @click="editIngredient(ingredient)" class="col-2">{{priceName(ingredient.price)}}</td>
-                        <td class="col-2"><button
-                            :class="{
-                                'btn-success': ingredient.status === 'avaliable',
-                                'btn-warning': ingredient.status === 'unavaliable',
-                                'btn-danger': ingredient.status === 'desactivated'
-                            }" class="btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{statusName(ingredient.status)}}
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a @click="updateStatus(ingredient, 'avaliable')" v-if="ingredient.status != 'avaliable'" class="dropdown-item"><i class="fas fa-check-circle"></i> Disponível</a>
-                            <a @click="updateStatus(ingredient, 'unavaliable')" v-if="ingredient.status != 'unavaliable'" class="dropdown-item"><i class="fas fa-hourglass-half"></i> Indisponível</a>
-                            <a @click="updateStatus(ingredient, 'desactivated')" v-if="ingredient.status != 'desactivated'" class="dropdown-item"><i class="fas fa-ban"></i> Desativado</a>
-                        </div></td>
-                        <td @click="editIngredient(ingredient)" class="col-2">{{ingredient.creation_date}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-bordered shadow-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Preço unitário</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Cadastrado em</th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="ingredient in ingredientsList" :key="ingredient.id">
+                        <tr>
+                            <th class="align-middle" @click="editIngredient(ingredient)" scope="row">{{ingredient.name}}</th>
+                            <td class="align-middle" @click="editIngredient(ingredient)">{{categoryName(ingredient.category)}}</td>
+                            <td class="align-middle" @click="editIngredient(ingredient)">{{priceName(ingredient.price)}}</td>
+                            <td class="align-middle">
+                                <button
+                                    :class="{
+                                        'btn-success': ingredient.status === 'avaliable',
+                                        'btn-warning': ingredient.status === 'unavaliable',
+                                        'btn-danger': ingredient.status === 'desactivated'
+                                    }" class="btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{statusName(ingredient.status)}}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a @click="updateStatus(ingredient, 'avaliable')" v-if="ingredient.status != 'avaliable'" class="dropdown-item"><i class="fas fa-check-circle"></i> Disponível</a>
+                                    <a @click="updateStatus(ingredient, 'unavaliable')" v-if="ingredient.status != 'unavaliable'" class="dropdown-item"><i class="fas fa-hourglass-half"></i> Indisponível</a>
+                                    <a @click="updateStatus(ingredient, 'desactivated')" v-if="ingredient.status != 'desactivated'" class="dropdown-item"><i class="fas fa-ban"></i> Desativado</a>
+                                </div>
+                            </td>
+                            <td class="align-middle" @click="editIngredient(ingredient)">{{ingredient.creation_date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </admin-template>
 </template>
@@ -95,7 +94,7 @@ export default {
         return {
             new_ingredient: {
                 name: '',
-                type: '',
+                category: '',
                 price: '',
                 status: ''
             }
@@ -148,16 +147,16 @@ export default {
             return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
         },
 
-        typeName(type) {
-            if (type ===  'bread') {
+        categoryName(category) {
+            if (category ===  'bread') {
                 return 'Pão'
-            } else if (type === 'blend') {
+            } else if (category === 'blend') {
                 return 'Carne'
-            } else if (type === 'cheese') {
+            } else if (category === 'cheese') {
                 return 'Queijo'
-            } else if (type === 'salad') {
+            } else if (category === 'salad') {
                 return 'Salada'
-            } else if (type === 'side_dishes') {
+            } else if (category === 'side_dishes') {
                 return 'Acompanhamento'
             }
         },
@@ -165,7 +164,7 @@ export default {
         updateStatus(ingredient, status) {
             axios.put(`${this.endpoint}/${ingredient.id}`, {
                 name: ingredient.name,
-                type: ingredient.type,
+                category: ingredient.category,
                 price: ingredient.price,
                 status: status,
             }, {

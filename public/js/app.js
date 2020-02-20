@@ -2455,6 +2455,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2470,9 +2472,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       name: '',
-      type: 'side_dishes',
+      category: '',
       price: 0,
-      status: 'avaliable'
+      status: ''
     };
   },
   methods: {
@@ -2482,7 +2484,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$v.$invalid) {
         axios.post("".concat(this.endpoint), {
           name: this.name,
-          type: this.type,
+          category: this.category,
           price: this.price,
           status: this.status
         }, {
@@ -2520,7 +2522,7 @@ __webpack_require__.r(__webpack_exports__);
     name: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
-    type: {
+    category: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
     },
     price: {
@@ -2739,7 +2741,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2762,7 +2763,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       new_ingredient: {
         name: '',
-        type: '',
+        category: '',
         price: '',
         status: ''
       }
@@ -2811,16 +2812,16 @@ __webpack_require__.r(__webpack_exports__);
     statusName: function statusName(status) {
       return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado";
     },
-    typeName: function typeName(type) {
-      if (type === 'bread') {
+    categoryName: function categoryName(category) {
+      if (category === 'bread') {
         return 'Pão';
-      } else if (type === 'blend') {
+      } else if (category === 'blend') {
         return 'Carne';
-      } else if (type === 'cheese') {
+      } else if (category === 'cheese') {
         return 'Queijo';
-      } else if (type === 'salad') {
+      } else if (category === 'salad') {
         return 'Salada';
-      } else if (type === 'side_dishes') {
+      } else if (category === 'side_dishes') {
         return 'Acompanhamento';
       }
     },
@@ -2829,7 +2830,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.put("".concat(this.endpoint, "/").concat(ingredient.id), {
         name: ingredient.name,
-        type: ingredient.type,
+        category: ingredient.category,
         price: ingredient.price,
         status: status
       }, {
@@ -74087,7 +74088,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group col-sm-12 col-md-4" }, [
-              _c("label", { attrs: { for: "type" } }, [_vm._v("Tipo")]),
+              _c("label", { attrs: { for: "type" } }, [_vm._v("Categoria")]),
               _vm._v(" "),
               _c(
                 "select",
@@ -74130,9 +74131,15 @@ var render = function() {
                     { ref: "invalid_type", staticClass: "invalid-feedback" },
                     [
                       _vm._v(
-                        "\n                        Por favor, selecione o tipo do ingrediente.\n                    "
+                        "\n                        Por favor, selecione a categoria do ingrediente.\n                    "
                       )
                     ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "option",
+                    { attrs: { disabled: "", value: "", selected: "" } },
+                    [_vm._v("Selecione uma categoria")]
                   ),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "side_dishes" } }, [
@@ -74258,9 +74265,13 @@ var render = function() {
                 [
                   _c(
                     "option",
-                    { attrs: { value: "avaliable", selected: "" } },
-                    [_vm._v("Disponível")]
+                    { attrs: { disabled: "", value: "", selected: "" } },
+                    [_vm._v("Selecione um estado")]
                   ),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "avaliable" } }, [
+                    _vm._v("Disponível")
+                  ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "unavaliable" } }, [
                     _vm._v("Indisponível")
@@ -74608,7 +74619,7 @@ var render = function() {
         _c(
           "form",
           {
-            staticClass: "input-group col-md-6",
+            staticClass: "input-group col-md-6 my-2 my-md-0",
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -74644,10 +74655,7 @@ var render = function() {
                 staticClass: "btn shadow-sm btn-primary btn-block rounded-pill",
                 attrs: { tag: "button", to: { name: "master.ingredients.add" } }
               },
-              [
-                _c("i", { staticClass: "fas fa-plus-circle" }),
-                _vm._v(" Novo ingrediente")
-              ]
+              [_c("i", { staticClass: "fas fa-plus-circle" }), _vm._v(" Novo")]
             )
           ],
           1
@@ -74656,100 +74664,100 @@ var render = function() {
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
-      _c(
-        "table",
-        { staticClass: "shadow-sm table table-sm table-hover table-bordered" },
-        [
-          _c("thead", { staticClass: "thead-dark" }, [
-            _c("tr", { staticClass: "d-flex" }, [
-              _c("th", { staticClass: "col-4" }, [_vm._v("Nome")]),
-              _vm._v(" "),
-              _c("th", { staticClass: "col-2" }, [_vm._v("Tipo")]),
-              _vm._v(" "),
-              _c("th", { staticClass: "col-2" }, [_vm._v("Preço unitário")]),
-              _vm._v(" "),
-              _c("th", { staticClass: "col-2" }, [_vm._v("Estado")]),
-              _vm._v(" "),
-              _c("th", { staticClass: "col-2" }, [_vm._v("Cadastrado em")])
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._l(_vm.ingredientsList, function(ingredient) {
-            return _c("tbody", { key: ingredient.id }, [
-              _c("tr", { staticClass: "d-flex" }, [
-                _c(
-                  "td",
-                  {
-                    staticClass: "col-4",
-                    on: {
-                      click: function($event) {
-                        return _vm.editIngredient(ingredient)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(ingredient.name))]
-                ),
+      _c("div", { staticClass: "table-responsive" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table table-sm table-hover table-bordered shadow-sm"
+          },
+          [
+            _c("thead", { staticClass: "thead-dark" }, [
+              _c("tr", [
+                _c("th", { attrs: { scope: "col" } }, [_vm._v("Nome")]),
                 _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "col-2",
-                    on: {
-                      click: function($event) {
-                        return _vm.editIngredient(ingredient)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.typeName(ingredient.type)))]
-                ),
+                _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
                 _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "col-2",
-                    on: {
-                      click: function($event) {
-                        return _vm.editIngredient(ingredient)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.priceName(ingredient.price)))]
-                ),
+                _c("th", { attrs: { scope: "col" } }, [
+                  _vm._v("Preço unitário")
+                ]),
                 _vm._v(" "),
-                _c("td", { staticClass: "col-2" }, [
+                _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
+                _vm._v(" "),
+                _c("th", { attrs: { scope: "col" } }, [_vm._v("Cadastrado em")])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.ingredientsList, function(ingredient) {
+              return _c("tbody", { key: ingredient.id }, [
+                _c("tr", [
                   _c(
-                    "button",
+                    "th",
                     {
-                      staticClass:
-                        "btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle",
-                      class: {
-                        "btn-success": ingredient.status === "avaliable",
-                        "btn-warning": ingredient.status === "unavaliable",
-                        "btn-danger": ingredient.status === "desactivated"
-                      },
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "dropdown",
-                        "aria-haspopup": "true",
-                        "aria-expanded": "false"
+                      staticClass: "align-middle",
+                      attrs: { scope: "row" },
+                      on: {
+                        click: function($event) {
+                          return _vm.editIngredient(ingredient)
+                        }
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.statusName(ingredient.status)) +
-                          "\n                    "
-                      )
-                    ]
+                    [_vm._v(_vm._s(ingredient.name))]
                   ),
                   _vm._v(" "),
                   _c(
-                    "div",
+                    "td",
                     {
-                      staticClass: "dropdown-menu",
-                      attrs: { "aria-labelledby": "dropdownMenuButton" }
+                      staticClass: "align-middle",
+                      on: {
+                        click: function($event) {
+                          return _vm.editIngredient(ingredient)
+                        }
+                      }
                     },
-                    [
+                    [_vm._v(_vm._s(_vm.categoryName(ingredient.category)))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "align-middle",
+                      on: {
+                        click: function($event) {
+                          return _vm.editIngredient(ingredient)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.priceName(ingredient.price)))]
+                  ),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "align-middle" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle",
+                        class: {
+                          "btn-success": ingredient.status === "avaliable",
+                          "btn-warning": ingredient.status === "unavaliable",
+                          "btn-danger": ingredient.status === "desactivated"
+                        },
+                        attrs: {
+                          type: "button",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.statusName(ingredient.status)) +
+                            "\n                            "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "dropdown-menu" }, [
                       ingredient.status != "avaliable"
                         ? _c(
                             "a",
@@ -74812,28 +74820,28 @@ var render = function() {
                             ]
                           )
                         : _vm._e()
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "col-2",
-                    on: {
-                      click: function($event) {
-                        return _vm.editIngredient(ingredient)
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "align-middle",
+                      on: {
+                        click: function($event) {
+                          return _vm.editIngredient(ingredient)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v(_vm._s(ingredient.creation_date))]
-                )
+                    },
+                    [_vm._v(_vm._s(ingredient.creation_date))]
+                  )
+                ])
               ])
-            ])
-          })
-        ],
-        2
-      )
+            })
+          ],
+          2
+        )
+      ])
     ])
   ])
 }

@@ -17,15 +17,16 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-4">
-                        <label for="type">Tipo</label>
+                        <label for="type">Categoria</label>
                         <select
                             @input="$v.type.$touch()"
                             :class="{ 'is-invalid': $v.type.$dirty && $v.type.$invalid}"
                             v-model="type"
                         class="custom-select shadow-sm" id="type">
                         <div ref="invalid_type" class="invalid-feedback">
-                            Por favor, selecione o tipo do ingrediente.
+                            Por favor, selecione a categoria do ingrediente.
                         </div>
+                            <option disabled value="" selected>Selecione uma categoria</option>
                             <option value="side_dishes">Acompanhamento</option>
                             <option value="blend">Carne</option>
                             <option value="bread">Pão</option>
@@ -59,7 +60,8 @@
                             @input="$v.status.$touch()"
                             :class="{ 'is-invalid': $v.status.$dirty && $v.status.$invalid}"
                         id="inputState" class="form-control shadow-sm">
-                            <option value="avaliable" selected>Disponível</option>
+                            <option disabled value="" selected>Selecione um estado</option>
+                            <option value="avaliable">Disponível</option>
                             <option value="unavaliable">Indisponível</option>
                             <option value="desactivated">Desativado</option>
                         </select>
@@ -101,9 +103,9 @@ export default {
     data () {
         return {
             name: '',
-            type: 'side_dishes',
+            category: '',
             price: 0,
-            status: 'avaliable'
+            status: ''
         }
     },
 
@@ -112,7 +114,7 @@ export default {
             if (!this.$v.$invalid) {
                 axios.post(`${this.endpoint}`, {
                     name: this.name,
-                    type: this.type,
+                    category: this.category,
                     price: this.price,
                     status: this.status,
                 }, {
@@ -151,7 +153,7 @@ export default {
         name: {
             required
         },
-        type: {
+        category: {
             required
         },
         price: {

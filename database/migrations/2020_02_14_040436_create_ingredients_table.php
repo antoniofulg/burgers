@@ -17,7 +17,7 @@ class CreateIngredientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->enum('status', ['avaliable', 'unavaliable', 'desactivated']); //Status do ingrediente, se está disponível / indisponível / ou se não deve aparecer no cardápio;
-            $table->enum('type', ['bread', 'blend', 'cheese', 'salad', 'side_dishes']); // Tipo do ingrediente: [pão, carne, queijo, salada, acompanhamento]
+            $table->enum('category', ['bread', 'blend', 'cheese', 'salad', 'side_dishes']); // Tipo do ingrediente: [pão, carne, queijo, salada, acompanhamento]
             $table->double('price', 8, 2);
             $table->timestamps();
             $table->softDeletes();

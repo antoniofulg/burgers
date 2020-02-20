@@ -14,7 +14,7 @@ class Ingredient extends Model
     ];
 
     protected $fillable = [
-        'type', 'status', 'price', 'name'
+        'category', 'status', 'price', 'name'
     ];
 
     protected $hidden = [
