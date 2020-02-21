@@ -76,7 +76,7 @@
                         <button @click="insertIngredient" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-plus-circle"></i> Cadastrar</button>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <router-link tag="button" :to="{name: 'master.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</router-link>
+                        <router-link tag="button" :to="{name: 'admin.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</router-link>
                     </div>
                 </div>
             </form>
@@ -126,7 +126,7 @@ export default {
                     if (response.data.concluded) {
                         console.log(response.data)
                         this.$router.push({
-                            name: 'master.ingredients',
+                            name: 'admin.ingredients',
                             params: {
                                 toast: {
                                     type: 'success',

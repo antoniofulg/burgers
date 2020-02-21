@@ -1,17 +1,4 @@
 export default {
-    data () {
-        return {
-            getRequest: {
-                setItems: 'setIngredients',
-                errorMessage: 'Não foi possível obter os ingredientes'
-            },
-
-            editRequest: {
-                name: 'admin.ingredients.update'
-            }
-        }
-    },
-
     computed: {
         endpoint () {},
 
@@ -22,6 +9,22 @@ export default {
                     "Accept": "application/json"
                 }
             }
+        },
+
+        itemsList () {}
+    },
+
+    created () {
+        this.getItems()
+    },
+
+    data () {
+        return {
+            getRequest: {},
+
+            editRequest: {},
+
+            deleteTarget: {},
         }
     },
 
@@ -65,14 +68,7 @@ export default {
             })
         },
 
-        payload (item, status) {
-            return {
-                name: item.name,
-                category: item.category,
-                price: item.price,
-                status: status,
-            }
-        },
+        payload (item, status) {},
 
         priceName(price) {
             return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {

@@ -39,7 +39,6 @@ export default {
     },
 
     mounted () {
-        console.log('mounted')
         if (this.toast) {
             if (this.toast.type === 'success') {
                 this.successToast(this.toast.title, this.toast.message)

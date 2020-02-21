@@ -28,7 +28,7 @@
                     small
                     striped
                     head-variant="dark"
-                    :items="ingredientsList"
+                    :items="itemsList"
                 :fields="table.fields">
                     <template v-slot:cell(status)="status">
                          <button
@@ -47,7 +47,7 @@
                     </template>
                     <template v-slot:cell(actions)="row">
                         <div class="d-flex justify-content-center">
-                            <button @click="editIngredient(row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
+                            <button @click="editItem(row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
                                 <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="mr-1 fas fa-pencil-alt"></i> Editar</span>                            
                                 <span class="d-block d-sm-block d-md-block d-lg-none"><i class="mr-1 fas fa-pencil-alt"></i></span>                            
                             </button>
@@ -69,7 +69,7 @@
                     <span class="d-block"><strong>Preço: </strong> {{priceName(deleteTarget.price)}}</span>
                 </template>
                 <template v-slot:action>
-                    <button @click="deleteIngredient(deleteTarget)" type="button" class="btn btn-danger" data-dismiss="modal"><i class="mr-1 fas fa-trash"></i> Confirmar exclusão</button>
+                    <button @click="deleteItem(deleteTarget)" type="button" class="btn btn-danger" data-dismiss="modal"><i class="mr-1 fas fa-trash"></i> Confirmar exclusão</button>
                 </template>
             </modal>
             <modal id="help" title="Ingredientes">
@@ -113,6 +113,7 @@ import { required } from "vuelidate/lib/validators"
 import AdminTemplate from '../../layouts/AdminTemplate'
 import Modal from '../../components/Modal'
 import Toast from "../../mixins/toasts"
+import Requests from "../../mixins/indexRequests"
 
 export default {
     components: {
@@ -125,17 +126,24 @@ export default {
             return `/api/ingredients`
         },
 
-        ingredientsList() {
+        itemsList() {
             return this.$store.getters.getIngredients
         }
     },
 
-    created() {
-        this.getIngredients()
-    },
-
     data () {
         return {
+            editRequest: {
+                name: 'admin.ingredients.update'
+            },
+            
+            filter: null,
+
+            getRequest: {
+                setItems: 'setIngredients',
+                errorMessage: 'Não foi possível obter os ingredientes!'
+            },
+
             table: {
                 fields: [
                     {
@@ -171,8 +179,6 @@ export default {
                     }
                 ],
             },
-            deleteTarget: {},
-            filter: null
         }
     },
 
@@ -191,91 +197,17 @@ export default {
             }
         },
 
-        deleteIngredient(ingredient) {
-            axios.delete(`${this.endpoint}/${ingredient.id}`, {
-                "headers": {
-                    "authorization": `Bearer ${this.$store.getters.getToken}`,
-                    "Accept": "application/json"
-                }
-            }).then(response => {
-                if (response.data.concluded) {
-                    this.successToast('Ação concluída!', response.data.message)
-                    this.getIngredients()
-                    this.deleteTarget = {}
-                } else {
-                    this.warningToast('Ação não concluída!', response.data.message)
-                }
-            }).catch(e => {
-                console.log(e)
-            })
-        },
-
-        editIngredient(ingredient) {
-            this.$router.push({
-                name: 'admin.ingredients.update',
-                params: {
-                    id: ingredient.id,
-                    ingredient
-                }
-            })
-        },
-
-        getIngredients() {
-            axios.get(`${this.endpoint}`, {
-                "headers": {
-                    "authorization": `Bearer ${this.$store.getters.getToken}`,
-                    "Accept": "application/json"
-                }
-            }).then(response => {
-                if (response.data.concluded) {
-                    console.log('request')
-                    console.log(response.data)
-                    this.$store.commit('setIngredients', response.data.ingredients)
-                } else {
-                    this.warningToast('Ação não concluída!', 'Não foi possível obter os ingredientes!')
-                }
-            }).catch(e => {
-                console.log(e)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            })
-        },
-
-        priceName(price) {
-            return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })}` : 'Grátis'
-        },
-       
-        statusName(status) {
-            return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
-        },
-
-        updateStatus(ingredient, status) {
-            axios.put(`${this.endpoint}/${ingredient.id}`, {
-                name: ingredient.name,
-                category: ingredient.category,
-                price: ingredient.price,
+        payload (item, status) {
+            return {
+                name: item.name,
+                category: item.category,
+                price: item.price,
                 status: status,
-            }, {
-                "headers": {
-                    "authorization": `Bearer ${this.$store.getters.getToken}`,
-                    "Accept": "application/json"
-                }
-            }).then(response => {
-                if (response.data.concluded) {
-                    this.successToast('Ação concluída!', response.data.message)
-                    this.getIngredients()
-                } else {
-                    this.warningToast('Ação não concluída!', response.data.message)
-                }
-            }).catch(e => {
-                console.log(e)
-            })
-        }
+            }
+        },
     },
 
-    mixins: [Toast]
+    mixins: [Toast, Requests],
 }
 </script>
 

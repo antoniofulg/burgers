@@ -2264,7 +2264,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(response.data);
 
             _this.$router.push({
-              name: 'master.ingredients',
+              name: 'admin.ingredients',
               params: {
                 toast: {
                   type: 'success',
@@ -2441,6 +2441,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../layouts/AdminTemplate */ "./resources/js/layouts/AdminTemplate.vue");
 /* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Modal */ "./resources/js/components/Modal.vue");
 /* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
+/* harmony import */ var _mixins_indexRequests__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/indexRequests */ "./resources/js/mixins/indexRequests.js");
 //
 //
 //
@@ -2551,6 +2552,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2564,17 +2566,22 @@ __webpack_require__.r(__webpack_exports__);
     endpoint: function endpoint() {
       return "/api/ingredients";
     },
-    ingredientsList: function ingredientsList() {
+    itemsList: function itemsList() {
       return this.$store.getters.getIngredients;
     }
-  },
-  created: function created() {
-    this.getIngredients();
   },
   data: function data() {
     var _this = this;
 
     return {
+      editRequest: {
+        name: 'admin.ingredients.update'
+      },
+      filter: null,
+      getRequest: {
+        setItems: 'setIngredients',
+        errorMessage: 'Não foi possível obter os ingredientes!'
+      },
       table: {
         fields: [{
           key: 'name',
@@ -2603,9 +2610,7 @@ __webpack_require__.r(__webpack_exports__);
           key: 'actions',
           label: 'Ações'
         }]
-      },
-      deleteTarget: {},
-      filter: null
+      }
     };
   },
   methods: {
@@ -2622,96 +2627,16 @@ __webpack_require__.r(__webpack_exports__);
         return 'Acompanhamento';
       }
     },
-    deleteIngredient: function deleteIngredient(ingredient) {
-      var _this2 = this;
-
-      axios["delete"]("".concat(this.endpoint, "/").concat(ingredient.id), {
-        "headers": {
-          "authorization": "Bearer ".concat(this.$store.getters.getToken),
-          "Accept": "application/json"
-        }
-      }).then(function (response) {
-        if (response.data.concluded) {
-          _this2.successToast('Ação concluída!', response.data.message);
-
-          _this2.getIngredients();
-
-          _this2.deleteTarget = {};
-        } else {
-          _this2.warningToast('Ação não concluída!', response.data.message);
-        }
-      })["catch"](function (e) {
-        console.log(e);
-      });
-    },
-    editIngredient: function editIngredient(ingredient) {
-      this.$router.push({
-        name: 'admin.ingredients.update',
-        params: {
-          id: ingredient.id,
-          ingredient: ingredient
-        }
-      });
-    },
-    getIngredients: function getIngredients() {
-      var _this3 = this;
-
-      axios.get("".concat(this.endpoint), {
-        "headers": {
-          "authorization": "Bearer ".concat(this.$store.getters.getToken),
-          "Accept": "application/json"
-        }
-      }).then(function (response) {
-        if (response.data.concluded) {
-          console.log('request');
-          console.log(response.data);
-
-          _this3.$store.commit('setIngredients', response.data.ingredients);
-        } else {
-          _this3.warningToast('Ação não concluída!', 'Não foi possível obter os ingredientes!');
-        }
-      })["catch"](function (e) {
-        console.log(e);
-
-        _this3.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
-      });
-    },
-    priceName: function priceName(price) {
-      return price > 0 ? "R$ ".concat(price.toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })) : 'Grátis';
-    },
-    statusName: function statusName(status) {
-      return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado";
-    },
-    updateStatus: function updateStatus(ingredient, status) {
-      var _this4 = this;
-
-      axios.put("".concat(this.endpoint, "/").concat(ingredient.id), {
-        name: ingredient.name,
-        category: ingredient.category,
-        price: ingredient.price,
+    payload: function payload(item, status) {
+      return {
+        name: item.name,
+        category: item.category,
+        price: item.price,
         status: status
-      }, {
-        "headers": {
-          "authorization": "Bearer ".concat(this.$store.getters.getToken),
-          "Accept": "application/json"
-        }
-      }).then(function (response) {
-        if (response.data.concluded) {
-          _this4.successToast('Ação concluída!', response.data.message);
-
-          _this4.getIngredients();
-        } else {
-          _this4.warningToast('Ação não concluída!', response.data.message);
-        }
-      })["catch"](function (e) {
-        console.log(e);
-      });
+      };
     }
   },
-  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_3__["default"]]
+  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_indexRequests__WEBPACK_IMPORTED_MODULE_4__["default"]]
 });
 
 /***/ }),
@@ -2950,7 +2875,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(response.data);
 
             _this2.$router.push({
-              name: 'master.ingredients',
+              name: 'admin.ingredients',
               params: {
                 toast: {
                   type: 'success',
@@ -74097,7 +74022,7 @@ var render = function() {
                   {
                     staticClass:
                       "btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm",
-                    attrs: { tag: "button", to: { name: "master.ingredients" } }
+                    attrs: { tag: "button", to: { name: "admin.ingredients" } }
                   },
                   [
                     _c("i", { staticClass: "mr-1 fas fa-undo-alt" }),
@@ -74436,7 +74361,7 @@ var render = function() {
                 small: "",
                 striped: "",
                 "head-variant": "dark",
-                items: _vm.ingredientsList,
+                items: _vm.itemsList,
                 fields: _vm.table.fields
               },
               scopedSlots: _vm._u([
@@ -74556,7 +74481,7 @@ var render = function() {
                                 "btn btn-primary btn-sm rounded-pill shadow-sm",
                               on: {
                                 click: function($event) {
-                                  return _vm.editIngredient(row.item)
+                                  return _vm.editItem(row.item)
                                 }
                               }
                             },
@@ -74688,7 +74613,7 @@ var render = function() {
                       attrs: { type: "button", "data-dismiss": "modal" },
                       on: {
                         click: function($event) {
-                          return _vm.deleteIngredient(_vm.deleteTarget)
+                          return _vm.deleteItem(_vm.deleteTarget)
                         }
                       }
                     },
@@ -75210,7 +75135,7 @@ var render = function() {
                   {
                     staticClass:
                       "btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm",
-                    attrs: { tag: "button", to: { name: "master.ingredients" } }
+                    attrs: { tag: "button", to: { name: "admin.ingredients" } }
                   },
                   [
                     _c("i", { staticClass: "mr-1 fas fa-undo-alt" }),
@@ -94415,6 +94340,110 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/mixins/indexRequests.js":
+/*!**********************************************!*\
+  !*** ./resources/js/mixins/indexRequests.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    endpoint: function endpoint() {},
+    headers: function headers() {
+      return {
+        "headers": {
+          "authorization": "Bearer ".concat(this.$store.getters.getToken),
+          "Accept": "application/json"
+        }
+      };
+    },
+    itemsList: function itemsList() {}
+  },
+  created: function created() {
+    this.getItems();
+  },
+  data: function data() {
+    return {
+      getRequest: {},
+      editRequest: {},
+      deleteTarget: {}
+    };
+  },
+  methods: {
+    deleteItem: function deleteItem(item) {
+      var _this = this;
+
+      axios["delete"]("".concat(this.endpoint, "/").concat(item.id), this.headers).then(function (response) {
+        if (response.data.concluded) {
+          _this.successToast('Ação concluída!', response.data.message);
+
+          _this.getItems();
+
+          _this.deleteTarget = {};
+        } else {
+          _this.warningToast('Ação não concluída!', response.data.message);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    editItem: function editItem(item) {
+      this.$router.push({
+        name: this.editRequest.name,
+        params: {
+          id: item.id,
+          item: item
+        }
+      });
+    },
+    getItems: function getItems() {
+      var _this2 = this;
+
+      axios.get("".concat(this.endpoint), this.headers).then(function (response) {
+        if (response.data.concluded) {
+          _this2.$store.commit(_this2.getRequest.setItems, response.data.items);
+        } else {
+          _this2.warningToast('Ação não concluída!', _this2.getRequest.errorMessage);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+
+        _this2.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
+      });
+    },
+    payload: function payload(item, status) {},
+    priceName: function priceName(price) {
+      return price > 0 ? "R$ ".concat(price.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })) : 'Grátis';
+    },
+    statusName: function statusName(status) {
+      return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado";
+    },
+    updateStatus: function updateStatus(item, status) {
+      var _this3 = this;
+
+      axios.put("".concat(this.endpoint, "/").concat(item.id), this.payload(item, status), this.headers).then(function (response) {
+        if (response.data.concluded) {
+          _this3.successToast('Ação concluída!', response.data.message);
+
+          _this3.getItems();
+        } else {
+          _this3.warningToast('Ação não concluída!', response.data.message);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/mixins/toasts.js":
 /*!***************************************!*\
   !*** ./resources/js/mixins/toasts.js ***!
@@ -94464,8 +94493,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    console.log('mounted');
-
     if (this.toast) {
       if (this.toast.type === 'success') {
         this.successToast(this.toast.title, this.toast.message);
