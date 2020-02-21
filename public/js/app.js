@@ -2138,6 +2138,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../layouts/AdminTemplate */ "./resources/js/layouts/AdminTemplate.vue");
 /* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
+/* harmony import */ var _mixins_storeRequests__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/storeRequests */ "./resources/js/mixins/storeRequests.js");
 //
 //
 //
@@ -2224,6 +2225,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2241,50 +2243,23 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       category: '',
       price: 0,
-      status: ''
+      status: '',
+      storeRequest: {
+        name: 'admin.ingredients'
+      }
     };
   },
   methods: {
-    insertIngredient: function insertIngredient() {
-      var _this = this;
-
-      if (!this.$v.$invalid) {
-        axios.post("".concat(this.endpoint), {
-          name: this.name,
-          category: this.category,
-          price: this.price,
-          status: this.status
-        }, {
-          "headers": {
-            "authorization": "Bearer ".concat(this.$store.getters.getToken),
-            "Accept": "application/json"
-          }
-        }).then(function (response) {
-          if (response.data.concluded) {
-            console.log(response.data);
-
-            _this.$router.push({
-              name: 'admin.ingredients',
-              params: {
-                toast: {
-                  type: 'success',
-                  title: 'Ação concluída!',
-                  message: response.data.message
-                }
-              }
-            });
-          } else {
-            _this.warningToast('Ação não concluída!', response.data.message);
-          }
-        })["catch"](function (e) {
-          console.log(e);
-        });
-      } else {
-        this.$v.$touch();
-      }
+    payload: function payload() {
+      return {
+        name: this.name,
+        category: this.category,
+        price: this.price,
+        status: this.status
+      };
     }
   },
-  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"], _mixins_storeRequests__WEBPACK_IMPORTED_MODULE_3__["default"]],
   validations: {
     name: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
@@ -73948,7 +73923,7 @@ var render = function() {
                     staticClass:
                       "btn shadow-sm btn-success mt-auto rounded-pill shadow-sm",
                     attrs: { disabled: _vm.$v.$invalid },
-                    on: { click: _vm.insertIngredient }
+                    on: { click: _vm.insertItem }
                   },
                   [
                     _c("i", { staticClass: "mr-1 fas fa-plus-circle" }),
@@ -94388,6 +94363,67 @@ __webpack_require__.r(__webpack_exports__);
         _this3.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
       });
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/storeRequests.js":
+/*!**********************************************!*\
+  !*** ./resources/js/mixins/storeRequests.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    endpoint: function endpoint() {},
+    headers: function headers() {
+      return {
+        "headers": {
+          "authorization": "Bearer ".concat(this.$store.getters.getToken),
+          "Accept": "application/json"
+        }
+      };
+    }
+  },
+  data: function data() {
+    return {
+      storeRequest: {}
+    };
+  },
+  methods: {
+    insertItem: function insertItem() {
+      var _this = this;
+
+      if (!this.$v.$invalid) {
+        axios.post("".concat(this.endpoint), this.payload(), this.headers).then(function (response) {
+          if (response.data.concluded) {
+            _this.$router.push({
+              name: _this.storeRequest.name,
+              params: {
+                toast: {
+                  type: 'success',
+                  title: 'Ação concluída!',
+                  message: response.data.message
+                }
+              }
+            });
+          } else {
+            _this.warningToast('Ação não concluída!', response.data.message);
+          }
+        })["catch"](function (e) {
+          console.log(e);
+
+          _this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
+        });
+      } else {
+        this.$v.$touch();
+      }
+    },
+    payload: function payload() {}
   }
 });
 

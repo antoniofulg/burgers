@@ -73,7 +73,7 @@
                 <hr>
                 <div class="d-flex flex-row-reverse">
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <button @click="insertIngredient" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-plus-circle"></i> Cadastrar</button>
+                        <button @click="insertItem" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-plus-circle"></i> Cadastrar</button>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
                         <router-link tag="button" :to="{name: 'admin.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</router-link>
@@ -88,6 +88,7 @@
 import { required, decimal } from "vuelidate/lib/validators"
 import AdminTemplate from '../../layouts/AdminTemplate'
 import Toast from "../../mixins/toasts"
+import Requests from "../../mixins/storeRequests"
 
 export default {
     components: {
@@ -105,49 +106,25 @@ export default {
             name: '',
             category: '',
             price: 0,
-            status: ''
+            status: '',
+            storeRequest: {
+                name: 'admin.ingredients'
+            }
         }
     },
 
     methods: {
-        insertIngredient() {
-            if (!this.$v.$invalid) {
-                axios.post(`${this.endpoint}`, {
-                    name: this.name,
-                    category: this.category,
-                    price: this.price,
-                    status: this.status,
-                }, {
-                    "headers": {
-                        "authorization": `Bearer ${this.$store.getters.getToken}`,
-                        "Accept": "application/json"
-                    }
-                }).then(response => {
-                    if (response.data.concluded) {
-                        console.log(response.data)
-                        this.$router.push({
-                            name: 'admin.ingredients',
-                            params: {
-                                toast: {
-                                    type: 'success',
-                                    title: 'Ação concluída!',
-                                    message: response.data.message
-                                }
-                            }
-                        })
-                    } else {
-                        this.warningToast('Ação não concluída!', response.data.message)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                })
-            } else {
-                this.$v.$touch()
+        payload() {
+            return {
+                name: this.name,
+                category: this.category,
+                price: this.price,
+                status: this.status,
             }
-        },
+        }
     },
 
-    mixins: [Toast],
+    mixins: [Toast, Requests],
 
     validations: {
         name: {
