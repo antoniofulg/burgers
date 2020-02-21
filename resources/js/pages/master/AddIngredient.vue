@@ -1,7 +1,7 @@
 <template>
     <admin-template>
         <div class="container mt-5">
-            <h1>Adicionar novo ingrediente <span><i class="fas fa-question-circle text-info pointer"></i></span></h1>
+            <h1>Adicionar novo ingrediente</h1>
             <hr>
             <form @submit.prevent>
                 <div class="form-row">
@@ -11,19 +11,19 @@
                             @input="$v.name.$touch()"
                             :class="{ 'is-invalid': $v.name.$dirty && $v.name.$invalid}"
                             v-model="name"
-                        type="text" class="form-control shadow-sm" id="name">
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi, 100g" id="name">
                         <div ref="invalid_name" class="invalid-feedback">
                             Por favor, insira um nome para o ingrediente.
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-4">
-                        <label for="type">Categoria</label>
+                        <label for="category">Categoria</label>
                         <select
-                            @input="$v.type.$touch()"
-                            :class="{ 'is-invalid': $v.type.$dirty && $v.type.$invalid}"
-                            v-model="type"
-                        class="custom-select shadow-sm" id="type">
-                        <div ref="invalid_type" class="invalid-feedback">
+                            @input="$v.category.$touch()"
+                            :class="{ 'is-invalid': $v.category.$dirty && $v.category.$invalid}"
+                            v-model="category"
+                        class="custom-select shadow-sm" id="category">
+                        <div ref="invalid_category" class="invalid-feedback">
                             Por favor, selecione a categoria do ingrediente.
                         </div>
                             <option disabled value="" selected>Selecione uma categoria</option>
@@ -37,16 +37,16 @@
                 </div>
                 <div class="form-row">
                     <div class="input-group col-md-4">
-                        <label for="inputCity">Preço unitário</label>
+                        <label for="inputPrice">Preço unitário</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                <span class="input-group-text">R$</span>
                             </div>
                             <input
                                 @input="$v.price.$touch()"
                                 :class="{ 'is-invalid': $v.price.$dirty && $v.price.$invalid}"
                                 v-model="price"
-                            type="number" class="form-control shadow-sm">
+                            type="number" class="form-control shadow-sm" id="inputPrice">
                             <div ref="invalid_type" class="invalid-feedback">
                                 Por favor, insira um preço para o ingrediente.
                             </div>
@@ -73,10 +73,10 @@
                 <hr>
                 <div class="d-flex flex-row-reverse">
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <button @click="insertIngredient" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="fas fa-plus-circle"></i> Cadastrar</button>
+                        <button @click="insertIngredient" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-plus-circle"></i> Cadastrar</button>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <router-link tag="button" :to="{name: 'master.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="fas fa-undo-alt"></i> Voltar</router-link>
+                        <router-link tag="button" :to="{name: 'master.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</router-link>
                     </div>
                 </div>
             </form>

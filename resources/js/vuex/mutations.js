@@ -7,11 +7,17 @@ const mutations = {
         state.users = n
     },
 
+    // Ingredients
     setIngredients(state, n) {
         state.ingredients = n
     },
 
-    addIngredient(state, n) {
+    updateIngredient(state, n) {
+        let founded = state.ingredients.findIndex(item => item.id == n.id)
+        state.ingredients[founded] = n
+    },
+
+    removeIngredient(state, n) {
         state.ingredients.push(n)
     }
 }
