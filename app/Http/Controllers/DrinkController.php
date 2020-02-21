@@ -15,10 +15,10 @@ class DrinkController extends Controller
      */
     public function index()
     {
-        $drinks = Drink::paginate(10);
+        $drinks = Drink::orderBy('category', 'ASC')->orderBy('name', 'ASC')->get();
         return response()->json([
             'concluded' => true,
-            'drinks' => $drinks,
+            'items' => $drinks,
         ]);
     }
 
@@ -34,8 +34,8 @@ class DrinkController extends Controller
 
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
-            'category' => ['required', 'in:beer,juice,soda,water'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
+            'category' => ['required', 'in:beer,juice,soda,water'],
             'price' => ['required', 'numeric'],
             'volume' => ['required', 'numeric']
         ]);
@@ -48,7 +48,7 @@ class DrinkController extends Controller
             ];
         }
 
-        $drink = Drink::create([
+        Drink::create([
             'name' => $request->name,
             'category' => $request->category,
             'status' => $request->status,
@@ -70,7 +70,18 @@ class DrinkController extends Controller
      */
     public function show($id)
     {
-        //
+        $drink = Drink::find($id);
+
+        if ($drink) {
+            return response()->json([
+                'concluded' => true,
+                'item' => $drink
+            ]);
+        }
+        return response()->json([
+            'concluded' => true,
+            'message' => 'Bebida não encontrada!'
+        ]);
     }
 
     /**
@@ -89,7 +100,7 @@ class DrinkController extends Controller
             'category' => ['required', 'in:beer,juice,soda,water'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
             'price' => ['required', 'numeric'],
-            'volume' => ['required', 'numeric']
+            'volume' => ['required', 'numeric', 'between:0,20000']
         ]);
     
         if($validation->fails()){

@@ -58,6 +58,7 @@ export default {
         getItems() {
             axios.get(`${this.endpoint}`, this.headers)
             .then(response => {
+                console.log(response)
                 if (response.data.concluded) {
                     this.$store.commit(this.getRequest.setItems, response.data.items)
                 } else {

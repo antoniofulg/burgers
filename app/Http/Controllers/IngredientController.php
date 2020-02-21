@@ -47,7 +47,7 @@ class IngredientController extends Controller
             ];
         }
 
-        $ingredient = Ingredient::create([
+        Ingredient::create([
             'name' => $request->name,
             'status' => $request->status,
             'category' => $request->category,

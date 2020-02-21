@@ -48,12 +48,12 @@
                     <template v-slot:cell(actions)="row">
                         <div class="d-flex justify-content-center">
                             <button @click="editItem(row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
-                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="mr-1 fas fa-pencil-alt"></i> Editar</span>                            
-                                <span class="d-block d-sm-block d-md-block d-lg-none"><i class="mr-1 fas fa-pencil-alt"></i></span>                            
+                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-pencil-alt"></i> Editar</span>                            
+                                <span class="d-block d-sm-block d-md-block d-lg-none"><i class="fas fa-pencil-alt"></i></span>                            
                             </button>
                             <button @click="deleteTarget = row.item" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-sm rounded-pill shadow-sm">
-                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="mr-1 fas fa-trash"></i> Apagar</span>
-                                <span class="d-block-sm-block d-md-block d-lg-none"><i class="mr-1 fas fa-trash"></i></span>
+                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-trash"></i> Apagar</span>
+                                <span class="d-block-sm-block d-md-block d-lg-none"><i class="fas fa-trash"></i></span>
                             </button>
                         </div>
                     </template>
@@ -185,15 +185,15 @@ export default {
     methods: {
         categoryName(category) {
             if (category ===  'bread') {
-                return 'Pão'
+                return 'Pães'
             } else if (category === 'blend') {
-                return 'Carne'
+                return 'Carnes'
             } else if (category === 'cheese') {
-                return 'Queijo'
+                return 'Queijos'
             } else if (category === 'salad') {
-                return 'Salada'
+                return 'Saladas'
             } else if (category === 'side_dishes') {
-                return 'Acompanhamento'
+                return 'Acompanhamentos'
             }
         },
 

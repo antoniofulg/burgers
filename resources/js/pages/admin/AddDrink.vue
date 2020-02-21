@@ -1,7 +1,7 @@
 <template>
     <admin-template>
         <div class="container mt-5">
-            <h1>Adicionar novo ingrediente</h1>
+            <h1>Adicionar nova bebida</h1>
             <hr>
             <form @submit.prevent>
                 <div class="form-row">
@@ -11,11 +11,29 @@
                             @input="$v.name.$touch()"
                             :class="{ 'is-invalid': $v.name.$dirty && $v.name.$invalid}"
                             v-model="name"
-                        type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi, 100g" id="name">
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Refrigerante (600ml)" id="name">
                         <div ref="invalid_name" class="invalid-feedback">
-                            Por favor, insira um nome para o ingrediente.
+                            Por favor, insira um nome para a bebida.
                         </div>
                     </div>
+                    <div class="form-group col-sm-12 col-md-4">
+                       <label for="inputVolume">Volume (ml)</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">R$</span>
+                            </div>
+                            <input
+                                @input="$v.volume.$touch()"
+                                :class="{ 'is-invalid': $v.volume.$dirty && $v.volume.$invalid}"
+                                v-model="volume"
+                            type="number" class="form-control shadow-sm" id="inputVolume">
+                            <div ref="invalid_volume" class="invalid-feedback">
+                                Por favor, insira o volume da bebida.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-sm-12 col-md-4">
                         <label for="category">Categoria</label>
                         <select
@@ -24,18 +42,16 @@
                             v-model="category"
                         class="custom-select shadow-sm" id="category">
                         <div ref="invalid_category" class="invalid-feedback">
-                            Por favor, selecione a categoria do ingrediente.
+                            Por favor, selecione a categoria da bebida.
                         </div>
                             <option disabled value="" selected>Selecione uma categoria</option>
-                            <option value="side_dishes">Acompanhamento</option>
-                            <option value="blend">Carne</option>
-                            <option value="bread">Pão</option>
-                            <option value="chesse">Queijo</option>
-                            <option value="salad">Salada</option>
+                            <option value="water">Águas</option>
+                            <option value="beer">Cervejas</option>
+                            <option value="soda">Refrigerantes</option>
+                            <option value="juice">Sucos</option>
                         </select>
                     </div>
-                </div>
-                <div class="form-row">
+                    
                     <div class="input-group col-md-4">
                         <label for="inputPrice">Preço unitário</label>
                         <div class="input-group mb-3">
@@ -48,7 +64,7 @@
                                 v-model="price"
                             type="number" class="form-control shadow-sm" id="inputPrice">
                             <div ref="invalid_type" class="invalid-feedback">
-                                Por favor, insira um preço para o ingrediente.
+                                Por favor, insira um preço para a bebida.
                             </div>
                         </div>
                     </div>
@@ -66,7 +82,7 @@
                             <option value="desactivated">Desativado</option>
                         </select>
                         <div ref="invalid_status" class="invalid-feedback">
-                            Por favor, insira um estado para o ingrediente.
+                            Por favor, insira um estado para a bebida.
                         </div>
                     </div>
                 </div>
@@ -85,7 +101,7 @@
 </template>
 
 <script>
-import { required, decimal } from "vuelidate/lib/validators"
+import { required, decimal, integer, numeric, maxValue } from "vuelidate/lib/validators"
 import AdminTemplate from '../../layouts/AdminTemplate'
 import Toast from "../../mixins/toasts"
 import Requests from "../../mixins/storeRequests"
@@ -97,7 +113,7 @@ export default {
 
     computed: {
         endpoint () {
-            return `/api/ingredients`
+            return `/api/drinks`
         },
     },
 
@@ -106,9 +122,10 @@ export default {
             name: '',
             category: '',
             price: 0,
+            volume: 0,
             status: '',
             storeRequest: {
-                name: 'admin.ingredients'
+                name: 'admin.drinks'
             }
         }
     },
@@ -119,6 +136,7 @@ export default {
                 name: this.name,
                 category: this.category,
                 price: this.price,
+                volume: this.volume,
                 status: this.status,
             }
         }
@@ -136,6 +154,12 @@ export default {
         price: {
             required,
             decimal
+        },
+        volume: {
+            required,
+            integer,
+            numeric,
+            maxValue: maxValue(20000)
         },
         status: {
             required

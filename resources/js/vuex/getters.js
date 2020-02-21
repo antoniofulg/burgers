@@ -13,9 +13,14 @@ const getters = {
         return state.users
     },
     
-    // Ingredientes
+    // Ingredients
     getIngredients: state => {
         return state.ingredients
+    },
+    
+    // Drinks
+    getDrinks: state => {
+        return state.drinks
     }
 
 }

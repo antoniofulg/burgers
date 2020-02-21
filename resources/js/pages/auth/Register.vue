@@ -102,7 +102,7 @@ export default {
                         sessionStorage.setItem('user', JSON.stringify(response.data.user))
                         this.$router.push({name: 'profile'})
                     } else {
-                        this.toast('Erro!', response.data.message)
+                        this.warningToast('Ação não concluída!', response.data.message)
                         // Informar em quais campos ocorreu problema
                     }
                 }).catch(e => {

@@ -19,6 +19,20 @@ const mutations = {
 
     removeIngredient(state, n) {
         state.ingredients.push(n)
+    },
+
+    // Drinks
+    setDrinks(state, n) {
+        state.drinks = n
+    },
+
+    updateDrink(state, n) {
+        let founded = state.drinks.findIndex(item => item.id == n.id)
+        state.drinks[founded] = n
+    },
+
+    removeDrink(state, n) {
+        state.drinks.push(n)
     }
 }
 

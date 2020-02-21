@@ -4,6 +4,8 @@ import Unauthorized from '../pages/auth/Unauthorized'
 import AdminBurguers from '../pages/admin/Burguers'
 import AdminDashboard from '../pages/admin/Dashboard'
 import AdminDrinks from '../pages/admin/Drinks'
+import AdminAddDrink from '../pages/admin/AddDrink'
+import AdminUpdateDrink from '../pages/admin/UpdateDrink'
 import AdminIngredients from '../pages/admin/Ingredients'
 import AdminAddIngredient from '../pages/admin/AddIngredient'
 import AdminUpdateIngredient from '../pages/admin/UpdateIngredient'
@@ -83,6 +85,24 @@ const routes = [
         path: '/bebidas',
         component: AdminDrinks,
         name: 'admin.drinks',
+        props: true,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/bebidas/nova',
+        component: AdminAddDrink,
+        name: 'admin.drinks.add',
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/bebidas/atualizar/:id',
+        component: AdminUpdateDrink,
+        name: 'admin.drinks.update',
+        props: true,
         meta: {
             admin: true
         }
@@ -105,7 +125,7 @@ const routes = [
         }
     },
     {
-        path: '/ingredientes/add',
+        path: '/ingredientes/novo',
         component: AdminAddIngredient,
         name: 'admin.ingredients.add',
         meta: {
@@ -113,7 +133,7 @@ const routes = [
         }
     },
     {
-        path: '/ingredientes/update/:id',
+        path: '/ingredientes/atualizar/:id',
         component: AdminUpdateIngredient,
         name: 'admin.ingredients.update',
         props: true,
