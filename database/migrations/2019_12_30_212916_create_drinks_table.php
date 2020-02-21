@@ -16,11 +16,12 @@ class CreateDrinksTable extends Migration
         Schema::create('drinks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->enum('type', ['beer', 'juice', 'soda', 'water']); //Tipos da bebida [cerveja, suco, refrigerante, agua];
+            $table->enum('category', ['beer', 'juice', 'soda', 'water']); //Tipos da bebida [cerveja, suco, refrigerante, agua];
             $table->enum('status', ['avaliable', 'unavaliable', 'desactivated']); //Status do hamburguer, se está disponível / indisponível / ou se não deve aparecer no cardápio;
             $table->integer('volume'); //Volume em ml
             $table->double('price', 8, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

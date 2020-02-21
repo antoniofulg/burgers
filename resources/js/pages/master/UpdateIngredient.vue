@@ -1,7 +1,7 @@
 <template>
     <admin-template>
         <div class="container mt-5">
-            <h1>Editar ingrediente <span><i class="fas fa-question-circle text-info pointer"></i></span></h1>
+            <h1>Editar ingrediente</h1>
             <hr>
             <form @submit.prevent>
                 <div class="form-row">
@@ -17,16 +17,17 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-4">
-                        <label for="type">Tipo</label>
+                        <label for="category">Categoria</label>
                         <select
-                            @input="$v.type.$touch()"
-                            :class="{ 'is-invalid': $v.type.$dirty && $v.type.$invalid}"
-                            v-model="type"
-                        class="custom-select shadow-sm" id="type">
-                        <div ref="invalid_type" class="invalid-feedback">
-                            Por favor, selecione o tipo do ingrediente.
+                            @input="$v.category.$touch()"
+                            :class="{ 'is-invalid': $v.category.$dirty && $v.category.$invalid}"
+                            v-model="category"
+                        class="custom-select shadow-sm" id="category">
+                        <div ref="invalid_category" class="invalid-feedback">
+                            Por favor, selecione a categoria do ingrediente.
                         </div>
-                            <option value="side_dishes">Acompanhamentos</option>
+                            <option disabled value="" selected>Selecione uma categoria</option>
+                            <option value="side_dishes">Acompanhamento</option>
                             <option value="blend">Carne</option>
                             <option value="bread">Pão</option>
                             <option value="chesse">Queijo</option>
@@ -36,7 +37,7 @@
                 </div>
                 <div class="form-row">
                     <div class="input-group col-md-4">
-                        <label for="inputCity">Preço</label>
+                        <label for="inputCity">Preço unitário</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">R$</span>
@@ -59,6 +60,7 @@
                             @input="$v.status.$touch()"
                             :class="{ 'is-invalid': $v.status.$dirty && $v.status.$invalid}"
                         id="inputState" class="form-control shadow-sm">
+                            <option disabled value="" selected>Selecione um estado</option>
                             <option value="avaliable" selected>Disponível</option>
                             <option value="unavaliable">Indisponível</option>
                             <option value="desactivated">Desativado</option>
@@ -71,10 +73,10 @@
                 <hr>
                 <div class="d-flex flex-row-reverse">
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <button @click="updateIngredient" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="fas fa-marker"></i> Atualizar</button>
+                        <button @click="updateIngredient" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-marker"></i> Atualizar</button>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <router-link tag="button" :to="{name: 'master.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="fas fa-undo-alt"></i> Voltar</router-link>
+                        <router-link tag="button" :to="{name: 'master.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</router-link>
                     </div>
                 </div>
             </form>
@@ -105,7 +107,7 @@ export default {
     data () {
         return {
             name: '',
-            type: 'side_dishes',
+            category: 'side_dishes',
             price: 0,
             status: 'avaliable'
         }
@@ -122,7 +124,7 @@ export default {
                 if (response.data.concluded) {
                     console.log(response)
                     this.name = response.data.ingredient.name
-                    this.type = response.data.ingredient.type
+                    this.category = response.data.ingredient.category
                     this.price = response.data.ingredient.price
                     this.status = response.data.ingredient.status
                 } else {
@@ -138,7 +140,7 @@ export default {
             if (!this.$v.$invalid) {
                 axios.put(`${this.endpoint}`, {
                     name: this.name,
-                    type: this.type,
+                    category: this.category,
                     price: this.price,
                     status: this.status,
                 }, {
@@ -153,7 +155,7 @@ export default {
                             name: 'master.ingredients',
                             params: {
                                 toast: {
-                                    type: 'success',
+                                    category: 'success',
                                     title: 'Ação concluída!',
                                     message: response.data.message
                                 }
@@ -176,7 +178,7 @@ export default {
     mounted() {
         if (this.ingredient) {
             this.name = this.ingredient.name;
-            this.type = this.ingredient.type;
+            this.category = this.ingredient.category;
             this.price = this.ingredient.price;
             this.status = this.ingredient.status;
         }
@@ -188,7 +190,7 @@ export default {
         name: {
             required
         },
-        type: {
+        category: {
             required
         },
         price: {

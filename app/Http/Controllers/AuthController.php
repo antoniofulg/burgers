@@ -76,12 +76,18 @@ class AuthController extends Controller
     public function logout (Request $request) {
 
         $token = $request->user()->token();
-        $token->revoke();
-    
+        if ($token) {
+            $token->revoke();
+            return response()->json([
+                'concluded' => true,
+                'message' => 'Sua sessão foi encerrada com sucesso!',
+            ]);
+        }
+
         return response()->json([
-            'concluded' => true,
-            'message' => 'Sua sessão foi encerrada com sucesso!',
-            'request' => $request
+            'concluded' => false,
+            'message' => 'Sessão não encontrada!',
         ]);
+    
     }
 }

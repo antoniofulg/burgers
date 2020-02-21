@@ -15,10 +15,10 @@ class DrinkController extends Controller
      */
     public function index()
     {
-        $drink = Drink::paginate(10);
+        $drinks = Drink::paginate(10);
         return response()->json([
             'concluded' => true,
-            'drink' => $drink,
+            'drinks' => $drinks,
         ]);
     }
 
@@ -34,7 +34,7 @@ class DrinkController extends Controller
 
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
-            'type' => ['required', 'in:beer,juice,soda,water'],
+            'category' => ['required', 'in:beer,juice,soda,water'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
             'price' => ['required', 'numeric'],
             'volume' => ['required', 'numeric']
@@ -50,7 +50,7 @@ class DrinkController extends Controller
 
         $drink = Drink::create([
             'name' => $request->name,
-            'type' => $request->type,
+            'category' => $request->category,
             'status' => $request->status,
             'price' => $request->price,
             'volume' => $request->volume,
@@ -59,7 +59,6 @@ class DrinkController extends Controller
         return response()->json([
             'concluded' => true,
             'message' => 'Bebida cadastrada com sucesso!',
-            'drink' => $drink,
         ]);
     }
 
@@ -87,7 +86,7 @@ class DrinkController extends Controller
 
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
-            'type' => ['required', 'in:beer,juice,soda,water'],
+            'category' => ['required', 'in:beer,juice,soda,water'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
             'price' => ['required', 'numeric'],
             'volume' => ['required', 'numeric']
@@ -104,7 +103,7 @@ class DrinkController extends Controller
         $drink = Drink::find($id);
         
         $drink->name = $request->name;
-        $drink->type = $request->type;
+        $drink->category = $request->category;
         $drink->status = $request->status;
         $drink->price = $request->price;
         $drink->volume = $request->volume;
@@ -114,7 +113,6 @@ class DrinkController extends Controller
         return response()->json([
             'concluded' => true,
             'message' => 'Bebida atualizada com sucesso!',
-            'drink' => $drink
         ]);
     }
 

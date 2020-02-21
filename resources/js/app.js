@@ -44,13 +44,21 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(r => r.meta.master) && !roles.isMaster){
         console.log('getACL: ' + store.getters.getACL)
         console.log('Esta página é restrita ao usuário master')
+<<<<<<< HEAD
         roles.isGuest ? router.push({name: 'login'}) : router.push({name: 'unauthorized'})
+=======
+        roles.isGuest ? router.push({name: 'login'}) : null
+>>>>>>> develop
         return
     }
     if (to.matched.some(r => r.meta.admin) && !roles.isAdmin) {
         console.log('getACL: ' + store.getters.getACL)
         console.log('Esta página é restrita a administradores')
+<<<<<<< HEAD
         roles.isGuest ? router.push({name: 'login'}) : router.push({name: 'unauthorized'})
+=======
+        roles.isGuest ? router.push({name: 'login'}) : null
+>>>>>>> develop
         return
     }
     next()

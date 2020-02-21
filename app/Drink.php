@@ -12,7 +12,7 @@ class Drink extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'type', 'status', 'volume', 'price'
+        'name', 'category', 'status', 'volume', 'price'
     ];
 
     public function orders() {

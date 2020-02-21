@@ -15,7 +15,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::paginate(10);
+        $ingredients = Ingredient::orderBy('category', 'ASC')->orderBy('name', 'ASC')->get();
         return response()->json([
             'concluded' => true,
             'ingredients' => $ingredients,
@@ -35,7 +35,7 @@ class IngredientController extends Controller
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'type' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
+            'category' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
     
@@ -50,7 +50,7 @@ class IngredientController extends Controller
         $ingredient = Ingredient::create([
             'name' => $request->name,
             'status' => $request->status,
-            'type' => $request->type,
+            'category' => $request->category,
             'price' => $request->price,
         ]);
 
@@ -97,7 +97,7 @@ class IngredientController extends Controller
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'type' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
+            'category' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
     
@@ -113,7 +113,7 @@ class IngredientController extends Controller
         
         $ingredient->name = $request->name;
         $ingredient->status = $request->status;
-        $ingredient->type = $request->type;
+        $ingredient->category = $request->category;
         $ingredient->price = $request->price;
 
         $ingredient->save();
