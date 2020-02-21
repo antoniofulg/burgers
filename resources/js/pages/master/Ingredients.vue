@@ -55,72 +55,50 @@
                     </template>
                 </b-table>
             </div>
-            <!-- Delete Modal -->
-            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Confirme sua ação!</h5>
-                        </div>
-                        <div class="modal-body">
-                            <strong>Você realmente deseja apagar este ingrediente?</strong>
-                            <span class="d-block"><strong>Nome: </strong> {{deleteTarget.name}}</span> 
-                            <span class="d-block"><strong>Categoria: </strong> {{categoryName(deleteTarget.category)}}</span> 
-                            <span class="d-block"><strong>Estado: </strong> {{statusName(deleteTarget.status)}}</span>
-                            <span class="d-block"><strong>Preço: </strong> {{priceName(deleteTarget.price)}}</span>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="mr-1 fas fa-undo-alt"></i> Voltar</button>
-                            <button @click="deleteIngredient(deleteTarget)" type="button" class="btn btn-danger" data-dismiss="modal"><i class="mr-1 fas fa-trash"></i> Confirmar exclusão</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Info Modal -->
-            <div class="modal fade" id="help" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Ingredientes</h5>
-                        </div>
-                        <div class="modal-body">
-                            <p class="text-justify">
-                                Nesta página temos o cadastro de ingredientes, onde podemos gerenciar os seguintes campos: <strong>Nome</strong>, <strong>Categoria</strong>, <strong>Estado</strong> e <strong>Preço unitário</strong>.
-                            </p>
+            <modal id="delete" title="Confirme sua ação!">
+                <template v-slot:body>
+                    <strong>Você realmente deseja apagar este ingrediente?</strong>
+                    <span class="d-block"><strong>Nome: </strong> {{deleteTarget.name}}</span> 
+                    <span class="d-block"><strong>Categoria: </strong> {{categoryName(deleteTarget.category)}}</span> 
+                    <span class="d-block"><strong>Estado: </strong> {{statusName(deleteTarget.status)}}</span>
+                    <span class="d-block"><strong>Preço: </strong> {{priceName(deleteTarget.price)}}</span>
+                </template>
+                <template v-slot:action>
+                    <button @click="deleteIngredient(deleteTarget)" type="button" class="btn btn-danger" data-dismiss="modal"><i class="mr-1 fas fa-trash"></i> Confirmar exclusão</button>
+                </template>
+            </modal>
+            <modal id="help" title="Ingredientes">
+                <template v-slot:body>
+                    <ul class="pl-3">
+                        <li class="text-justify">
+                            <h5><strong>Nome:</strong></h5> Campo sintetizado para a descrição do ingrediente cadastrado.
+                        </li>
+                        <hr>
+                        <li class="text-justify">
+                            <h5><strong>Categoria:</strong></h5> Campo para categorizar o tipo de ingrediente. Facilitando a busca pelo ingrediente desejado.
+                        </li>
+                        <hr>
+                        <li class="text-justify">
+                            <h5><strong>Preço unitário:</strong></h5> Campo referente ao preço do ingrediente caso o cliente deseje adicioná-lo ao hamburguer durante o seu pedido.
+                        </li>
+                        <hr>
+                        <li class="text-justify">
+                            <h5><strong>Estado:</strong></h5> Refere-se à disponibilidade do ingrediente.
                             <ul>
-
-                            <li class="text-justify">
-                                <h5><strong>Nome:</strong></h5> Campo sintetizado para a descrição do ingrediente cadastrado.
-                            </li>
-                            <li class="text-justify">
-                                <h5><strong>Categoria:</strong></h5> Campo para categorizar o tipo de ingrediente. Facilitando a busca pelo ingrediente desejado.
-                            </li>
-                            <li class="text-justify">
-                                <h5><strong>Preço unitário:</strong></h5> Campo referente ao preço do ingrediente caso o cliente deseje adicioná-lo ao hamburguer durante o seu pedido.
-                            </li>
-                            <li class="text-justify">
-                                <h5><strong>Estado:</strong></h5> Refere-se à disponibilidade do ingrediente.
-                                <ul>
-                                    <li>
-                                        <strong>Disponível</strong>: ele é mostrado no cardápio como disponível para que o cliente o adicione ao pedido.
-                                    </li>
-                                    <li>
-                                        <strong>Indisponível</strong>: ele é mostrado no cardápio como indisponível. O cliente não poderá adicionar o ingrediente ao pedido.
-                                    </li>
-                                    <li>
-                                        <strong>Desativado</strong>: O ingrediente não é mostrado ao cliente.
-                                    </li>
-                                </ul>
-                            </li>
+                                <li>
+                                    <strong>Disponível</strong>: ele é mostrado no cardápio como disponível para que o cliente o adicione ao pedido.
+                                </li>
+                                <li>
+                                    <strong>Indisponível</strong>: ele é mostrado no cardápio como indisponível. O cliente não poderá adicionar o ingrediente ao pedido.
+                                </li>
+                                <li>
+                                    <strong>Desativado</strong>: O ingrediente não é mostrado ao cliente.
+                                </li>
                             </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="mr-1 fas fa-undo-alt"></i> Voltar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </li>
+                    </ul>
+                </template>
+            </modal>
         </div>
     </admin-template>
 </template>
@@ -128,11 +106,13 @@
 <script>
 import { required } from "vuelidate/lib/validators"
 import AdminTemplate from '../../layouts/AdminTemplate'
+import Modal from '../../components/Modal'
 import Toast from "../../mixins/toasts"
 
 export default {
     components: {
-        AdminTemplate
+        AdminTemplate,
+        Modal
     },
 
     computed: {
