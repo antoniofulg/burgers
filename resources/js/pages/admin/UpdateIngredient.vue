@@ -107,9 +107,9 @@ export default {
     data () {
         return {
             name: '',
-            category: 'side_dishes',
+            category: '',
             price: 0,
-            status: 'avaliable'
+            status: ''
         }
     },
 

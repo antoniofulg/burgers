@@ -2826,9 +2826,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       name: '',
-      category: 'side_dishes',
+      category: '',
       price: 0,
-      status: 'avaliable'
+      status: ''
     };
   },
   methods: {
@@ -94388,6 +94388,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (e) {
         console.log(e);
+
+        _this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
       });
     },
     editItem: function editItem(item) {
@@ -94437,6 +94439,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (e) {
         console.log(e);
+
+        _this3.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
       });
     }
   }

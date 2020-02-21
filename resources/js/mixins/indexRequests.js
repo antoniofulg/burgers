@@ -41,6 +41,7 @@ export default {
                 }
             }).catch(e => {
                 console.log(e)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             })
         },
 
@@ -94,6 +95,7 @@ export default {
                 }
             }).catch(e => {
                 console.log(e)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             })
         }
     }
