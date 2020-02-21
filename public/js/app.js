@@ -97443,14 +97443,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_admin_Burguers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/admin/Burguers */ "./resources/js/pages/admin/Burguers.vue");
 /* harmony import */ var _pages_admin_Dashboard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/admin/Dashboard */ "./resources/js/pages/admin/Dashboard.vue");
 /* harmony import */ var _pages_admin_Drinks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/admin/Drinks */ "./resources/js/pages/admin/Drinks.vue");
-/* harmony import */ var _pages_admin_AddDrink__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../pages/admin/AddDrink */ "./resources/js/pages/admin/AddDrink.vue");
-/* harmony import */ var _pages_admin_UpdateDrink__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../pages/admin/UpdateDrink */ "./resources/js/pages/admin/UpdateDrink.vue");
-/* harmony import */ var _pages_admin_Ingredients__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/admin/Ingredients */ "./resources/js/pages/admin/Ingredients.vue");
-/* harmony import */ var _pages_admin_AddIngredient__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pages/admin/AddIngredient */ "./resources/js/pages/admin/AddIngredient.vue");
-/* harmony import */ var _pages_admin_UpdateIngredient__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pages/admin/UpdateIngredient */ "./resources/js/pages/admin/UpdateIngredient.vue");
-/* harmony import */ var _pages_admin_Orders__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../pages/admin/Orders */ "./resources/js/pages/admin/Orders.vue");
-/* harmony import */ var _pages_admin_SideDishes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../pages/admin/SideDishes */ "./resources/js/pages/admin/SideDishes.vue");
-/* harmony import */ var _pages_admin_Users__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../pages/admin/Users */ "./resources/js/pages/admin/Users.vue");
+/* harmony import */ var _pages_admin_AddDrink__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/admin/AddDrink */ "./resources/js/pages/admin/AddDrink.vue");
+/* harmony import */ var _pages_admin_UpdateDrink__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/admin/UpdateDrink */ "./resources/js/pages/admin/UpdateDrink.vue");
+/* harmony import */ var _pages_admin_Ingredients__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pages/admin/Ingredients */ "./resources/js/pages/admin/Ingredients.vue");
+/* harmony import */ var _pages_admin_AddIngredient__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pages/admin/AddIngredient */ "./resources/js/pages/admin/AddIngredient.vue");
+/* harmony import */ var _pages_admin_UpdateIngredient__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../pages/admin/UpdateIngredient */ "./resources/js/pages/admin/UpdateIngredient.vue");
+/* harmony import */ var _pages_admin_Orders__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../pages/admin/Orders */ "./resources/js/pages/admin/Orders.vue");
+/* harmony import */ var _pages_admin_SideDishes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../pages/admin/SideDishes */ "./resources/js/pages/admin/SideDishes.vue");
+/* harmony import */ var _pages_admin_Users__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../pages/admin/Users */ "./resources/js/pages/admin/Users.vue");
 
 
 
@@ -97505,21 +97505,21 @@ var routes = [{
   }
 }, {
   path: '/pedidos',
-  component: _pages_admin_Orders__WEBPACK_IMPORTED_MODULE_10__["default"],
+  component: _pages_admin_Orders__WEBPACK_IMPORTED_MODULE_11__["default"],
   name: 'admin.orders',
   meta: {
     admin: true
   }
 }, {
   path: '/usuarios',
-  component: _pages_admin_Users__WEBPACK_IMPORTED_MODULE_12__["default"],
+  component: _pages_admin_Users__WEBPACK_IMPORTED_MODULE_13__["default"],
   name: 'admin.users',
   meta: {
     admin: true
   }
 }, {
   path: '/alimentos',
-  component: _pages_admin_SideDishes__WEBPACK_IMPORTED_MODULE_11__["default"],
+  component: _pages_admin_SideDishes__WEBPACK_IMPORTED_MODULE_12__["default"],
   name: 'admin.foods',
   meta: {
     admin: true
@@ -97534,14 +97534,14 @@ var routes = [{
   }
 }, {
   path: '/bebidas/nova',
-  component: _pages_admin_AddDrink__WEBPACK_IMPORTED_MODULE_13__["default"],
+  component: _pages_admin_AddDrink__WEBPACK_IMPORTED_MODULE_6__["default"],
   name: 'admin.drinks.add',
   meta: {
     admin: true
   }
 }, {
   path: '/bebidas/atualizar/:id',
-  component: _pages_admin_UpdateDrink__WEBPACK_IMPORTED_MODULE_14__["default"],
+  component: _pages_admin_UpdateDrink__WEBPACK_IMPORTED_MODULE_7__["default"],
   name: 'admin.drinks.update',
   props: true,
   meta: {
@@ -97556,7 +97556,7 @@ var routes = [{
   }
 }, {
   path: '/ingredientes',
-  component: _pages_admin_Ingredients__WEBPACK_IMPORTED_MODULE_7__["default"],
+  component: _pages_admin_Ingredients__WEBPACK_IMPORTED_MODULE_8__["default"],
   name: 'admin.ingredients',
   props: true,
   meta: {
@@ -97564,14 +97564,14 @@ var routes = [{
   }
 }, {
   path: '/ingredientes/novo',
-  component: _pages_admin_AddIngredient__WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _pages_admin_AddIngredient__WEBPACK_IMPORTED_MODULE_9__["default"],
   name: 'admin.ingredients.add',
   meta: {
     admin: true
   }
 }, {
   path: '/ingredientes/atualizar/:id',
-  component: _pages_admin_UpdateIngredient__WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _pages_admin_UpdateIngredient__WEBPACK_IMPORTED_MODULE_10__["default"],
   name: 'admin.ingredients.update',
   props: true,
   meta: {
