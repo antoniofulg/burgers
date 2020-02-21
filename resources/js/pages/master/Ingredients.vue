@@ -5,9 +5,9 @@
             <hr>
             <div class="row">     
                 <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
-                    <input type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
+                    <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
                     <div class="input-group-append">
-                        <button class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                        <button :disabled="!filter" @click="filter = ''" class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-broom"></i> Limpar</button>
                     </div>
                 </form>
                 <div class="col-md-4">
@@ -16,7 +16,16 @@
             </div>
             <hr>
             <div class="table-responsive">
-                <b-table class="shadow-sm" bordered hover small striped head-variant="dark" :items="ingredientsList" :fields="table.fields">
+                <b-table
+                    :filter="filter"
+                    class="shadow-sm"
+                    bordered
+                    hover
+                    small
+                    striped
+                    head-variant="dark"
+                    :items="ingredientsList"
+                :fields="table.fields">
                     <template v-slot:cell(status)="status">
                          <button
                             :class="{
@@ -177,7 +186,8 @@ export default {
                     }
                 ],
             },
-            deleteTarget: {}
+            deleteTarget: {},
+            filter: null
         }
     },
 

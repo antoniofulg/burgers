@@ -2827,6 +2827,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2878,7 +2887,8 @@ __webpack_require__.r(__webpack_exports__);
           label: 'Ações'
         }]
       },
-      deleteTarget: {}
+      deleteTarget: {},
+      filter: null
     };
   },
   methods: {
@@ -74810,8 +74820,25 @@ var render = function() {
           },
           [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filter,
+                  expression: "filter"
+                }
+              ],
               staticClass: "form-control shadow-sm",
-              attrs: { type: "text", placeholder: "Buscar ingredientes" }
+              attrs: { type: "text", placeholder: "Buscar ingredientes" },
+              domProps: { value: _vm.filter },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.filter = $event.target.value
+                }
+              }
             }),
             _vm._v(" "),
             _c("div", { staticClass: "input-group-append" }, [
@@ -74819,9 +74846,14 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn shadow-sm btn-outline-secondary",
-                  attrs: { type: "submit" }
+                  attrs: { disabled: !_vm.filter, type: "submit" },
+                  on: {
+                    click: function($event) {
+                      _vm.filter = ""
+                    }
+                  }
                 },
-                [_c("i", { staticClass: "fas fa-search" })]
+                [_c("i", { staticClass: "fas fa-broom" }), _vm._v(" Limpar")]
               )
             ])
           ]
@@ -74856,6 +74888,7 @@ var render = function() {
           _c("b-table", {
             staticClass: "shadow-sm",
             attrs: {
+              filter: _vm.filter,
               bordered: "",
               hover: "",
               small: "",
