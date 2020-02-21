@@ -155,7 +155,7 @@ export default {
                             name: 'master.ingredients',
                             params: {
                                 toast: {
-                                    category: 'success',
+                                    type: 'success',
                                     title: 'Ação concluída!',
                                     message: response.data.message
                                 }

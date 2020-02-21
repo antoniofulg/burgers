@@ -39,12 +39,7 @@ export default {
     },
 
     mounted () {
-<<<<<<< HEAD
-        this.message ? this.infoToast('Informação!', this.message) : null
-    },
-
-    props: ['message'],
-=======
+        console.log('mounted')
         if (this.toast) {
             if (this.toast.type === 'success') {
                 this.successToast(this.toast.title, this.toast.message)
@@ -55,5 +50,6 @@ export default {
             }
         }
     },
->>>>>>> develop
+
+    props: ['toast']
 }

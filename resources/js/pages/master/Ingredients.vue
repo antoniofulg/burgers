@@ -79,16 +79,18 @@
                             <p class="text-justify">
                                 Nesta página temos o cadastro de ingredientes, onde podemos gerenciar os seguintes campos: <strong>Nome</strong>, <strong>Categoria</strong>, <strong>Estado</strong> e <strong>Preço unitário</strong>.
                             </p>
-                            <p class="text-justify">
+                            <ul>
+
+                            <li class="text-justify">
                                 <h5><strong>Nome:</strong></h5> Campo sintetizado para a descrição do ingrediente cadastrado.
-                            </p>
-                            <p class="text-justify">
+                            </li>
+                            <li class="text-justify">
                                 <h5><strong>Categoria:</strong></h5> Campo para categorizar o tipo de ingrediente. Facilitando a busca pelo ingrediente desejado.
-                            </p>
-                            <p class="text-justify">
+                            </li>
+                            <li class="text-justify">
                                 <h5><strong>Preço unitário:</strong></h5> Campo referente ao preço do ingrediente caso o cliente deseje adicioná-lo ao hamburguer durante o seu pedido.
-                            </p>
-                            <p class="text-justify">
+                            </li>
+                            <li class="text-justify">
                                 <h5><strong>Estado:</strong></h5> Refere-se à disponibilidade do ingrediente.
                                 <ul>
                                     <li>
@@ -101,7 +103,8 @@
                                         <strong>Desativado</strong>: O ingrediente não é mostrado ao cliente.
                                     </li>
                                 </ul>
-                            </p>
+                            </li>
+                            </ul>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="mr-1 fas fa-undo-alt"></i> Voltar</button>
@@ -277,9 +280,7 @@ export default {
         }
     },
 
-    mixins: [Toast],
-
-    props: ['toast']
+    mixins: [Toast]
 }
 </script>
 

@@ -2824,6 +2824,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2981,8 +2984,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
-  props: ['toast']
+  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]]
 });
 
 /***/ }),
@@ -3224,7 +3226,7 @@ __webpack_require__.r(__webpack_exports__);
               name: 'master.ingredients',
               params: {
                 toast: {
-                  category: 'success',
+                  type: 'success',
                   title: 'Ação concluída!',
                   message: response.data.message
                 }
@@ -75189,56 +75191,57 @@ var render = function() {
                     _vm._v(".\n                        ")
                   ]),
                   _vm._v(" "),
-                  _c("p", { staticClass: "text-justify" }),
-                  _c("h5", [_c("strong", [_vm._v("Nome:")])]),
-                  _vm._v(
-                    " Campo sintetizado para a descrição do ingrediente cadastrado.\n                        "
-                  ),
-                  _c("p"),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-justify" }),
-                  _c("h5", [_c("strong", [_vm._v("Categoria:")])]),
-                  _vm._v(
-                    " Campo para categorizar o tipo de ingrediente. Facilitando a busca pelo ingrediente desejado.\n                        "
-                  ),
-                  _c("p"),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-justify" }),
-                  _c("h5", [_c("strong", [_vm._v("Preço unitário:")])]),
-                  _vm._v(
-                    " Campo referente ao preço do ingrediente caso o cliente deseje adicioná-lo ao hamburguer durante o seu pedido.\n                        "
-                  ),
-                  _c("p"),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-justify" }),
-                  _c("h5", [_c("strong", [_vm._v("Estado:")])]),
-                  _vm._v(
-                    " Refere-se à disponibilidade do ingrediente.\n                            "
-                  ),
                   _c("ul", [
-                    _c("li", [
-                      _c("strong", [_vm._v("Disponível")]),
+                    _c("li", { staticClass: "text-justify" }, [
+                      _c("h5", [_c("strong", [_vm._v("Nome:")])]),
                       _vm._v(
-                        ": ele é mostrado no cardápio como disponível para que o cliente o adicione ao pedido.\n                                "
+                        " Campo sintetizado para a descrição do ingrediente cadastrado.\n                        "
                       )
                     ]),
                     _vm._v(" "),
-                    _c("li", [
-                      _c("strong", [_vm._v("Indisponível")]),
+                    _c("li", { staticClass: "text-justify" }, [
+                      _c("h5", [_c("strong", [_vm._v("Categoria:")])]),
                       _vm._v(
-                        ": ele é mostrado no cardápio como indisponível. O cliente não poderá adicionar o ingrediente ao pedido.\n                                "
+                        " Campo para categorizar o tipo de ingrediente. Facilitando a busca pelo ingrediente desejado.\n                        "
                       )
                     ]),
                     _vm._v(" "),
-                    _c("li", [
-                      _c("strong", [_vm._v("Desativado")]),
+                    _c("li", { staticClass: "text-justify" }, [
+                      _c("h5", [_c("strong", [_vm._v("Preço unitário:")])]),
                       _vm._v(
-                        ": O ingrediente não é mostrado ao cliente.\n                                "
+                        " Campo referente ao preço do ingrediente caso o cliente deseje adicioná-lo ao hamburguer durante o seu pedido.\n                        "
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "text-justify" }, [
+                      _c("h5", [_c("strong", [_vm._v("Estado:")])]),
+                      _vm._v(
+                        " Refere-se à disponibilidade do ingrediente.\n                            "
+                      ),
+                      _c("ul", [
+                        _c("li", [
+                          _c("strong", [_vm._v("Disponível")]),
+                          _vm._v(
+                            ": ele é mostrado no cardápio como disponível para que o cliente o adicione ao pedido.\n                                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("strong", [_vm._v("Indisponível")]),
+                          _vm._v(
+                            ": ele é mostrado no cardápio como indisponível. O cliente não poderá adicionar o ingrediente ao pedido.\n                                "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("strong", [_vm._v("Desativado")]),
+                          _vm._v(
+                            ": O ingrediente não é mostrado ao cliente.\n                                "
+                          )
+                        ])
+                      ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("p")
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-footer" }, [
@@ -94280,9 +94283,64 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/mixins/toasts.js ***!
   \***************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/antoniofulg/Projetos/Burguers/resources/js/mixins/toasts.js: Unexpected token (42:0)\n\n\u001b[0m \u001b[90m 40 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 41 | \u001b[39m    mounted () {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 42 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 43 | \u001b[39m        \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mmessage \u001b[33m?\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39minfoToast(\u001b[32m'Informação!'\u001b[39m\u001b[33m,\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mmessage) \u001b[33m:\u001b[39m \u001b[36mnull\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 44 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 45 | \u001b[39m\u001b[0m\n    at Parser.raise (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:7017:17)\n    at Parser.unexpected (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:8395:16)\n    at Parser.parseExprAtom (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9673:20)\n    at Parser.parseExprSubscripts (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9259:23)\n    at Parser.parseMaybeUnary (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9239:21)\n    at Parser.parseExprOps (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9109:23)\n    at Parser.parseMaybeConditional (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9082:23)\n    at Parser.parseMaybeAssign (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9037:21)\n    at Parser.parseExpression (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:8989:23)\n    at Parser.parseStatementContent (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10819:23)\n    at Parser.parseStatement (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10690:17)\n    at Parser.parseBlockOrModuleBlockBody (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:11264:25)\n    at Parser.parseBlockBody (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:11251:10)\n    at Parser.parseBlock (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:11235:10)\n    at Parser.parseFunctionBody (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10252:24)\n    at Parser.parseFunctionBodyAndFinish (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10222:10)\n    at Parser.parseMethod (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10187:10)\n    at Parser.parseObjectMethod (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10104:19)\n    at Parser.parseObjPropValue (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10146:23)\n    at Parser.parseObjectMember (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10070:10)\n    at Parser.parseObj (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9991:25)\n    at Parser.parseExprAtom (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9616:28)\n    at Parser.parseExprSubscripts (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9259:23)\n    at Parser.parseMaybeUnary (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9239:21)\n    at Parser.parseExprOps (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9109:23)\n    at Parser.parseMaybeConditional (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9082:23)\n    at Parser.parseMaybeAssign (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:9037:21)\n    at Parser.parseExportDefaultExpression (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:11866:24)\n    at Parser.parseExport (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:11768:31)\n    at Parser.parseStatementContent (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10794:27)\n    at Parser.parseStatement (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10690:17)\n    at Parser.parseBlockOrModuleBlockBody (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:11264:25)\n    at Parser.parseBlockBody (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:11251:10)\n    at Parser.parseTopLevel (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:10621:10)\n    at Parser.parse (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:12222:10)\n    at parse (/home/antoniofulg/Projetos/Burguers/node_modules/@babel/parser/lib/index.js:12273:38)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    dangerToast: function dangerToast(title, body) {
+      this.$bvToast.toast("".concat(body), {
+        title: "".concat(title),
+        toaster: 'b-toaster-top-right',
+        solid: true,
+        appendToast: false,
+        variant: 'danger'
+      });
+    },
+    infoToast: function infoToast(title, body) {
+      this.$bvToast.toast("".concat(body), {
+        title: "".concat(title),
+        toaster: 'b-toaster-top-right',
+        solid: true,
+        appendToast: false,
+        variant: 'info'
+      });
+    },
+    successToast: function successToast(title, body) {
+      this.$bvToast.toast("".concat(body), {
+        title: "".concat(title),
+        toaster: 'b-toaster-top-right',
+        solid: true,
+        appendToast: false,
+        variant: 'success'
+      });
+    },
+    warningToast: function warningToast(title, body) {
+      this.$bvToast.toast("".concat(body), {
+        title: "".concat(title),
+        toaster: 'b-toaster-top-right',
+        solid: true,
+        appendToast: false,
+        variant: 'warning'
+      });
+    }
+  },
+  mounted: function mounted() {
+    console.log('mounted');
+
+    if (this.toast) {
+      if (this.toast.type === 'success') {
+        this.successToast(this.toast.title, this.toast.message);
+      } else if (this.toast.type === 'warning') {
+        this.warningToast(this.toast.title, this.toast.message);
+      } else if (this.toast.type === 'danger') {
+        this.dangerToast(this.toast.title, this.toast.message);
+      }
+    }
+  },
+  props: ['toast']
+});
 
 /***/ }),
 
