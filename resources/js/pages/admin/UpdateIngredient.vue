@@ -73,7 +73,7 @@
                 <hr>
                 <div class="d-flex flex-row-reverse">
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <button @click="updateIngredient" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-marker"></i> Atualizar</button>
+                        <button @click="updateItem" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-marker"></i> Atualizar</button>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
                         <router-link tag="button" :to="{name: 'admin.ingredients'}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</router-link>
@@ -88,6 +88,7 @@
 import { required, decimal } from "vuelidate/lib/validators"
 import AdminTemplate from '../../layouts/AdminTemplate'
 import Toast from "../../mixins/toasts"
+import Requests from "../../mixins/updateRequests"
 
 export default {
     components: {
@@ -100,91 +101,37 @@ export default {
         },
     },
 
-    created() {
-        this.ingredient ? null : this.getIngredient()
-    },
-
     data () {
         return {
             name: '',
             category: '',
             price: 0,
-            status: ''
+            status: '',
+            updateRequest: {
+                name: 'admin.ingredients'
+            }
         }
     },
 
     methods: {
-        getIngredient() {
-            axios.get(`${this.endpoint}`, {
-                "headers": {
-                    "authorization": `Bearer ${this.$store.getters.getToken}`,
-                    "Accept": "application/json"
-                }
-            }).then(response => {
-                if (response.data.concluded) {
-                    console.log(response)
-                    this.name = response.data.ingredient.name
-                    this.category = response.data.ingredient.category
-                    this.price = response.data.ingredient.price
-                    this.status = response.data.ingredient.status
-                } else {
-                    this.warningToast('Ação não concluída!', response.data.message)
-                }
-            }).catch(e => {
-                console.log(e)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            })
+        mountedPayload(item) {
+            this.name = item.name;
+            this.category = item.category;
+            this.price = item.price;
+            this.status = item.status;
         },
 
-        updateIngredient() {
-            if (!this.$v.$invalid) {
-                axios.put(`${this.endpoint}`, {
-                    name: this.name,
-                    category: this.category,
-                    price: this.price,
-                    status: this.status,
-                }, {
-                    "headers": {
-                        "authorization": `Bearer ${this.$store.getters.getToken}`,
-                        "Accept": "application/json"
-                    }
-                }).then(response => {
-                    if (response.data.concluded) {
-                        console.log(response.data)
-                        this.$router.push({
-                            name: 'admin.ingredients',
-                            params: {
-                                toast: {
-                                    type: 'success',
-                                    title: 'Ação concluída!',
-                                    message: response.data.message
-                                }
-                            }
-                        })
-                    } else {
-                        this.warningToast('Ação não concluída!', response.data.message)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                })
-            } else {
-                this.$v.$touch()
+        payload() {
+            return {
+                name: this.name,
+                category: this.category,
+                price: this.price,
+                status: this.status,
             }
         },
     },
 
-    mixins: [Toast],
-
-    mounted() {
-        if (this.ingredient) {
-            this.name = this.ingredient.name;
-            this.category = this.ingredient.category;
-            this.price = this.ingredient.price;
-            this.status = this.ingredient.status;
-        }
-    },
-
-    props: ['id', 'ingredient'],
+    mixins: [Toast, Requests],
 
     validations: {
         name: {

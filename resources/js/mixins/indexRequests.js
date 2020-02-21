@@ -69,7 +69,7 @@ export default {
             })
         },
 
-        payload (item, status) {},
+        payload(item, status) {},
 
         priceName(price) {
             return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {

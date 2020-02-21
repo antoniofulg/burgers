@@ -2722,6 +2722,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../layouts/AdminTemplate */ "./resources/js/layouts/AdminTemplate.vue");
 /* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
+/* harmony import */ var _mixins_updateRequests__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/updateRequests */ "./resources/js/mixins/updateRequests.js");
 //
 //
 //
@@ -2808,6 +2809,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2820,91 +2822,34 @@ __webpack_require__.r(__webpack_exports__);
       return "/api/ingredients/".concat(this.id);
     }
   },
-  created: function created() {
-    this.ingredient ? null : this.getIngredient();
-  },
   data: function data() {
     return {
       name: '',
       category: '',
       price: 0,
-      status: ''
+      status: '',
+      updateRequest: {
+        name: 'admin.ingredients'
+      }
     };
   },
   methods: {
-    getIngredient: function getIngredient() {
-      var _this = this;
-
-      axios.get("".concat(this.endpoint), {
-        "headers": {
-          "authorization": "Bearer ".concat(this.$store.getters.getToken),
-          "Accept": "application/json"
-        }
-      }).then(function (response) {
-        if (response.data.concluded) {
-          console.log(response);
-          _this.name = response.data.ingredient.name;
-          _this.category = response.data.ingredient.category;
-          _this.price = response.data.ingredient.price;
-          _this.status = response.data.ingredient.status;
-        } else {
-          _this.warningToast('Ação não concluída!', response.data.message);
-        }
-      })["catch"](function (e) {
-        console.log(e);
-
-        _this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
-      });
+    mountedPayload: function mountedPayload(item) {
+      this.name = item.name;
+      this.category = item.category;
+      this.price = item.price;
+      this.status = item.status;
     },
-    updateIngredient: function updateIngredient() {
-      var _this2 = this;
-
-      if (!this.$v.$invalid) {
-        axios.put("".concat(this.endpoint), {
-          name: this.name,
-          category: this.category,
-          price: this.price,
-          status: this.status
-        }, {
-          "headers": {
-            "authorization": "Bearer ".concat(this.$store.getters.getToken),
-            "Accept": "application/json"
-          }
-        }).then(function (response) {
-          if (response.data.concluded) {
-            console.log(response.data);
-
-            _this2.$router.push({
-              name: 'admin.ingredients',
-              params: {
-                toast: {
-                  type: 'success',
-                  title: 'Ação concluída!',
-                  message: response.data.message
-                }
-              }
-            });
-          } else {
-            _this2.warningToast('Ação não concluída!', response.data.message);
-          }
-        })["catch"](function (e) {
-          console.log(e);
-        });
-      } else {
-        this.$v.$touch();
-      }
+    payload: function payload() {
+      return {
+        name: this.name,
+        category: this.category,
+        price: this.price,
+        status: this.status
+      };
     }
   },
-  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
-  mounted: function mounted() {
-    if (this.ingredient) {
-      this.name = this.ingredient.name;
-      this.category = this.ingredient.category;
-      this.price = this.ingredient.price;
-      this.status = this.ingredient.status;
-    }
-  },
-  props: ['id', 'ingredient'],
+  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"], _mixins_updateRequests__WEBPACK_IMPORTED_MODULE_3__["default"]],
   validations: {
     name: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"]
@@ -75116,7 +75061,7 @@ var render = function() {
                     staticClass:
                       "btn shadow-sm btn-success mt-auto rounded-pill shadow-sm",
                     attrs: { disabled: _vm.$v.$invalid },
-                    on: { click: _vm.updateIngredient }
+                    on: { click: _vm.updateItem }
                   },
                   [
                     _c("i", { staticClass: "mr-1 fas fa-marker" }),
@@ -94508,6 +94453,96 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   props: ['toast']
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/updateRequests.js":
+/*!***********************************************!*\
+  !*** ./resources/js/mixins/updateRequests.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    endpoint: function endpoint() {
+      return "/api/ingredients/".concat(this.id);
+    },
+    headers: function headers() {
+      return {
+        "headers": {
+          "authorization": "Bearer ".concat(this.$store.getters.getToken),
+          "Accept": "application/json"
+        }
+      };
+    }
+  },
+  created: function created() {
+    this.item ? null : this.getItem();
+  },
+  data: function data() {
+    return {
+      updateRequest: {}
+    };
+  },
+  methods: {
+    mountedPayload: function mountedPayload(item) {},
+    payload: function payload() {},
+    getItem: function getItem() {
+      var _this = this;
+
+      axios.get("".concat(this.endpoint), this.headers).then(function (response) {
+        if (response.data.concluded) {
+          _this.mountedPayload(response.data.item);
+        } else {
+          _this.warningToast('Ação não concluída!', response.data.message);
+        }
+      })["catch"](function (e) {
+        console.log(e);
+
+        _this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
+      });
+    },
+    updateItem: function updateItem() {
+      var _this2 = this;
+
+      if (!this.$v.$invalid) {
+        axios.put("".concat(this.endpoint), this.payload(), this.headers).then(function (response) {
+          if (response.data.concluded) {
+            _this2.$router.push({
+              name: _this2.updateRequest.name,
+              params: {
+                toast: {
+                  type: 'success',
+                  title: 'Ação concluída!',
+                  message: response.data.message
+                }
+              }
+            });
+          } else {
+            console.log(response.data);
+
+            _this2.warningToast('Ação não concluída!', response.data.message);
+          }
+        })["catch"](function (e) {
+          console.log(e);
+
+          _this2.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
+        });
+      } else {
+        this.$v.$touch();
+      }
+    }
+  },
+  mounted: function mounted() {
+    if (this.item) {
+      this.mountedPayload(this.item);
+    }
+  },
+  props: ['id', 'item']
 });
 
 /***/ }),

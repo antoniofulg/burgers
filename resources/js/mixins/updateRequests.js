@@ -20,28 +20,14 @@ export default {
 
     data() {
         return {
-            updateRequest: {
-                name: 'admin.ingredients'
-            }
+            updateRequest: {}
         }
     },
 
     methods: {
-        mountedPayload(item) {
-            this.name = this.item.name;
-            this.category = this.item.category;
-            this.price = this.item.price;
-            this.status = this.item.status;
-        },
+        mountedPayload(item) {},
 
-        payload() {
-            return {
-                name: this.name,
-                category: this.category,
-                price: this.price,
-                status: this.status,
-            }
-        },
+        payload() {},
 
         getItem() {
             axios.get(`${this.endpoint}`,
@@ -61,7 +47,7 @@ export default {
         updateItem() {
             if (!this.$v.$invalid) {
                 axios.put(`${this.endpoint}`,
-                    this.payload,
+                    this.payload(),
                     this.headers
                 ).then(response => {
                     if (response.data.concluded) {
@@ -76,6 +62,7 @@ export default {
                             }
                         })
                     } else {
+                        console.log(response.data)
                         this.warningToast('Ação não concluída!', response.data.message)
                     }
                 }).catch(e => {
@@ -90,7 +77,7 @@ export default {
 
     mounted() {
         if (this.item) {
-            this.mountedPayload(item)
+            this.mountedPayload(this.item)
         }
     },
 
