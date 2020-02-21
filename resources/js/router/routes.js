@@ -1,15 +1,15 @@
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import Unauthorized from '../pages/auth/Unauthorized'
-import MasterBurguers from '../pages/master/Burguers'
-import MasterDashboard from '../pages/master/Dashboard'
-import MasterDrinks from '../pages/master/Drinks'
-import MasterIngredients from '../pages/master/Ingredients'
-import MasterAddIngredient from '../pages/master/AddIngredient'
-import MasterUpdateIngredient from '../pages/master/UpdateIngredient'
-import MasterOrders from '../pages/master/Orders'
-import MasterSideDishes from '../pages/master/SideDishes'
-import MasterUsers from '../pages/master/Users'
+import AdminBurguers from '../pages/admin/Burguers'
+import AdminDashboard from '../pages/admin/Dashboard'
+import AdminDrinks from '../pages/admin/Drinks'
+import AdminIngredients from '../pages/admin/Ingredients'
+import AdminAddIngredient from '../pages/admin/AddIngredient'
+import AdminUpdateIngredient from '../pages/admin/UpdateIngredient'
+import AdminOrders from '../pages/admin/Orders'
+import AdminSideDishes from '../pages/admin/SideDishes'
+import AdminUsers from '../pages/admin/Users'
 
 const routes = [
     {
@@ -40,7 +40,7 @@ const routes = [
     },
     {
         path: '/perfil',
-        component: MasterDashboard,
+        component: AdminDashboard,
         name: 'profile',
         meta: {
             requiresAuth: true
@@ -48,8 +48,8 @@ const routes = [
     },
     {
         path: '/dashboard',
-        component: MasterDashboard,
-        name: 'master.dashboard',
+        component: AdminDashboard,
+        name: 'admin.dashboard',
         props: true,
         meta: {
             admin: true
@@ -57,48 +57,48 @@ const routes = [
     },
     {
         path: '/pedidos',
-        component: MasterOrders,
-        name: 'master.orders',
+        component: AdminOrders,
+        name: 'admin.orders',
         meta: {
             admin: true
         }
     },
     {
         path: '/usuarios',
-        component: MasterUsers,
-        name: 'master.users',
+        component: AdminUsers,
+        name: 'admin.users',
         meta: {
             admin: true
         }
     },
     {
         path: '/alimentos',
-        component: MasterSideDishes,
-        name: 'master.foods',
+        component: AdminSideDishes,
+        name: 'admin.foods',
         meta: {
             admin: true
         }
     },
     {
         path: '/bebidas',
-        component: MasterDrinks,
-        name: 'master.drinks',
+        component: AdminDrinks,
+        name: 'admin.drinks',
         meta: {
             admin: true
         }
     },
     {
         path: '/hamburguers',
-        component: MasterBurguers,
-        name: 'master.burguers',
+        component: AdminBurguers,
+        name: 'admin.burguers',
         meta: {
             admin: true
         }
     },
     {
         path: '/ingredientes',
-        component: MasterIngredients,
-        name: 'master.ingredients',
+        component: AdminIngredients,
+        name: 'admin.ingredients',
         props: true,
         meta: {
             admin: true
@@ -106,16 +106,16 @@ const routes = [
     },
     {
         path: '/ingredientes/add',
-        component: MasterAddIngredient,
-        name: 'master.ingredients.add',
+        component: AdminAddIngredient,
+        name: 'admin.ingredients.add',
         meta: {
             admin: true
         }
     },
     {
         path: '/ingredientes/update/:id',
-        component: MasterUpdateIngredient,
-        name: 'master.ingredients.update',
+        component: AdminUpdateIngredient,
+        name: 'admin.ingredients.update',
         props: true,
         meta: {
             admin: true

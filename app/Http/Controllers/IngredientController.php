@@ -18,7 +18,7 @@ class IngredientController extends Controller
         $ingredients = Ingredient::orderBy('category', 'ASC')->orderBy('name', 'ASC')->get();
         return response()->json([
             'concluded' => true,
-            'ingredients' => $ingredients,
+            'items' => $ingredients,
         ]);
     }
 
@@ -73,7 +73,7 @@ class IngredientController extends Controller
         if ($ingredient) {
             return response()->json([
                 'concluded' => true,
-                'ingredient' => $ingredient
+                'item' => $ingredient
             ]);
         }
         return response()->json([

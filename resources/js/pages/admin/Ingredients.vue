@@ -1,8 +1,10 @@
 <template>
     <admin-template>
         <div class="container mt-5">
+
             <h1>Ingredientes <span data-toggle="modal" data-target="#help"><i class="fas fa-question-circle text-info pointer"></i></span></h1>
             <hr>
+
             <div class="row">     
                 <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
                     <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
@@ -11,10 +13,12 @@
                     </div>
                 </form>
                 <div class="col-md-4">
-                    <router-link tag="button" :to="{name: 'master.ingredients.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo ingrediente</router-link>
+                    <router-link tag="button" :to="{name: 'admin.ingredients.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo ingrediente</router-link>
                 </div> 
             </div>
+
             <hr>
+
             <div class="table-responsive">
                 <b-table
                     :filter="filter"
@@ -55,6 +59,7 @@
                     </template>
                 </b-table>
             </div>
+
             <modal id="delete" title="Confirme sua ação!">
                 <template v-slot:body>
                     <strong>Você realmente deseja apagar este ingrediente?</strong>
@@ -207,7 +212,7 @@ export default {
 
         editIngredient(ingredient) {
             this.$router.push({
-                name: 'master.ingredients.update',
+                name: 'admin.ingredients.update',
                 params: {
                     id: ingredient.id,
                     ingredient
