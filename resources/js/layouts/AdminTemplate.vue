@@ -15,10 +15,10 @@
                     <i class="fas fa-utensils"></i> Alimentos
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <router-link tag="a" exact :to="{name: 'admin.foods'}" class="dropdown-item">Acompanhamentos</router-link>
                     <router-link tag="a" exact :to="{name: 'admin.drinks'}" class="dropdown-item">Bebidas</router-link>
                     <router-link tag="a" exact :to="{name: 'admin.burguers'}" class="dropdown-item">Hambúrguers</router-link>
                     <router-link tag="a" exact :to="{name: 'admin.ingredients'}" class="dropdown-item">Ingredientes</router-link>
+                    <router-link tag="a" exact :to="{name: 'admin.snacks'}" class="dropdown-item">Lanches</router-link>
                 </div>
             </li>
         </admin-navbar>

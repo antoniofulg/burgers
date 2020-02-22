@@ -1,17 +1,23 @@
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import Unauthorized from '../pages/auth/Unauthorized'
-import AdminBurguers from '../pages/admin/Burguers'
-import AdminDashboard from '../pages/admin/Dashboard'
-import AdminDrinks from '../pages/admin/Drinks'
-import AdminAddDrink from '../pages/admin/AddDrink'
-import AdminUpdateDrink from '../pages/admin/UpdateDrink'
-import AdminIngredients from '../pages/admin/Ingredients'
-import AdminAddIngredient from '../pages/admin/AddIngredient'
-import AdminUpdateIngredient from '../pages/admin/UpdateIngredient'
-import AdminOrders from '../pages/admin/Orders'
-import AdminSideDishes from '../pages/admin/SideDishes'
-import AdminUsers from '../pages/admin/Users'
+import Burguers from '../pages/admin/Burguers'
+import Dashboard from '../pages/admin/Dashboard'
+//Drinks
+import Drinks from '../pages/admin/Drinks'
+import DrinkAdd from '../pages/admin/DrinkAdd'
+import DrinkUpdate from '../pages/admin/DrinkUpdate'
+//Ingredients
+import Ingredients from '../pages/admin/Ingredients'
+import IngredientAdd from '../pages/admin/IngredientAdd'
+import IngredientUpdate from '../pages/admin/IngredientUpdate'
+//Orders
+import Orders from '../pages/admin/Orders'
+//Snacks
+import Snacks from '../pages/admin/Snacks'
+import SnackAdd from '../pages/admin/SnackAdd'
+import SnackUpdate from '../pages/admin/SnackUpdate'
+import Users from '../pages/admin/Users'
 
 const routes = [
     {
@@ -42,7 +48,7 @@ const routes = [
     },
     {
         path: '/perfil',
-        component: AdminDashboard,
+        component: Dashboard,
         name: 'profile',
         meta: {
             requiresAuth: true
@@ -50,7 +56,7 @@ const routes = [
     },
     {
         path: '/dashboard',
-        component: AdminDashboard,
+        component: Dashboard,
         name: 'admin.dashboard',
         props: true,
         meta: {
@@ -59,7 +65,7 @@ const routes = [
     },
     {
         path: '/pedidos',
-        component: AdminOrders,
+        component: Orders,
         name: 'admin.orders',
         meta: {
             admin: true
@@ -67,23 +73,42 @@ const routes = [
     },
     {
         path: '/usuarios',
-        component: AdminUsers,
+        component: Users,
         name: 'admin.users',
         meta: {
             admin: true
         }
     },
     {
-        path: '/alimentos',
-        component: AdminSideDishes,
-        name: 'admin.foods',
+        path: '/lanches',
+        component: Snacks,
+        name: 'admin.snacks',
+        props: true,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/lanches/novo',
+        component: SnackAdd,
+        name: 'admin.snacks.add',
+        props: true,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/lanches/atualizar/:id',
+        component: SnackUpdate,
+        name: 'admin.snacks.update',
+        props: true,
         meta: {
             admin: true
         }
     },
     {
         path: '/bebidas',
-        component: AdminDrinks,
+        component: Drinks,
         name: 'admin.drinks',
         props: true,
         meta: {
@@ -92,7 +117,7 @@ const routes = [
     },
     {
         path: '/bebidas/nova',
-        component: AdminAddDrink,
+        component: DrinkAdd,
         name: 'admin.drinks.add',
         meta: {
             admin: true
@@ -100,7 +125,7 @@ const routes = [
     },
     {
         path: '/bebidas/atualizar/:id',
-        component: AdminUpdateDrink,
+        component: DrinkUpdate,
         name: 'admin.drinks.update',
         props: true,
         meta: {
@@ -109,7 +134,7 @@ const routes = [
     },
     {
         path: '/hamburguers',
-        component: AdminBurguers,
+        component: Burguers,
         name: 'admin.burguers',
         meta: {
             admin: true
@@ -117,7 +142,7 @@ const routes = [
     },
     {
         path: '/ingredientes',
-        component: AdminIngredients,
+        component: Ingredients,
         name: 'admin.ingredients',
         props: true,
         meta: {
@@ -126,7 +151,7 @@ const routes = [
     },
     {
         path: '/ingredientes/novo',
-        component: AdminAddIngredient,
+        component: IngredientAdd,
         name: 'admin.ingredients.add',
         meta: {
             admin: true
@@ -134,7 +159,7 @@ const routes = [
     },
     {
         path: '/ingredientes/atualizar/:id',
-        component: AdminUpdateIngredient,
+        component: IngredientUpdate,
         name: 'admin.ingredients.update',
         props: true,
         meta: {

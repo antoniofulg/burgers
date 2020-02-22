@@ -27,7 +27,7 @@ class Order extends Model
         return $this->BelongsToMany('App/Drink');
     }
 
-    public function foods() {
-        return $this->BelongsToMany('App/Food');
+    public function snacks() {
+        return $this->BelongsToMany('App/Snack');
     }
 }
