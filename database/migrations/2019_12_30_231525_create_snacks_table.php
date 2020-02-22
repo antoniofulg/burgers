@@ -19,8 +19,11 @@ class CreateSnacksTable extends Migration
             $table->text('description')->nullable();
             $table->enum('status', ['avaliable', 'unavaliable', 'desactivated']); //Status do hamburguer, se está disponível / indisponível / ou se não deve aparecer no cardápio;
             $table->double('price', 8, 2);
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('category_id')->on('categories')->references('id');
         });
     }
 

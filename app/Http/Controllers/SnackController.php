@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Food;
+use App\Snack;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class FoodController extends Controller
+class SnackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $food = Food::paginate(10);
+        $snack = Snack::paginate(10);
         return response()->json([
             'concluded' => true,
-            'food' => $food,
+            'snack' => $snack,
         ]);
     }
 
@@ -34,6 +34,7 @@ class FoodController extends Controller
 
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
+            'description' => ['alpha_num'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
             'price' => ['required', 'numeric']
         ]);
@@ -46,7 +47,7 @@ class FoodController extends Controller
             ];
         }
 
-        $food = Food::create([
+        $snack = Snack::create([
             'name' => $request->name,
             'status' => $request->status,
             'price' => $request->price,
@@ -55,7 +56,7 @@ class FoodController extends Controller
         return response()->json([
             'concluded' => true,
             'message' => 'Alimento cadastrado com sucesso!',
-            'food' => $food,
+            'snack' => $snack,
         ]);
     }
 
@@ -95,18 +96,18 @@ class FoodController extends Controller
             ];
         }
 
-        $food = Food::find($id);
+        $snack = Snack::find($id);
         
-        $food->name = $request->name;
-        $food->status = $request->status;
-        $food->price = $request->price;
+        $snack->name = $request->name;
+        $snack->status = $request->status;
+        $snack->price = $request->price;
 
-        $food->save();
+        $snack->save();
 
         return response()->json([
             'concluded' => true,
             'message' => 'Alimento atualizado com sucesso!',
-            'food' => $food
+            'snack' => $snack
         ]);
     }
 
@@ -118,10 +119,10 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        $food = Food::find($id);
+        $snack = Snack::find($id);
 
-        if ($food) {
-            $food->delete();
+        if ($snack) {
+            $snack->delete();
             return response()->json([
                 'concluded' => true,
                 'message' => 'Alimento excluído com sucesso!'
