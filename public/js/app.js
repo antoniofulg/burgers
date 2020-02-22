@@ -2126,40 +2126,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/Burguers.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/Burguers.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layouts/AdminTemplate */ "./resources/js/layouts/AdminTemplate.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    AdminTemplate: _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/Categories.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/Categories.vue?vue&type=script&lang=js& ***!
@@ -3252,6 +3218,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3320,6 +3287,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layouts_AdminTemplate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../layouts/AdminTemplate */ "./resources/js/layouts/AdminTemplate.vue");
 /* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
 /* harmony import */ var _mixins_updateRequests__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/updateRequests */ "./resources/js/mixins/updateRequests.js");
+//
 //
 //
 //
@@ -3656,12 +3624,14 @@ __webpack_require__.r(__webpack_exports__);
     categoryName: function categoryName(category) {
       if (category === 'bread') {
         return 'Pães';
-      } else if (category === 'blend') {
+      } else if (category === 'beef') {
         return 'Carnes';
       } else if (category === 'cheese') {
         return 'Queijos';
       } else if (category === 'salad') {
         return 'Saladas';
+      } else if (category === 'sauce') {
+        return 'Molhos';
       } else if (category === 'side_dishes') {
         return 'Acompanhamentos';
       }
@@ -75236,56 +75206,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/Burguers.vue?vue&type=template&id=1eda62a2&":
-/*!************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/Burguers.vue?vue&type=template&id=1eda62a2& ***!
-  \************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("admin-template", [
-    _c("div", { staticClass: "container mt-5" }, [
-      _c("h1", [_vm._v("Hambúrgueres")]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "list-group" }, [
-        _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("Cras justo odio")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("Dapibus ac facilisis in")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("Morbi leo risus")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("Porta ac consectetur ac")
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("Vestibulum at eros")
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/Categories.vue?vue&type=template&id=9b7cdf36&scoped=true&":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/Categories.vue?vue&type=template&id=9b7cdf36&scoped=true& ***!
@@ -77436,8 +77356,10 @@ var render = function() {
                     _vm._v("Acompanhamento")
                   ]),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "blend" } }, [
-                    _vm._v("Carne")
+                  _c("option", { attrs: { value: "beef" } }, [_vm._v("Carne")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "sauce" } }, [
+                    _vm._v("Molho")
                   ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "bread" } }, [_vm._v("Pão")]),
@@ -77781,6 +77703,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("option", { attrs: { value: "blend" } }, [
                     _vm._v("Carne")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "sauce" } }, [
+                    _vm._v("Molho")
                   ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "bread" } }, [_vm._v("Pão")]),
@@ -99236,67 +99162,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/pages/admin/Burguers.vue ***!
   \***********************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Burguers_vue_vue_type_template_id_1eda62a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Burguers.vue?vue&type=template&id=1eda62a2& */ "./resources/js/pages/admin/Burguers.vue?vue&type=template&id=1eda62a2&");
-/* harmony import */ var _Burguers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Burguers.vue?vue&type=script&lang=js& */ "./resources/js/pages/admin/Burguers.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Burguers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Burguers_vue_vue_type_template_id_1eda62a2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Burguers_vue_vue_type_template_id_1eda62a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/pages/admin/Burguers.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/pages/admin/Burguers.vue?vue&type=script&lang=js&":
-/*!************************************************************************!*\
-  !*** ./resources/js/pages/admin/Burguers.vue?vue&type=script&lang=js& ***!
-  \************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Burguers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Burguers.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/Burguers.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Burguers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/pages/admin/Burguers.vue?vue&type=template&id=1eda62a2&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/pages/admin/Burguers.vue?vue&type=template&id=1eda62a2& ***!
-  \******************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Burguers_vue_vue_type_template_id_1eda62a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Burguers.vue?vue&type=template&id=1eda62a2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/Burguers.vue?vue&type=template&id=1eda62a2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Burguers_vue_vue_type_template_id_1eda62a2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Burguers_vue_vue_type_template_id_1eda62a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/home/antoniofulg/Projetos/Burguers/resources/js/pages/admin/Burguers.vue'");
 
 /***/ }),
 

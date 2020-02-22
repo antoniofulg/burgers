@@ -28,7 +28,8 @@
                         </div>
                             <option disabled value="" selected>Selecione uma categoria</option>
                             <option value="side_dishes">Acompanhamento</option>
-                            <option value="blend">Carne</option>
+                            <option value="beef">Carne</option>
+                            <option value="sauce">Molho</option>
                             <option value="bread">Pão</option>
                             <option value="chesse">Queijo</option>
                             <option value="salad">Salada</option>

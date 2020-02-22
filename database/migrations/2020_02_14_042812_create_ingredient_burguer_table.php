@@ -15,12 +15,13 @@ class CreateIngredientBurguerTable extends Migration
     {
         Schema::create('ingredient_burguer', function (Blueprint $table) {
             $table->unsignedBigInteger('burguer_id');
-            $table->unsignedBigInteger('ingredient_id');
+            $table->unsignedBigInteger('ingredient_id')->nullable();
+            $table->enum('category', ['bread', 'beef', 'cheese', 'salad', 'sauce', 'side_dishes'])->nullable();
+            $table->integer('amount');
             $table->timestamps();
 
-            $table->primary(['burguer_id', 'ingredient_id']);
-            // $table->foreign('burguer_id')->references('id')->on('burguers');
-            // $table->foreign('ingredient_id')->references('id')->on('ingredients');
+            $table->foreign('burguer_id')->references('id')->on('burguers');
+            $table->foreign('ingredient_id')->references('id')->on('ingredients');
         });
     }
 

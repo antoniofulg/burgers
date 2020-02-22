@@ -186,12 +186,14 @@ export default {
         categoryName(category) {
             if (category ===  'bread') {
                 return 'Pães'
-            } else if (category === 'blend') {
+            } else if (category === 'beef') {
                 return 'Carnes'
             } else if (category === 'cheese') {
                 return 'Queijos'
             } else if (category === 'salad') {
                 return 'Saladas'
+            } else if (category === 'sauce') {
+                return 'Molhos'
             } else if (category === 'side_dishes') {
                 return 'Acompanhamentos'
             }
