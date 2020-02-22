@@ -7,6 +7,20 @@ const mutations = {
         state.users = n
     },
 
+    // Categories
+    setCategories(state, n) {
+        state.categories = n
+    },
+
+    updateCategory(state, n) {
+        let founded = state.categories.findIndex(item => item.id == n.id)
+        state.categories[founded] = n
+    },
+
+    removeCategory(state, n) {
+        state.categories.push(n)
+    },
+
     // Drinks
     setDrinks(state, n) {
         state.drinks = n

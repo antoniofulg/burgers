@@ -20,14 +20,14 @@ class Order extends Model
     protected $appends = [];
 
     public function burguers() {
-        return $this->BelongsToMany('App/Burguer');
+        return $this->BelongsToMany('App\Burguer');
     }
 
     public function drinks() {
-        return $this->BelongsToMany('App/Drink');
+        return $this->BelongsToMany('App\Drink');
     }
 
     public function snacks() {
-        return $this->BelongsToMany('App/Snack');
+        return $this->BelongsToMany('App\Snack');
     }
 }

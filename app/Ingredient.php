@@ -9,16 +9,12 @@ class Ingredient extends Model
 {
     use SoftDeletes;
 
-    protected $appends = [
-        'creation_date'
-    ];
-
     protected $fillable = [
         'category', 'status', 'price', 'name'
     ];
 
     protected $hidden = [
-        'created_at'
+        'created_at', 'updated_at', 'deleted_at'
     ];
 
     public function getCreationDateAttribute() {

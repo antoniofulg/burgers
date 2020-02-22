@@ -6,7 +6,8 @@ export default {
             return {
                 "headers": {
                     "authorization": `Bearer ${this.$store.getters.getToken}`,
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
                 }
             }
         }
@@ -20,11 +21,13 @@ export default {
 
     methods: {
         insertItem() {
+            console.log(this.payload())
             if (!this.$v.$invalid) {
                 axios.post(`${this.endpoint}`,
                     this.payload(),
                     this.headers
                 ).then(response => {
+                    console.log(response)
                     if (response.data.concluded) {
                         this.$router.push({
                             name: this.storeRequest.name,

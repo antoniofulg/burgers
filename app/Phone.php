@@ -16,6 +16,10 @@ class Phone extends Model
         'number', 'user_id'
     ];
 
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
+
     public function user() {
         return $this->belongsTo('App\User');
     }

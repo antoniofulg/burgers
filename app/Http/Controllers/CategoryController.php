@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Snack;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SnackController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class SnackController extends Controller
      */
     public function index()
     {
-        $snack = Snack::all();
+        $category = Category::all();
         return response()->json([
             'concluded' => true,
-            'items' => $snack,
+            'items' => $category,
         ]);
     }
 
@@ -33,10 +33,7 @@ class SnackController extends Controller
         $data = $request->all();
 
         $validation = Validator::make($data, [
-            'name' => ['required', 'string'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'price' => ['required', 'numeric']
+            'name' => ['required', 'string']
         ]);
     
         if($validation->fails()){
@@ -47,12 +44,9 @@ class SnackController extends Controller
             ];
         }
 
-        Snack::create([
+        Category::create([
             'name' => $request->name,
             'description' => $request->description,
-            'price' => $request->price,
-            'status' => $request->status,
-            'category_id' => $request->category_id,
         ]);
 
         return response()->json([
@@ -69,17 +63,17 @@ class SnackController extends Controller
      */
     public function show($id)
     {
-        $snack = Snack::find($id);
+        $category = Category::find($id);
 
-        if ($snack) {
+        if ($category) {
             return response()->json([
                 'concluded' => true,
-                'item' => $snack
+                'item' => $category
             ]);
         }
         return response()->json([
             'concluded' => true,
-            'message' => 'Lanche não encontrado!'
+            'message' => 'Categoria não encontrada!'
         ]);
     }
 
@@ -96,9 +90,6 @@ class SnackController extends Controller
 
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'price' => ['required', 'numeric']
         ]);
     
         if($validation->fails()){
@@ -109,14 +100,12 @@ class SnackController extends Controller
             ];
         }
 
-        $snack = Snack::find($id);
+        $category = Category::find($id);
         
-        $snack->name = $request->name;
-        $snack->description = $request->description;
-        $snack->category_id = $request->category_id;
-        $snack->price = $request->price;
+        $category->name = $request->name;
+        $category->description = $request->description;
 
-        $snack->save();
+        $category->save();
 
         return response()->json([
             'concluded' => true,
@@ -132,19 +121,19 @@ class SnackController extends Controller
      */
     public function destroy($id)
     {
-        $snack = Snack::find($id);
+        $category = Category::find($id);
 
-        if ($snack) {
-            $snack->delete();
+        if ($category) {
+            $category->delete();
             return response()->json([
                 'concluded' => true,
-                'message' => 'Lanche excluído com sucesso!'
+                'message' => 'Categoria excluída com sucesso!'
             ]);
         }
         
         return response()->json([
             'concluded' => false,
-            'message' => 'Lanche não encontrado!'
+            'message' => 'Categoria não encontrada!'
         ]);
     }
 }

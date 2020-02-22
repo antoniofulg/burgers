@@ -12,16 +12,26 @@ const getters = {
     getUsers: state => {
         return state.users
     },
+
+    // Categories
+    getCategories: state => {
+        return state.categories
+    },
+    
+    // Drinks
+    getDrinks: state => {
+        return state.drinks
+    },
     
     // Ingredients
     getIngredients: state => {
         return state.ingredients
     },
     
-    // Drinks
-    getDrinks: state => {
-        return state.drinks
-    }
+    // Snacks
+    getSnacks: state => {
+        return state.snacks
+    },
 
 }
 

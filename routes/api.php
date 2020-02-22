@@ -20,9 +20,10 @@ Route::post('/register', 'AuthController@register');
 Route::middleware(['auth:api'])->group(function() {
     //Logout
     Route::post('/logout', 'AuthController@logout');
+    Route::apiResource('/categories', 'CategoryController');
+    Route::apiResource('/drinks', 'DrinkController');
     Route::apiResource('/ingredients', 'IngredientController');
-    Route::apiResource('/foods', 'FoodController')->except('show');
-    Route::apiResource('/drinks', 'DrinkController')->except('show');
+    Route::apiResource('/snacks', 'SnackController');
     // Route::apiResource('/questions.answers', 'Api\AnswersController')->except('index');
     // Route::post('/questions/{question}/vote', 'Api\VoteQuestionController');
     // Route::post('/answers/{answer}/vote', 'Api\VoteAnswerController');

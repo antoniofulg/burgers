@@ -19,20 +19,24 @@
                     <div class="form-group col-sm-12 col-md-4">
                         <label for="category">Categoria</label>
                         <select
-                            @input="$v.category.$touch()"
-                            :class="{ 'is-invalid': $v.category.$dirty && $v.category.$invalid}"
-                            v-model="category"
+                            @input="$v.category_id.$touch()"
+                            :class="{ 'is-invalid': $v.category_id.$dirty && $v.category_id.$invalid}"
+                            v-model="category_id"
                         class="custom-select shadow-sm" id="category">
                         <div ref="invalid_category" class="invalid-feedback">
-                            Por favor, selecione a categoria do lanche.
+                            Por favor, selecione a categoria do ingrediente.
                         </div>
                             <option disabled value="" selected>Selecione uma categoria</option>
-                            <option value="side_dishes">Acompanhamento</option>
-                            <option value="blend">Carne</option>
-                            <option value="bread">Pão</option>
-                            <option value="chesse">Queijo</option>
-                            <option value="salad">Salada</option>
+                            <option v-for="item in itemsList" :key="item.id" :value="item.id">{{item.name}}</option>
                         </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <label for="description">Descrição</label>
+                        <input
+                            v-model="description"
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batatas fritas com molho..." id="description">
                     </div>
                 </div>
                 <div class="form-row">
@@ -96,17 +100,37 @@ export default {
     },
 
     computed: {
-        endpoint () {
+        endpoint() {
             return `/api/snacks`
         },
+
+        itemsList()  {
+            return this.$store.getters.getCategories
+        }
+    },
+
+    created() {
+        axios.get(`/api/categories`, this.headers)
+            .then(response => {
+                console.log(response)
+                if (response.data.concluded) {
+                    this.$store.commit('setCategories', response.data.items)
+                } else {
+                    this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
+                }
+            }).catch(e => {
+                console.log(e)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            })
     },
 
     data () {
         return {
             name: '',
-            category: '',
+            description: '',
             price: 0,
             status: '',
+            category_id: '',
             storeRequest: {
                 name: 'admin.snacks'
             }
@@ -117,9 +141,10 @@ export default {
         payload() {
             return {
                 name: this.name,
-                category: this.category,
+                description: this.description,
                 price: this.price,
                 status: this.status,
+                category_id: this.category_id
             }
         }
     },
@@ -130,7 +155,7 @@ export default {
         name: {
             required
         },
-        category: {
+        category_id: {
             required
         },
         price: {

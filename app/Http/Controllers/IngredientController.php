@@ -80,7 +80,6 @@ class IngredientController extends Controller
             'concluded' => true,
             'message' => 'Ingrediente não encontrado!'
         ]);
-
     }
 
     /**

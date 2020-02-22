@@ -13,7 +13,7 @@
                     </div>
                 </form>
                 <div class="col-md-4">
-                    <router-link tag="button" :to="{name: 'admin.ingredients.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo lanche</router-link>
+                    <router-link tag="button" :to="{name: 'admin.snacks.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo lanche</router-link>
                 </div> 
             </div>
 
@@ -64,7 +64,7 @@
                 <template v-slot:body>
                     <strong>Você realmente deseja apagar este lanche?</strong>
                     <span class="d-block"><strong>Nome: </strong> {{deleteTarget.name}}</span> 
-                    <span class="d-block"><strong>Categoria: </strong> {{categoryName(deleteTarget.category)}}</span> 
+                    <span class="d-block"><strong>Categoria: </strong> {{deleteTarget.category.name}}</span> 
                     <span class="d-block"><strong>Estado: </strong> {{statusName(deleteTarget.status)}}</span>
                     <span class="d-block"><strong>Preço: </strong> {{priceName(deleteTarget.price)}}</span>
                 </template>
@@ -123,18 +123,28 @@ export default {
 
     computed: {
         endpoint () {
-            return `/api/foods`
+            return `/api/snacks`
         },
 
         itemsList() {
-            return this.$store.getters.getFoods
+            return this.$store.getters.getSnacks
         }
+    },
+
+    created () {
+        console.log(this.$store.getters.getToken)
     },
 
     data () {
         return {
+            deleteTarget: {
+                category: {
+                    name: ''
+                }
+            },
+
             editRequest: {
-                name: 'admin.snack.update'
+                name: 'admin.snacks.update'
             },
             
             filter: null,
@@ -152,10 +162,10 @@ export default {
                         sortable: true
                     },
                     {
-                        key: 'category',
-                        label: 'Categoria',
+                        key: 'description',
+                        label: 'Descrição',
                         formatter: (value) => {
-                            return this.categoryName(value)
+                            return value ? value : 'Sem descrição'
                         },
                         sortable: true,
                         sortByFormatted: true
@@ -167,6 +177,14 @@ export default {
                             return this.priceName(value)
                         },
                         sortable: true
+                    },
+                    {
+                        key: 'category',
+                        label: 'Categoria',
+                        formatter: (value) => {
+                            return value.name
+                        },
+                        sortable: true,
                     },
                     {
                         key: 'status',
@@ -183,26 +201,13 @@ export default {
     },
 
     methods: {
-        categoryName(category) {
-            if (category ===  'bread') {
-                return 'Pães'
-            } else if (category === 'blend') {
-                return 'Carnes'
-            } else if (category === 'cheese') {
-                return 'Queijos'
-            } else if (category === 'salad') {
-                return 'Saladas'
-            } else if (category === 'side_dishes') {
-                return 'Acompanhamentos'
-            }
-        },
-
         payload (item, status) {
             return {
                 name: item.name,
-                category: item.category,
+                description: item.description,
                 price: item.price,
                 status: status,
+                category: item.category
             }
         },
     },

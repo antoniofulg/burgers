@@ -6,7 +6,8 @@ export default {
             return {
                 "headers": {
                     "authorization": `Bearer ${this.$store.getters.getToken}`,
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
                 }
             }
         },

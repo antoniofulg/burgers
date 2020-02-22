@@ -9,15 +9,25 @@ class Snack extends Model
 {
     use SoftDeletes;
 
+    protected $appends = ['category'];
+
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at', 'category_id'
+    ];
+
     protected $fillable = [
-        'name', 'status', 'price'
+        'name', 'description', 'status', 'price', 'category_id'
     ];
 
     public function orders() {
-        return $this->belongsToMany('App/Order');
+        return $this->belongsToMany('App\Order');
     }
 
-    public function categories() {
-        return $this->belongsTo('App/Category', 'id', 'category_id');
+    public function category() {
+        return $this->belongsTo('App\Category', 'category_id');
+    }
+
+    public function getCategoryAttribute() {
+        return $this->category()->first();
     }
 }

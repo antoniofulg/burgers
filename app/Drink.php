@@ -18,6 +18,6 @@ class Drink extends Model
     ];
 
     public function orders() {
-        $this->belongsToMany('App/Order');
+        $this->belongsToMany('App\Order');
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <admin-template>
         <div class="container mt-5">
-            <h1>Editar ingrediente</h1>
+            <h1>Editar lanche</h1>
             <hr>
             <form @submit.prevent>
                 <div class="form-row">
@@ -11,44 +11,48 @@
                             @input="$v.name.$touch()"
                             :class="{ 'is-invalid': $v.name.$dirty && $v.name.$invalid}"
                             v-model="name"
-                        type="text" class="form-control shadow-sm" id="name">
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi, 100g" id="name">
                         <div ref="invalid_name" class="invalid-feedback">
-                            Por favor, insira um nome para o ingrediente.
+                            Por favor, insira um nome para o lanche.
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-4">
                         <label for="category">Categoria</label>
                         <select
-                            @input="$v.category.$touch()"
-                            :class="{ 'is-invalid': $v.category.$dirty && $v.category.$invalid}"
-                            v-model="category"
+                            @input="$v.category_id.$touch()"
+                            :class="{ 'is-invalid': $v.category_id.$dirty && $v.category_id.$invalid}"
+                            v-model="category_id"
                         class="custom-select shadow-sm" id="category">
                         <div ref="invalid_category" class="invalid-feedback">
                             Por favor, selecione a categoria do ingrediente.
                         </div>
                             <option disabled value="" selected>Selecione uma categoria</option>
-                            <option value="side_dishes">Acompanhamento</option>
-                            <option value="blend">Carne</option>
-                            <option value="bread">Pão</option>
-                            <option value="chesse">Queijo</option>
-                            <option value="salad">Salada</option>
+                            <option v-for="item in itemsList" :key="item.id" :value="item.id">{{item.name}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <label for="description">Descrição</label>
+                        <input
+                            v-model="description"
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batatas fritas com molho..." id="description">
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="input-group col-md-4">
-                        <label for="inputCity">Preço unitário</label>
+                        <label for="inputPrice">Preço unitário</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">R$</span>
+                                <span class="input-group-text">R$</span>
                             </div>
                             <input
                                 @input="$v.price.$touch()"
                                 :class="{ 'is-invalid': $v.price.$dirty && $v.price.$invalid}"
                                 v-model="price"
-                            type="number" class="form-control shadow-sm">
+                            type="number" class="form-control shadow-sm" id="inputPrice">
                             <div ref="invalid_type" class="invalid-feedback">
-                                Por favor, insira um preço para o ingrediente.
+                                Por favor, insira um preço para o lanche.
                             </div>
                         </div>
                     </div>
@@ -61,12 +65,12 @@
                             :class="{ 'is-invalid': $v.status.$dirty && $v.status.$invalid}"
                         id="inputState" class="form-control shadow-sm">
                             <option disabled value="" selected>Selecione um estado</option>
-                            <option value="avaliable" selected>Disponível</option>
+                            <option value="avaliable">Disponível</option>
                             <option value="unavaliable">Indisponível</option>
                             <option value="desactivated">Desativado</option>
                         </select>
                         <div ref="invalid_status" class="invalid-feedback">
-                            Por favor, insira um estado para o ingrediente.
+                            Por favor, insira um estado para o lanche.
                         </div>
                     </div>
                 </div>
@@ -97,36 +101,59 @@ export default {
 
     computed: {
         endpoint () {
-            return `/api/ingredients/${this.id}`
+            return `/api/snacks/${this.id}`
         },
+
+        itemsList()  {
+            return this.$store.getters.getCategories
+        }
+    },
+
+    created() {
+        axios.get(`/api/categories`, this.headers)
+            .then(response => {
+                console.log(response)
+                if (response.data.concluded) {
+                    this.$store.commit('setCategories', response.data.items)
+                } else {
+                    this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
+                }
+            }).catch(e => {
+                console.log(e)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            })
     },
 
     data () {
         return {
             name: '',
-            category: '',
+            description: '',
             price: 0,
             status: '',
+            category_id: null,
             updateRequest: {
-                name: 'admin.ingredients'
+                name: 'admin.snacks'
             }
         }
     },
 
     methods: {
         mountedPayload(item) {
-            this.name = item.name;
-            this.category = item.category;
-            this.price = item.price;
-            this.status = item.status;
+            console.log(item)
+            this.name = item.name
+            this.description = item.description
+            this.price = item.price
+            this.status = item.status
+            this.category_id = item.category.id
         },
 
         payload() {
             return {
                 name: this.name,
-                category: this.category,
+                description: this.description,
                 price: this.price,
                 status: this.status,
+                category_id: this.category_id,
             }
         },
     },
@@ -137,7 +164,7 @@ export default {
         name: {
             required
         },
-        category: {
+        category_id: {
             required
         },
         price: {

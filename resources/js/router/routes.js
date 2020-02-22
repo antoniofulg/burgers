@@ -3,6 +3,10 @@ import Register from '../pages/auth/Register'
 import Unauthorized from '../pages/auth/Unauthorized'
 import Burguers from '../pages/admin/Burguers'
 import Dashboard from '../pages/admin/Dashboard'
+//Categories
+import Categories from '../pages/admin/Categories'
+import CategoryAdd from '../pages/admin/CategoryAdd'
+import CategoryUpdate from '../pages/admin/CategoryUpdate'
 //Drinks
 import Drinks from '../pages/admin/Drinks'
 import DrinkAdd from '../pages/admin/DrinkAdd'
@@ -80,27 +84,26 @@ const routes = [
         }
     },
     {
-        path: '/lanches',
-        component: Snacks,
-        name: 'admin.snacks',
+        path: '/categorias',
+        component: Categories,
+        name: 'admin.categories',
         props: true,
         meta: {
             admin: true
         }
     },
     {
-        path: '/lanches/novo',
-        component: SnackAdd,
-        name: 'admin.snacks.add',
-        props: true,
+        path: '/categorias/nova',
+        component: CategoryAdd,
+        name: 'admin.categories.add',
         meta: {
             admin: true
         }
     },
     {
-        path: '/lanches/atualizar/:id',
-        component: SnackUpdate,
-        name: 'admin.snacks.update',
+        path: '/categorias/atualizar/:id',
+        component: CategoryUpdate,
+        name: 'admin.categories.update',
         props: true,
         meta: {
             admin: true
@@ -161,6 +164,33 @@ const routes = [
         path: '/ingredientes/atualizar/:id',
         component: IngredientUpdate,
         name: 'admin.ingredients.update',
+        props: true,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/lanches',
+        component: Snacks,
+        name: 'admin.snacks',
+        props: true,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/lanches/novo',
+        component: SnackAdd,
+        name: 'admin.snacks.add',
+        props: true,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/lanches/atualizar/:id',
+        component: SnackUpdate,
+        name: 'admin.snacks.update',
         props: true,
         meta: {
             admin: true

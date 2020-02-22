@@ -9,16 +9,12 @@ class Burguer extends Model
 {
     use SoftDeletes;
     
-    protected $appends = [
-        'creation_date'
-    ];
-
     protected $fillable = [
         'name', 'status', 'price'
     ];
 
     protected $hidden = [
-        'created_at'
+        'created_at', 'updated_at', 'deleted_at'
     ];
 
     public function getCreationDateAttribute() {
@@ -26,10 +22,10 @@ class Burguer extends Model
     }
 
     public function ingredients() {
-        $this->belongsToMany('App/Ingredient');
+        $this->belongsToMany('App\Ingredient');
     }
 
     public function orders() {
-        $this->belongsToMany('App/Order');
+        $this->belongsToMany('App\Order');
     }
 }

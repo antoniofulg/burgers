@@ -18,6 +18,7 @@
                     <router-link tag="a" exact :to="{name: 'admin.drinks'}" class="dropdown-item">Bebidas</router-link>
                     <router-link tag="a" exact :to="{name: 'admin.burguers'}" class="dropdown-item">Hambúrguers</router-link>
                     <router-link tag="a" exact :to="{name: 'admin.ingredients'}" class="dropdown-item">Ingredientes</router-link>
+                    <router-link tag="a" exact :to="{name: 'admin.categories'}" class="dropdown-item">Categorias de lanches</router-link>
                     <router-link tag="a" exact :to="{name: 'admin.snacks'}" class="dropdown-item">Lanches</router-link>
                 </div>
             </li>
