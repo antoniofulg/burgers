@@ -10,6 +10,12 @@ use App\User;
 
 class AuthController extends Controller
 {
+    private $attributeNames = [
+        'email' => 'email',
+        'name' => 'nome',
+        'password' => 'senha'
+    ];
+
     public function login(Request $request) {
 
         $data = $request->all();
@@ -18,6 +24,8 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8'],
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return response()->json([
@@ -50,6 +58,8 @@ class AuthController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return response()->json([

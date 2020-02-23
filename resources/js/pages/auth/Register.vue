@@ -8,48 +8,59 @@
                             <div class="form-group">
                                 <label for="name">Nome</label>
                                 <input
-                                    @input="$v.name.$touch()"
-                                    :class="{ 'is-invalid': $v.name.$dirty && $v.name.$invalid}"
-                                    v-model="name"
+                                    :class="{'is-invalid': $v.name.$error}"
+                                    v-model="$v.name.$model"
                                     type="text"
                                     class="form-control"
                                     id="name"
                                 />
-                                <div ref="invalid_name" class="invalid-feedback">
-                                    Por favor, insira nome e sobrenome.
+                                <div v-if="!$v.name.required" class="invalid-feedback">
+                                    Por favor, preencha este campo.
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input
-                                    @input="$v.email.$touch()"
-                                    :class="{ 'is-invalid': $v.email.$dirty && $v.email.$invalid}"
-                                    v-model="email"
+                                    :class="{'is-invalid': $v.email.$error}"
+                                    v-model="$v.email.$model"
                                     type="email" class="form-control" id="email"/>
-                                <div ref="invalid_email" class="invalid-feedback">
-                                    Por favor, insira um e-mail válido.
+                                <div v-if="!$v.email.required" class="invalid-feedback">
+                                    Por favor, preencha este campo.
+                                </div>
+                                <div v-if="!$v.email.email" class="invalid-feedback">
+                                    Por favor, preencha com um email válido.
+                                </div>
+                                <div v-if="!$v.email.not" class="invalid-feedback">
+                                    Este email já está sendo utilizado.
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password">Senha</label>
                                 <input
-                                    @input="$v.password.$touch()"
-                                    :class="{ 'is-invalid': $v.password.$dirty && $v.password.$invalid}"
-                                    v-model="password"
+                                    :class="{'is-invalid': $v.password.$error}"
+                                    v-model="$v.password.$model"
                                     type="password" class="form-control" id="password"/>
-                                <div ref="invalid_password" class="invalid-feedback">
-                                    Por favor, preencha o campo de senha.
+                                <div v-if="!$v.password.required" class="invalid-feedback">
+                                    Por favor, preencha este campo.
+                                </div>
+                                <div v-if="!$v.password.minLength" class="invalid-feedback">
+                                    Este campo deve ter pelo menos {{$v.password.$params.minLength.min}} caracteres.
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password_confirmation">Confirmar senha</label>
                                 <input
-                                    @input="$v.password_confirmation.$touch()"
-                                    :class="{ 'is-invalid': $v.password_confirmation.$dirty && $v.password_confirmation.$invalid}"
-                                    v-model="password_confirmation"
+                                    :class="{'is-invalid': $v.password_confirmation.$error}"
+                                    v-model="$v.password_confirmation.$model"
                                     type="password" class="form-control" id="password_confirmation">
-                                <div ref="invalid_password" class="invalid-feedback">
-                                    Por favor, confirme sua senha.
+                                <div v-if="!$v.password_confirmation.required" class="invalid-feedback">
+                                    Por favor, preencha este campo.
+                                </div>
+                                <div v-if="!$v.password_confirmation.sameAs" class="invalid-feedback">
+                                    Este campo precisa coincidir com o campo senha.
+                                </div>
+                                <div v-if="!$v.password_confirmation.minLength" class="invalid-feedback">
+                                    Este campo deve ter pelo menos {{$v.password_confirmation.$params.minLength.min}} caracteres.
                                 </div>
                             </div>
                             <button @click="register" :disabled="$v.$invalid" class="btn btn-success btn-block btn-large">Registrar</button>
@@ -64,7 +75,7 @@
 </template>
 
 <script>
-import { required, email, sameAs } from "vuelidate/lib/validators";
+import { required, email, minLength, not, sameAs } from "vuelidate/lib/validators";
 import Toast from "../../mixins/toasts"
 
 export default {
@@ -81,6 +92,7 @@ export default {
     data () {
         return {
             email: '',
+            email_unique: '',
             password: '',
             password_confirmation: '',
             name: ''
@@ -89,28 +101,27 @@ export default {
 
     methods: {
         register() {
-            if (!this.$v.$invalid) {
-                axios.post(this.endpoint, {
-                    email: this.email,
-                    password: this.password,
-                    password_confirmation: this.password_confirmation,
-                    name: this.name,
-                }).then(response => {
-                    console.log(response)
-                    if (response.data.concluded) {
-                        this.$store.commit('setUser', response.data.user)
-                        sessionStorage.setItem('user', JSON.stringify(response.data.user))
-                        this.$router.push({name: 'profile'})
-                    } else {
-                        this.warningToast('Ação não concluída!', response.data.message)
-                        // Informar em quais campos ocorreu problema
+            axios.post(this.endpoint, {
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.password_confirmation,
+                name: this.name,
+            }).then(response => {
+                console.log(response)
+                if (response.data.concluded) {
+                    this.$store.commit('setUser', response.data.user)
+                    sessionStorage.setItem('user', JSON.stringify(response.data.user))
+                    this.$router.push({name: 'profile'})
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                    for (let field in response.data.validation) {
+                        this.warningToast('Erro de validação!', response.data.validation[field])
                     }
-                }).catch(e => {
-                    console.log(e)
-                })
-            } else {
-                this.$v.$touch()
-            }
+                    this.email_unique = this.email
+                }
+            }).catch(e => {
+                console.log(e)
+            })
         }
     },
 
@@ -122,13 +133,16 @@ export default {
         },
         email: {
             required,
-            email
+            email,
+            not: not(sameAs('email_unique'))
         },
         password: {
-            required
+            required,
+            minLength: minLength(8)
         },
         password_confirmation: {
             required,
+            minLength: minLength(8),
             sameAsPassword: sameAs('password')
         },
     }

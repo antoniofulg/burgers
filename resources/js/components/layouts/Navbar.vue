@@ -44,7 +44,15 @@ export default {
           if (response.data.concluded) {
             this.$store.commit('setUser', null)
             sessionStorage.clear()
-            this.$router.push({name: 'login', params: {message: response.data.message}})
+            this.$router.push({name: 'login',
+              params: {
+                toast: {
+                  type: 'warning',
+                  title: 'Ação não concluída!',
+                  message: response.data.message
+                }
+              }
+            })
           } else {
             this.$store.commit('setUser', null)
             sessionStorage.clear()

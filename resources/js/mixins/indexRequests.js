@@ -5,8 +5,8 @@ export default {
         headers () {
             return {
                 "headers": {
-                    "authorization": `Bearer ${this.$store.getters.getToken}`,
                     "Accept": "application/json",
+                    "authorization": `Bearer ${this.$store.getters.getToken}`,
                     "Content-Type": "application/json",
                 }
             }
@@ -30,9 +30,9 @@ export default {
     },
 
     methods: {
-        deleteItem(item) {
-            axios.delete(`${this.endpoint}/${item.id}`, this.headers)
-            .then(response => {
+        async deleteItem(item) {
+            try {
+                axios.delete(`${this.endpoint}/${item.id}`, this.headers)
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
                     this.getItems()
@@ -40,10 +40,10 @@ export default {
                 } else {
                     this.warningToast('Ação não concluída!', response.data.message)
                 }
-            }).catch(e => {
-                console.log(e)
+            } catch (error) {
+                console.log(e.error)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            })
+            }
         },
 
         editItem(item) {
@@ -56,22 +56,22 @@ export default {
             })
         },
 
-        getItems() {
-            axios.get(`${this.endpoint}`, this.headers)
-            .then(response => {
+        async getItems() {
+            try {
+                const response = await axios.get(`${this.endpoint}`, this.headers)
                 console.log(response)
                 if (response.data.concluded) {
                     this.$store.commit(this.getRequest.setItems, response.data.items)
                 } else {
                     this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
                 }
-            }).catch(e => {
-                console.log(e)
+            } catch (error) {
+                console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            })
+            }
         },
 
-        payload(item, status) {},
+        payload() {},
 
         priceName(price) {
             return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {
@@ -84,21 +84,19 @@ export default {
             return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
         },
 
-        updateStatus(item, status) {
-            axios.put(`${this.endpoint}/${item.id}`,
-                this.payload(item, status),
-                this.headers)
-            .then(response => {
+        async updateStatus(item, status) {
+            try {
+                const response = await axios.put(`${this.endpoint}/${item.id}`, this.payload(item, status), this.headers)
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
                     this.getItems()
                 } else {
                     this.warningToast('Ação não concluída!', response.data.message)
                 }
-            }).catch(e => {
-                console.log(e)
+            } catch (error) {
+                console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            })
+            }
         }
     }
 }
