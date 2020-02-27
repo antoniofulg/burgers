@@ -6,7 +6,7 @@
 
         <title>Laravel</title>
 
-        <!-- CSS Materialize -->
+        <!-- CSS Bootstrap -->
         <link rel="stylesheet" href="{{ asset('css/app.css')}}">
 
         <!-- Fonts -->

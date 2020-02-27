@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Validator;
 
 class IngredientController extends Controller
 {
+
+    private $attributeNames = [
+        'name' => 'nome',
+        'status' => 'estado',
+        'category' => 'categoria',
+        'price' => 'preço',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,8 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::orderBy('category', 'ASC')->orderBy('name', 'ASC')->get();
+        $ingredients = Ingredient::all();
+        sleep(2);
         return response()->json([
             'concluded' => true,
             'items' => $ingredients,
@@ -38,6 +47,8 @@ class IngredientController extends Controller
             'category' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return [
@@ -99,6 +110,8 @@ class IngredientController extends Controller
             'category' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return [

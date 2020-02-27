@@ -28,7 +28,10 @@
                                     Por favor, preencha este campo.
                                 </div>
                             </div>
-                            <button @click="login" :disabled="$v.$invalid" class="btn btn-success btn-block btn-large">Entrar</button>
+                            <button @click="login" :disabled="$v.$invalid" class="btn btn-success btn-block btn-large">
+                                <spinner :type="'submit'" v-if="$root.loading"></spinner>
+                                <span v-else>Entrar</span>
+                            </button>
                         </form>
                         <hr>
                         <small id="emailHelp" class="form-text text-muted text-center mb-1">Não publicaremos nada em suas redes sociais!</small>
@@ -66,31 +69,32 @@ export default {
     },
 
     methods: {
-        login() {
-            axios.post(this.endpoint, {
-                email: this.email,
-                password: this.password
-            }).then(response => {
-                console.log(response)
+        async login() {
+            try {
+                const response = await axios.post(this.endpoint, {
+                    email: this.email,
+                    password: this.password
+                })
+
                 if (response.data.concluded) {
                     this.$store.commit('setUser', response.data.user)
                     sessionStorage.setItem('user', JSON.stringify(response.data.user))
                     this.$router.push({name: 'profile',
                         params: {
-                        toast: {
-                            type: 'warning',
-                            title: 'Ação não concluída!',
-                            message: response.data.message
+                            toast: {
+                                type: 'success',
+                                title: 'Ação não concluída!',
+                                message: response.data.message
                             }
                         }
                     })
                 } else {
                     this.dangerToast('Não foi possível realizar o login', response.data.message)
-                    // Informar em quais campos ocorreu problema
                 }
-            }).catch(e => {
-                console.log(e)
-            })
+            } catch (error) {
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            }  
         },
     },
 

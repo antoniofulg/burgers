@@ -30,48 +30,41 @@ export default {
 
         payload() {},
 
-        getItem() {
-            axios.get(`${this.endpoint}`,
-                this.headers
-            ).then(response => {
+        async getItem() {
+            try {
+                const response = await axios.get(`${this.endpoint}`, this.headers)
                 if (response.data.concluded) {
                     this.mountedPayload(response.data.item)
                 } else {
                     this.warningToast('Ação não concluída!', response.data.message)
                 }
-            }).catch(e => {
+            } catch (error) {   
                 console.log(e)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            })
+            }
         },
 
-        updateItem() {
-            if (!this.$v.$invalid) {
-                axios.put(`${this.endpoint}`,
-                    this.payload(),
-                    this.headers
-                ).then(response => {
-                    if (response.data.concluded) {
-                        this.$router.push({
-                            name: this.updateRequest.name,
-                            params: {
-                                toast: {
-                                    type: 'success',
-                                    title: 'Ação concluída!',
-                                    message: response.data.message
-                                }
+        async updateItem() {
+            try {
+                const response = await axios.put(`${this.endpoint}`, this.payload(), this.headers)
+                if (response.data.concluded) {
+                    this.$router.push({
+                        name: this.updateRequest.name,
+                        params: {
+                            toast: {
+                                type: 'success',
+                                title: 'Ação concluída!',
+                                message: response.data.message
                             }
-                        })
-                    } else {
-                        console.log(response.data)
-                        this.warningToast('Ação não concluída!', response.data.message)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                    this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-                })
-            } else {
-                this.$v.$touch()
+                        }
+                    })
+                } else {
+                    console.log(response.data)
+                    this.warningToast('Ação não concluída!', response.data.message)
+                }
+            } catch (error) {   
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
         },
     },

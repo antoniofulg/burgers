@@ -20,34 +20,27 @@ export default {
     },
 
     methods: {
-        insertItem() {
-            console.log(this.payload())
-            if (!this.$v.$invalid) {
-                axios.post(`${this.endpoint}`,
-                    this.payload(),
-                    this.headers
-                ).then(response => {
-                    console.log(response)
-                    if (response.data.concluded) {
-                        this.$router.push({
-                            name: this.storeRequest.name,
-                            params: {
-                                toast: {
-                                    type: 'success',
-                                    title: 'Ação concluída!',
-                                    message: response.data.message
-                                }
+        async insertItem() {
+            try {
+                const response = await axios.post(`${this.endpoint}`, this.payload(), this.headers)
+                console.log(response)
+                if (response.data.concluded) {
+                    this.$router.push({
+                        name: this.storeRequest.name,
+                        params: {
+                            toast: {
+                                type: 'success',
+                                title: 'Ação concluída!',
+                                message: response.data.message
                             }
-                        })
-                    } else {
-                        this.warningToast('Ação não concluída!', response.data.message)
-                    }
-                }).catch(e => {
-                    console.log(e)
-                    this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-                })
-            } else {
-                this.$v.$touch()
+                        }
+                    })
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                }
+            } catch (error) {
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
         },
 

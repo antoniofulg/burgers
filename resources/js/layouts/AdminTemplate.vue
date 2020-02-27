@@ -2,7 +2,9 @@
     <span>
         <admin-navbar :user="user">
             <li class="nav-item">
-                <router-link tag="a" exact :to="{name: 'admin.dashboard'}" class="nav-link"><i class="fas fa-chart-pie"></i> Dashboard</router-link>
+                <router-link tag="a" exact :to="{name: 'admin.dashboard'}" class="nav-link">
+                    <i class="fas fa-chart-pie"></i> Dashboard
+                </router-link>
             </li>
             <li class="nav-item">
                 <router-link tag="a" exact :to="{name: 'admin.orders'}" class="nav-link"><i class="fas fa-shopping-cart"></i> Pedidos</router-link>

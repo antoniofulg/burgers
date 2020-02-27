@@ -17,11 +17,8 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-4">
-                       <label for="inputVolume">Volume (ml)</label>
+                        <label for="inputVolume">Volume</label>
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">R$</span>
-                            </div>
                             <input
                                 @input="$v.volume.$touch()"
                                 :class="{ 'is-invalid': $v.volume.$dirty && $v.volume.$invalid}"
@@ -55,9 +52,6 @@
                     <div class="input-group col-md-4">
                         <label for="inputPrice">Preço unitário</label>
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">R$</span>
-                            </div>
                             <input
                                 @input="$v.price.$touch()"
                                 :class="{ 'is-invalid': $v.price.$dirty && $v.price.$invalid}"

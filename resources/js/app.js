@@ -5,22 +5,26 @@
  */
 
 require('./bootstrap');
+require('./fontawesome');
 
 window.Vue = require('vue');
 
 import App from './App'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import store from './vuex'
 import router from './router'
+import Spinner from './components/Spinner'
 import Vuelidate from 'vuelidate'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue } from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // Install Vuelidate
 Vue.use(Vuelidate)
 // Install BootstrapVue
 Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
+// Loading indicator
+Vue.component('spinner', Spinner);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Middleware access
 router.beforeEach((to, from, next) => {
@@ -58,6 +62,40 @@ router.beforeEach((to, from, next) => {
 
 const app = new Vue({
     el: '#app',
+
+    data: {
+        loading: false,
+        interceptor: null
+    },
+
+    created () {
+        this.enableInterceptor();
+    },
+
+    methods: {
+        enableInterceptor () {
+            axios.interceptors.request.use((config) => {
+                this.loading = true;
+                return config;
+            }, (error) => {
+                this.loading = false;
+                return Promise.reject(error);
+            });
+            
+            axios.interceptors.response.use((response) => {
+                this.loading = false;
+                return response;
+            }, (error) => {
+                this.loading = false;
+                return Promise.reject(error);
+            });
+        },
+
+        disableInterceptor () {
+            axios.interceptors.request.eject(this.interceptor);
+        }
+    },
+
     router,
     store,
     components: {App}

@@ -19,7 +19,8 @@
 
             <hr>
 
-            <div class="table-responsive">
+            <spinner v-if="$root.loading"></spinner>
+            <div v-else class="table-responsive">
                 <b-table
                     :filter="filter"
                     class="shadow-sm"

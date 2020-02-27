@@ -15,7 +15,7 @@ export default {
         itemsList () {}
     },
 
-    created () {
+    mounted () {
         this.getItems()
     },
 
@@ -58,6 +58,7 @@ export default {
 
         async getItems() {
             try {
+                this.loading = true;
                 const response = await axios.get(`${this.endpoint}`, this.headers)
                 console.log(response)
                 if (response.data.concluded) {

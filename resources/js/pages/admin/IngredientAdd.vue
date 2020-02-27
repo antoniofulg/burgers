@@ -8,32 +8,30 @@
                     <div class="form-group col-sm-12 col-md-8">
                         <label for="name">Nome</label>
                         <input
-                            @input="$v.name.$touch()"
-                            :class="{ 'is-invalid': $v.name.$dirty && $v.name.$invalid}"
-                            v-model="name"
-                        type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi, 100g" id="name">
-                        <div ref="invalid_name" class="invalid-feedback">
+                            :class="{'is-invalid': $v.name.$error}"
+                            v-model="$v.name.$model"
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi (100g)" id="name">
+                        <div v-if="!$v.name.required" class="invalid-feedback">
                             Por favor, insira um nome para o ingrediente.
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-4">
                         <label for="category">Categoria</label>
                         <select
-                            @input="$v.category.$touch()"
-                            :class="{ 'is-invalid': $v.category.$dirty && $v.category.$invalid}"
-                            v-model="category"
+                            :class="{'is-invalid': $v.category.$error}"
+                            v-model="$v.category.$model"
                         class="custom-select shadow-sm" id="category">
-                        <div ref="invalid_category" class="invalid-feedback">
-                            Por favor, selecione a categoria do ingrediente.
-                        </div>
                             <option disabled value="" selected>Selecione uma categoria</option>
                             <option value="side_dishes">Acompanhamento</option>
                             <option value="beef">Carne</option>
                             <option value="sauce">Molho</option>
                             <option value="bread">Pão</option>
-                            <option value="chesse">Queijo</option>
+                            <option value="cheese">Queijo</option>
                             <option value="salad">Salada</option>
                         </select>
+                        <div v-if="!$v.name.required" class="invalid-feedback">
+                            Por favor, selecione uma categoria para o ingrediente.
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
@@ -44,12 +42,17 @@
                                 <span class="input-group-text">R$</span>
                             </div>
                             <input
-                                @input="$v.price.$touch()"
-                                :class="{ 'is-invalid': $v.price.$dirty && $v.price.$invalid}"
-                                v-model="price"
+                                :class="{'is-invalid': $v.price.$error}"
+                                v-model="$v.price.$model"
                             type="number" class="form-control shadow-sm" id="inputPrice">
-                            <div ref="invalid_type" class="invalid-feedback">
+                            <div v-if="!$v.price.required" class="invalid-feedback">
                                 Por favor, insira um preço para o ingrediente.
+                            </div>
+                            <div v-if="!$v.price.decimal" class="invalid-feedback">
+                                Por favor, insira um preço válido para o ingrediente.
+                            </div>
+                            <div v-if="!$v.price.minValue || $v.price.maxValue" class="invalid-feedback">
+                                Por favor, insira um preço entre R$ 0,00 e R$ 1000,00 para o ingrediente.
                             </div>
                         </div>
                     </div>
@@ -57,16 +60,15 @@
                     <div class="form-group col-md-4">
                         <label for="inputState">Estado</label>
                         <select
-                            v-model="status"
-                            @input="$v.status.$touch()"
-                            :class="{ 'is-invalid': $v.status.$dirty && $v.status.$invalid}"
+                            v-model="$v.status.$model"
+                            :class="{'is-invalid': $v.status.$error}"
                         id="inputState" class="form-control shadow-sm">
                             <option disabled value="" selected>Selecione um estado</option>
                             <option value="avaliable">Disponível</option>
                             <option value="unavaliable">Indisponível</option>
                             <option value="desactivated">Desativado</option>
                         </select>
-                        <div ref="invalid_status" class="invalid-feedback">
+                        <div v-if="!$v.status.required" class="invalid-feedback">
                             Por favor, insira um estado para o ingrediente.
                         </div>
                     </div>
@@ -86,7 +88,7 @@
 </template>
 
 <script>
-import { required, decimal } from "vuelidate/lib/validators"
+import { required, decimal, maxValue, minValue } from "vuelidate/lib/validators"
 import AdminTemplate from '../../layouts/AdminTemplate'
 import Toast from "../../mixins/toasts"
 import Requests from "../../mixins/storeRequests"
@@ -136,7 +138,9 @@ export default {
         },
         price: {
             required,
-            decimal
+            decimal,
+            maxValue: maxValue(1000),
+            minValue: minValue(0),
         },
         status: {
             required
