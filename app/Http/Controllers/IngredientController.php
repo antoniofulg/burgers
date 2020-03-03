@@ -24,7 +24,6 @@ class IngredientController extends Controller
     public function index()
     {
         $ingredients = Ingredient::all();
-        sleep(2);
         return response()->json([
             'concluded' => true,
             'items' => $ingredients,

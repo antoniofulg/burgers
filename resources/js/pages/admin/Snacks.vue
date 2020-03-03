@@ -19,7 +19,8 @@
 
             <hr>
 
-            <div class="table-responsive">
+            <spinner v-if="$root.loading"></spinner>
+            <div v-else class="table-responsive">
                 <b-table
                     :filter="filter"
                     class="shadow-sm"
@@ -48,8 +49,8 @@
                     <template v-slot:cell(actions)="row">
                         <div class="d-flex justify-content-center">
                             <button @click="editItem(row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
-                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-pencil-alt"></i> Editar</span>                            
-                                <span class="d-block d-sm-block d-md-block d-lg-none"><i class="fas fa-pencil-alt"></i></span>                            
+                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-pen"></i> Editar</span>                            
+                                <span class="d-block d-sm-block d-md-block d-lg-none"><i class="fas fa-pen"></i></span>                            
                             </button>
                             <button @click="deleteTarget = row.item" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-sm rounded-pill shadow-sm">
                                 <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-trash"></i> Apagar</span>

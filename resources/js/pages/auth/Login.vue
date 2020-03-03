@@ -33,6 +33,21 @@
                                 <span v-else>Entrar</span>
                             </button>
                         </form>
+                        <div class="form-row d-flex align-items-center mt-2">
+                            <div class="col-sm-6 d-flex justify-content-center">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="autoSizingCheck">
+                                    <label class="custom-control-label" for="autoSizingCheck">
+                                        Lembrar credenciais
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 d-flex justify-content-center">
+                                <button class="btn btn-sm btn-outline-info">
+                                    Esqueci minha senha
+                                </button>
+                            </div>
+                        </div>
                         <hr>
                         <small id="emailHelp" class="form-text text-muted text-center mb-1">Não publicaremos nada em suas redes sociais!</small>
                         <button class="btn btn-danger btn-block btn-large" disabled><i class="fab fa-google mr-2"></i>Entrar com o Google</button>

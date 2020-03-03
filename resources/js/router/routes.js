@@ -1,6 +1,7 @@
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import Unauthorized from '../pages/auth/Unauthorized'
+import Profile from '../pages/admin/Profile'
 import Burguers from '../pages/admin/Burguers'
 import Dashboard from '../pages/admin/Dashboard'
 //Categories
@@ -52,7 +53,7 @@ const routes = [
     },
     {
         path: '/perfil',
-        component: Dashboard,
+        component: Profile,
         name: 'profile',
         meta: {
             requiresAuth: true
