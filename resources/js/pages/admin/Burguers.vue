@@ -19,59 +19,13 @@
 
             <hr>
 
-            <div class="table-responsive">
-                <b-table
-                    :filter="filter"
-                    class="shadow-sm"
-                    bordered
-                    hover
-                    small
-                    striped
-                    head-variant="dark"
-                    :items="itemsList"
-                :fields="table.fields">
-                    <template v-slot:cell(status)="status">
-                         <button
-                            :class="{
-                                'btn-success': status.value === 'avaliable',
-                                'btn-warning': status.value === 'unavaliable',
-                                'btn-danger': status.value === 'desactivated'
-                            }" class="btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{statusName(status.value)}}
-                        </button>
-                        <div class="dropdown-menu">
-                            <button @click="updateStatus(status.item, 'avaliable')" v-if="status.value != 'avaliable'" class="dropdown-item"><i class="mr-1 fas fa-check-circle"></i> Disponível</button>
-                            <button @click="updateStatus(status.item, 'unavaliable')" v-if="status.value != 'unavaliable'" class="dropdown-item"><i class="mr-1 fas fa-hourglass-half"></i> Indisponível</button>
-                            <button @click="updateStatus(status.item, 'desactivated')" v-if="status.value != 'desactivated'" class="dropdown-item"><i class="mr-1 fas fa-ban"></i> Desativado</button>
-                        </div>
-                    </template>
-                    <template v-slot:cell(actions)="row">
-                        <div class="d-flex justify-content-center">
-                            <button @click="editItem(row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
-                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-pencil-alt"></i> Editar</span>                            
-                                <span class="d-block d-sm-block d-md-block d-lg-none"><i class="fas fa-pencil-alt"></i></span>                            
-                            </button>
-                            <button @click="deleteTarget = row.item" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-sm rounded-pill shadow-sm">
-                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-trash"></i> Apagar</span>
-                                <span class="d-block-sm-block d-md-block d-lg-none"><i class="fas fa-trash"></i></span>
-                            </button>
-                        </div>
-                    </template>
-                </b-table>
-            </div>
+            <items-list
+                :itemsList="itemsList"
+                :filter="filter"
+                :table="table"
+                v-on:deleteItem="deleteItem"
+            />
 
-            <modal id="delete" title="Confirme sua ação!">
-                <template v-slot:body>
-                    <strong>Você realmente deseja apagar este ingrediente?</strong>
-                    <span class="d-block"><strong>Nome: </strong> {{deleteTarget.name}}</span> 
-                    <span class="d-block"><strong>Categoria: </strong> {{categoryName(deleteTarget.category)}}</span> 
-                    <span class="d-block"><strong>Estado: </strong> {{statusName(deleteTarget.status)}}</span>
-                    <span class="d-block"><strong>Preço: </strong> {{priceName(deleteTarget.price)}}</span>
-                </template>
-                <template v-slot:action>
-                    <button @click="deleteItem(deleteTarget)" type="button" class="btn btn-danger" data-dismiss="modal"><i class="mr-1 fas fa-trash"></i> Confirmar exclusão</button>
-                </template>
-            </modal>
             <modal id="help" title="Ingredientes">
                 <template v-slot:body>
                     <ul class="pl-3">
@@ -111,13 +65,14 @@
 <script>
 import { required } from "vuelidate/lib/validators"
 import AdminTemplate from '../../layouts/AdminTemplate'
+import ItemsList from '../../components/cruds/ItemsList'
 import Modal from '../../components/Modal'
 import Toast from "../../mixins/toasts"
-import Requests from "../../mixins/indexRequests"
 
 export default {
     components: {
         AdminTemplate,
+        ItemsList,
         Modal
     },
 
@@ -126,13 +81,29 @@ export default {
             return `/api/ingredients`
         },
 
+        headers () {
+            return {
+                "headers": {
+                    "Accept": "application/json",
+                    "authorization": `Bearer ${this.$store.getters.getToken}`,
+                    "Content-Type": "application/json",
+                }
+            }
+        },
+
         itemsList() {
             return this.$store.getters.getIngredients
         }
     },
 
+    created() {
+        console.log('criado burguers')
+    },
+
     data () {
         return {
+            deleteTarget: {},
+
             editRequest: {
                 name: 'admin.ingredients.update'
             },
@@ -199,6 +170,48 @@ export default {
             }
         },
 
+        async deleteItem(item) {
+            try {
+                let response = await axios.delete(`${this.endpoint}/${item.id}`, this.headers)
+                if (response.data.concluded) {
+                    this.successToast('Ação concluída!', response.data.message)
+                    this.getItems()
+                    this.deleteTarget = {}
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                }
+            } catch (error) {
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            }
+        },
+
+        editItem(item) {
+            this.$router.push({
+                name: this.editRequest.name,
+                params: {
+                    id: item.id,
+                    item
+                }
+            })
+        },
+
+        async getItems() {
+            try {
+                // this.loading = true;
+                const response = await axios.get(`${this.endpoint}`, this.headers)
+                console.log(response)
+                if (response.data.concluded) {
+                    this.$store.commit(this.getRequest.setItems, response.data.items)
+                } else {
+                    this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
+                }
+            } catch (error) {
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            }
+        },
+
         payload (item, status) {
             return {
                 name: item.name,
@@ -207,9 +220,40 @@ export default {
                 status: status,
             }
         },
+
+        priceName(price) {
+            return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })}` : 'Grátis'
+        },
+
+        statusName(status) {
+            return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
+        },
+
+        async updateStatus(item, status) {
+            try {
+                const response = await axios.put(`${this.endpoint}/${item.id}`, this.payload(item, status), this.headers)
+                if (response.data.concluded) {
+                    this.successToast('Ação concluída!', response.data.message)
+                    this.getItems()
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                }
+            } catch (error) {
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            }
+        }
     },
 
-    mixins: [Toast, Requests],
+    mixins: [Toast],
+
+
+    mounted () {
+        this.getItems()
+    },
 }
 </script>
 
