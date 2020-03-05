@@ -23,7 +23,8 @@
                 :itemsList="itemsList"
                 :filter="filter"
                 :table="table"
-                v-on:deleteItem="deleteItem"
+                @deleteItem="deleteItem"
+                @editItem="editItem"
             />
 
             <modal id="help" title="Ingredientes">
@@ -93,6 +94,10 @@ export default {
 
         itemsList() {
             return this.$store.getters.getIngredients
+        },
+
+        itemUpdate() {
+            return this.item
         }
     },
 
@@ -114,6 +119,8 @@ export default {
                 setItems: 'setIngredients',
                 errorMessage: 'Não foi possível obter os ingredientes!'
             },
+
+            item: null,
 
             table: {
                 fields: [
@@ -187,13 +194,7 @@ export default {
         },
 
         editItem(item) {
-            this.$router.push({
-                name: this.editRequest.name,
-                params: {
-                    id: item.id,
-                    item
-                }
-            })
+            this.item = item
         },
 
         async getItems() {

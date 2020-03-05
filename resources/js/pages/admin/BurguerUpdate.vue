@@ -77,7 +77,7 @@
                         <button @click="updateItem" :disabled="$v.$invalid" class="btn shadow-sm btn-success mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-marker"></i> Atualizar</button>
                     </div>
                     <div class="form-group col-md-2 d-flex flex-column">
-                        <router-link tag="button" :to="{name: updateRequest.name}" class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</router-link>
+                        <button class="btn shadow-sm btn-danger mt-auto rounded-pill shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar</button>
                     </div>
                 </div>
             </form>
@@ -87,15 +87,9 @@
 
 <script>
 import { required, decimal } from "vuelidate/lib/validators"
-import AdminTemplate from '../../layouts/AdminTemplate'
-import Toast from "../../mixins/toasts"
 import Requests from "../../mixins/updateRequests"
 
 export default {
-    components: {
-        AdminTemplate
-    },
-
     computed: {
         endpoint () {
             return `/api/ingredients/${this.id}`

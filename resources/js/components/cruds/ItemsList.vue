@@ -29,7 +29,7 @@
             </template>
             <template v-slot:cell(actions)="row">
                 <div class="d-flex justify-content-center">
-                    <button @click="editItem(row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
+                    <button @click="$emit('editItem', row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
                         <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-pencil-alt"></i> Editar</span>                            
                         <span class="d-block d-sm-block d-md-block d-lg-none"><i class="fas fa-pencil-alt"></i></span>                            
                     </button>
@@ -40,8 +40,6 @@
                 </div>
             </template>
         </b-table>
-
-        <button @click="firstLoad = false">Click</button>
     </div>
 
     <modal id="delete" title="Confirme sua ação!">
@@ -62,7 +60,6 @@
 <script>
 import { required } from "vuelidate/lib/validators"
 import Modal from '../../components/Modal'
-import Toast from "../../mixins/toasts"
 
 export default {
     components: {
@@ -90,31 +87,9 @@ export default {
         }
     },
 
-    methods: {
+    methods: {  
         categoryName(category) {
-            if (category ===  'bread') {
-                return 'Pães'
-            } else if (category === 'beef') {
-                return 'Carnes'
-            } else if (category === 'cheese') {
-                return 'Queijos'
-            } else if (category === 'salad') {
-                return 'Saladas'
-            } else if (category === 'sauce') {
-                return 'Molhos'
-            } else if (category === 'side_dishes') {
-                return 'Acompanhamentos'
-            }
-        },
-
-        editItem(item) {
-            this.$router.push({
-                name: this.editRequest.name,
-                params: {
-                    id: item.id,
-                    item
-                }
-            })
+            return this.$parent.$parent.categoryName(category);
         },
 
         payload (item, status) {
