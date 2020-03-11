@@ -23,7 +23,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::all();
+        $ingredients = Ingredient::orderBy('id', 'desc')->get();
         return response()->json([
             'concluded' => true,
             'items' => $ingredients,
@@ -106,7 +106,7 @@ class IngredientController extends Controller
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'category' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
+            'category' => ['required', 'in:bread,blend,cheese,salad,sauce,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
 

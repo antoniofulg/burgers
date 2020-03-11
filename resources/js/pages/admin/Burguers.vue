@@ -2,16 +2,17 @@
     <admin-template>
         <div class="container mt-5">
 
-            <items-list v-show="operation == 'index'"
+            <items-list v-show="!form"
                 :itemsList="itemsList"
                 :filter="filter"
+                :firstLoad="firstLoad"
                 :table="table"
                 @deleteItem="deleteItem"
-                @editItem="editItem"
                 @selectItem="selectItem"
                 @updateStatus="updateStatus"
+                @showItem="showItem"
             >
-                <h1>Ingredientes <span data-toggle="modal" data-target="#help"><i class="fas fa-question-circle text-info pointer"></i></span></h1>
+                <h1>Ingredientes</h1>
                 <hr>
 
                 <div class="row">     
@@ -22,63 +23,20 @@
                         </div>
                     </form>
                     <div class="col-md-4">
-                        <button @click="operation = 'create'" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo ingrediente</button>
+                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo ingrediente</button>
                     </div> 
                 </div>
 
                 <hr>
-
-                <modal id="help" title="Ingredientes">
-                    <template v-slot:body>
-                        <ul class="pl-3">
-                            <li class="text-justify">
-                                <h5><strong>Nome:</strong></h5> Campo sintetizado para a descrição do ingrediente cadastrado.
-                            </li>
-                            <hr>
-                            <li class="text-justify">
-                                <h5><strong>Categoria:</strong></h5> Campo para categorizar o tipo de ingrediente. Facilitando a busca pelo ingrediente desejado.
-                            </li>
-                            <hr>
-                            <li class="text-justify">
-                                <h5><strong>Preço unitário:</strong></h5> Campo referente ao preço do ingrediente caso o cliente deseje adicioná-lo ao hamburguer durante o seu pedido.
-                            </li>
-                            <hr>
-                            <li class="text-justify">
-                                <h5><strong>Estado:</strong></h5> Refere-se à disponibilidade do ingrediente.
-                                <ul>
-                                    <li>
-                                        <strong>Disponível</strong>: ele é mostrado no cardápio como disponível para que o cliente o adicione ao pedido.
-                                    </li>
-                                    <li>
-                                        <strong>Indisponível</strong>: ele é mostrado no cardápio como indisponível. O cliente não poderá adicionar o ingrediente ao pedido.
-                                    </li>
-                                    <li>
-                                        <strong>Desativado</strong>: O ingrediente não é mostrado ao cliente.
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </template>
-                </modal>
-
-                <modal id="delete" title="Confirme sua ação!">
-                    <template v-slot:body>
-                        <strong>Você realmente deseja apagar este ingrediente?</strong>
-                        <span class="d-block"><strong>Nome: </strong> {{selectedItem.name}}</span> 
-                        <span class="d-block"><strong>Categoria: </strong> {{categoryName(selectedItem.category)}}</span> 
-                        <span class="d-block"><strong>Estado: </strong> {{statusName(selectedItem.status)}}</span>
-                        <span class="d-block"><strong>Preço: </strong> {{priceName(selectedItem.price)}}</span>
-                    </template>
-                    <template v-slot:action>
-                        <button @click="deleteItem(selectedItem)" type="button" class="btn btn-danger" data-dismiss="modal"><i class="mr-1 fas fa-trash"></i> Confirmar exclusão</button>
-                    </template>
-                </modal>
             </items-list>
 
             <item-form
-                v-if="operation != 'index'"
+                v-if="form"
                 :item="selectedItem"
                 :invalid="$v.$invalid"
+                @deleteItem="deleteItem(selectedItem)"
+                @insertItem="insertItem(selectedItem)"
+                @updateItem="updateItem(selectedItem)"
                 @resetItem="resetItem"
             >
                 <div class="form-row">
@@ -99,12 +57,12 @@
                             v-model="$v.selectedItem.category.$model"
                         class="custom-select shadow-sm" id="category">
                             <option disabled value="" selected>Selecione uma categoria</option>
-                            <option value="side_dishes">Acompanhamento</option>
-                            <option value="beef">Carne</option>
-                            <option value="sauce">Molho</option>
-                            <option value="bread">Pão</option>
-                            <option value="cheese">Queijo</option>
-                            <option value="salad">Salada</option>
+                            <option value="side_dishes">Acompanhamentos</option>
+                            <option value="beef">Carnes</option>
+                            <option value="sauce">Molhos</option>
+                            <option value="bread">Pães</option>
+                            <option value="cheese">Queijos</option>
+                            <option value="salad">Saladas</option>
                         </select>
                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
                             Por favor, selecione uma categoria para o ingrediente.
@@ -151,7 +109,6 @@
                     </div>
                 </div>
             </item-form>
-
         </div>
     </admin-template>
 </template>
@@ -160,7 +117,6 @@
 import AdminTemplate from "../../layouts/AdminTemplate"
 import ItemsList from "../../components/cruds/ItemsList"
 import ItemForm from "../../components/cruds/ItemForm"
-import Modal from "../../components/Modal"
 import Toast from "../../mixins/toasts"
 import { required, decimal, maxValue, minValue } from "vuelidate/lib/validators"
 
@@ -169,7 +125,6 @@ export default {
         AdminTemplate,
         ItemForm,
         ItemsList,
-        Modal
     },
 
     computed: {
@@ -190,26 +145,20 @@ export default {
         itemsList() {
             return this.$store.getters.getIngredients
         },
-
-        itemUpdate() {
-            return this.selectedItem
-        }
     },
 
     data () {
-        return {
-            editRequest: {
-                name: 'admin.ingredients.update'
-            },
-            
+        return {            
             filter: null,
+
+            firstLoad: true,
+
+            form: false,
 
             getRequest: {
                 setItems: 'setIngredients',
                 errorMessage: 'Não foi possível obter os ingredientes!'
             },
-
-            operation: 'index',
 
             selectedItem: {
                 id: null,
@@ -247,10 +196,6 @@ export default {
                         key: 'status',
                         label: 'Estado',
                         sortable: true
-                    },
-                    {
-                        key: 'actions',
-                        label: 'Ações'
                     }
                 ],
             },
@@ -290,10 +235,21 @@ export default {
             }
         },
 
-        editItem(item) {
-            this.selectedItem = item
-            console.log(this.selectedItem)
-            this.operation = 'update'
+        async insertItem(item) {
+            try {
+                const response = await axios.post(`${this.endpoint}`, this.payload(item), this.headers)
+                if (response.data.concluded) {
+                    this.successToast('Ação concluída!', response.data.message)
+                    this.getItems()
+                    this.form = false
+                    this.selectedItem = this.payload()
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                }
+            } catch (error) {
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            }
         },
 
         async getItems() {
@@ -305,18 +261,28 @@ export default {
                 } else {
                     this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
                 }
+                this.firstLoad = false
             } catch (error) {
                 console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
         },
 
-        payload (item, status) {
-            return {
-                name: item.name,
-                category: item.category,
-                price: item.price,
-                status: status,
+        payload (item = null) {
+            if (item) {
+                return {
+                    name: item.name,
+                    category: item.category,
+                    price: item.price,
+                    status: item.status,
+                }
+            } else {
+                return {
+                    name: '',
+                    category: '',
+                    price: 0,
+                    status: '',
+                }
             }
         },
 
@@ -328,46 +294,57 @@ export default {
         },
 
         resetItem() {
-            this.operation = 'index'
-            this.selectedItem = {
-                id: null,
-                name: '',
-                category: '',
-                price: 0,
-                status: ''
-            }
+            this.form = false
+            this.selectedItem = this.payload()
             this.$v.$reset()
         },
 
-        selectItem(item, operation = 'index') {
-            if (operation === 'update') {
-                this.operation = 'update'
+        selectItem(item, form = false) {
+            if (form) {
+                this.form = true
             }
             this.selectedItem = item
+        },
+
+        showItem(item) {
+            for (let prop in item) {
+                this.selectedItem[prop] = item[prop]
+            }
+            this.form = true
         },
 
         statusName(status) {
             return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
         },
 
-        async updateStatus(item, status) {
+        async updateItem(item) {
             try {
-                const response = await axios.put(`${this.endpoint}/${item.id}`, this.payload(item, status), this.headers)
+                const response = await axios.put(`${this.endpoint}/${item.id}`, this.payload(item), this.headers)
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
                     this.getItems()
+                    this.form = false
+                    this.selectedItem = this.payload()
                 } else {
+                    console.log(response.data)
                     this.warningToast('Ação não concluída!', response.data.message)
                 }
             } catch (error) {
                 console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
+        },
+
+        async updateStatus(item, status) {
+            for (let prop in item) {
+                this.selectedItem[prop] = item[prop]
+            }
+            this.selectedItem.status = status
+            this.updateItem(this.selectedItem)
         }
     },
 
     mixins: [Toast],
-
 
     mounted () {
         this.getItems()
@@ -394,9 +371,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-    .pointer {
-        cursor: pointer;
-    }
-</style>
