@@ -1,9 +1,9 @@
 <template>
 <span>
     <slot/>
-    <div class="table-responsive shadow-sm">
-        <spinner v-if="$root.loading && firstLoad"></spinner>
-        <b-table v-else
+    <spinner v-if="$root.loading && firstLoad"></spinner>
+    <div v-else class="table-responsive shadow-sm">
+        <b-table
             :fields="table.fields"
             :filter="filter"
             hover

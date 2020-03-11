@@ -118,6 +118,7 @@ import AdminTemplate from "../../layouts/AdminTemplate"
 import ItemsList from "../../components/cruds/ItemsList"
 import ItemForm from "../../components/cruds/ItemForm"
 import Toast from "../../mixins/toasts"
+import Crud from "../../mixins/crud"
 import { required, decimal, maxValue, minValue } from "vuelidate/lib/validators"
 
 export default {
@@ -131,32 +132,12 @@ export default {
         endpoint () {
             return `/api/ingredients`
         },
-
-        headers () {
-            return {
-                "headers": {
-                    "Accept": "application/json",
-                    "authorization": `Bearer ${this.$store.getters.getToken}`,
-                    "Content-Type": "application/json",
-                }
-            }
-        },
-
-        itemsList() {
-            return this.$store.getters.getIngredients
-        },
     },
 
     data () {
         return {            
-            filter: null,
-
-            firstLoad: true,
-
-            form: false,
-
-            getRequest: {
-                setItems: 'setIngredients',
+            request: {
+                item: 'Ingredients',
                 errorMessage: 'Não foi possível obter os ingredientes!'
             },
 
@@ -188,7 +169,7 @@ export default {
                         key: 'price',
                         label: 'Preço unitário',
                         formatter: (value) => {
-                            return this.priceName(value)
+                            return this.priceTemplate(value)
                         },
                         sortable: true
                     },
@@ -219,55 +200,6 @@ export default {
             }
         },
 
-        async deleteItem(item) {
-            try {
-                let response = await axios.delete(`${this.endpoint}/${item.id}`, this.headers)
-                if (response.data.concluded) {
-                    this.successToast('Ação concluída!', response.data.message)
-                    this.getItems()
-                    this.resetItem()
-                } else {
-                    this.warningToast('Ação não concluída!', response.data.message)
-                }
-            } catch (error) {
-                console.log(error.response)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            }
-        },
-
-        async insertItem(item) {
-            try {
-                const response = await axios.post(`${this.endpoint}`, this.payload(item), this.headers)
-                if (response.data.concluded) {
-                    this.successToast('Ação concluída!', response.data.message)
-                    this.getItems()
-                    this.form = false
-                    this.selectedItem = this.payload()
-                } else {
-                    this.warningToast('Ação não concluída!', response.data.message)
-                }
-            } catch (error) {
-                console.log(error.response)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            }
-        },
-
-        async getItems() {
-            try {
-                const response = await axios.get(`${this.endpoint}`, this.headers)
-                console.log(response)
-                if (response.data.concluded) {
-                    this.$store.commit(this.getRequest.setItems, response.data.items)
-                } else {
-                    this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
-                }
-                this.firstLoad = false
-            } catch (error) {
-                console.log(error.response)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            }
-        },
-
         payload (item = null) {
             if (item) {
                 return {
@@ -285,70 +217,9 @@ export default {
                 }
             }
         },
-
-        priceName(price) {
-            return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })}` : 'Grátis'
-        },
-
-        resetItem() {
-            this.form = false
-            this.selectedItem = this.payload()
-            this.$v.$reset()
-        },
-
-        selectItem(item, form = false) {
-            if (form) {
-                this.form = true
-            }
-            this.selectedItem = item
-        },
-
-        showItem(item) {
-            for (let prop in item) {
-                this.selectedItem[prop] = item[prop]
-            }
-            this.form = true
-        },
-
-        statusName(status) {
-            return status === 'avaliable' ? 'Disponível' : status === 'unavaliable' ? 'Indisponível' : "Desativado"
-        },
-
-        async updateItem(item) {
-            try {
-                const response = await axios.put(`${this.endpoint}/${item.id}`, this.payload(item), this.headers)
-                if (response.data.concluded) {
-                    this.successToast('Ação concluída!', response.data.message)
-                    this.getItems()
-                    this.form = false
-                    this.selectedItem = this.payload()
-                } else {
-                    console.log(response.data)
-                    this.warningToast('Ação não concluída!', response.data.message)
-                }
-            } catch (error) {
-                console.log(error.response)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            }
-        },
-
-        async updateStatus(item, status) {
-            for (let prop in item) {
-                this.selectedItem[prop] = item[prop]
-            }
-            this.selectedItem.status = status
-            this.updateItem(this.selectedItem)
-        }
     },
 
-    mixins: [Toast],
-
-    mounted () {
-        this.getItems()
-    },
+    mixins: [Crud, Toast],
 
     validations: {
         selectedItem: {
