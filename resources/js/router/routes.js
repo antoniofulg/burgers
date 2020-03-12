@@ -14,8 +14,6 @@ import DrinkAdd from '../pages/admin/DrinkAdd'
 import DrinkUpdate from '../pages/admin/DrinkUpdate'
 //Ingredients
 import Ingredients from '../pages/admin/Ingredients'
-import IngredientAdd from '../pages/admin/IngredientAdd'
-import IngredientUpdate from '../pages/admin/IngredientUpdate'
 //Orders
 import Orders from '../pages/admin/Orders'
 //Snacks
@@ -148,23 +146,6 @@ const routes = [
         path: '/ingredientes',
         component: Ingredients,
         name: 'admin.ingredients',
-        props: true,
-        meta: {
-            admin: true
-        }
-    },
-    {
-        path: '/ingredientes/novo',
-        component: IngredientAdd,
-        name: 'admin.ingredients.add',
-        meta: {
-            admin: true
-        }
-    },
-    {
-        path: '/ingredientes/atualizar/:id',
-        component: IngredientUpdate,
-        name: 'admin.ingredients.update',
         props: true,
         meta: {
             admin: true
