@@ -118,23 +118,6 @@ const routes = [
         }
     },
     {
-        path: '/bebidas/nova',
-        component: DrinkAdd,
-        name: 'admin.drinks.add',
-        meta: {
-            admin: true
-        }
-    },
-    {
-        path: '/bebidas/atualizar/:id',
-        component: DrinkUpdate,
-        name: 'admin.drinks.update',
-        props: true,
-        meta: {
-            admin: true
-        }
-    },
-    {
         path: '/hamburguers',
         component: Burguers,
         name: 'admin.burguers',
