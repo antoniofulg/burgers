@@ -34,6 +34,7 @@
                 v-if="form"
                 :item="selectedItem"
                 :invalid="$v.$invalid"
+                title="ingrediente"
                 @deleteItem="deleteItem(selectedItem)"
                 @insertItem="insertItem(selectedItem)"
                 @updateItem="updateItem(selectedItem)"

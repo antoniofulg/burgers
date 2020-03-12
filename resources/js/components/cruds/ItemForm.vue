@@ -5,8 +5,8 @@
                 <button @click.prevent="$emit('resetItem')" class="btn btn-secondary rounded-pill shadow-sm d-inline d-md-none mt-1"><i class="fas fa-undo-alt"></i> Voltar</button>
             </div>
             <div class="col-sm-9 col-md-12">
-                <p v-if="!item.id" class="h1 ml-1 mb-0">Novo ingrediente</p>
-                <p v-else class="h1 ml-auto mb-0">Editar ingrediente</p>
+                <p v-if="!item.id" class="h1 ml-1 mb-0">Novo {{title}}</p>
+                <p v-else class="h1 ml-auto mb-0">Editar {{title}}</p>
             </div>
         </div>
         <hr>
@@ -41,6 +41,6 @@ export default {
         Modal
     },
 
-    props: ['invalid', 'item']
+    props: ['invalid', 'item', 'title']
 }
 </script>
