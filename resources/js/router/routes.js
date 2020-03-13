@@ -10,8 +10,6 @@ import CategoryAdd from '../pages/admin/CategoryAdd'
 import CategoryUpdate from '../pages/admin/CategoryUpdate'
 //Drinks
 import Drinks from '../pages/admin/Drinks'
-import DrinkAdd from '../pages/admin/DrinkAdd'
-import DrinkUpdate from '../pages/admin/DrinkUpdate'
 //Ingredients
 import Ingredients from '../pages/admin/Ingredients'
 //Orders

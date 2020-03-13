@@ -34,7 +34,7 @@
                 v-if="form"
                 :item="selectedItem"
                 :invalid="$v.$invalid"
-                title="ingrediente"
+                title="bebida"
                 @deleteItem="deleteItem(selectedItem)"
                 @insertItem="insertItem(selectedItem)"
                 @updateItem="updateItem(selectedItem)"
@@ -48,9 +48,23 @@
                             v-model="$v.selectedItem.name.$model"
                         type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi (100g)" id="name">
                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
-                            Por favor, insira um nome para o ingrediente.
+                            Por favor, insira um nome para a bebida.
                         </div>
                     </div>
+                    <div class="form-group col-sm-12 col-md-4">
+                        <label for="inputVolume">Volume</label>
+                        <div class="input-group mb-3">
+                            <input
+                                :class="{ 'is-invalid': $v.selectedItem.volume.$error}"
+                                v-model="$v.selectedItem.volume.$model"
+                            type="number" class="form-control shadow-sm" id="inputVolume">
+                            <div ref="invalid_volume" class="invalid-feedback">
+                                Por favor, insira o volume da bebida.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-sm-12 col-md-4">
                         <label for="category">Categoria</label>
                         <select
@@ -58,20 +72,16 @@
                             v-model="$v.selectedItem.category.$model"
                         class="custom-select shadow-sm" id="category">
                             <option disabled value="" selected>Selecione uma categoria</option>
-                            <option value="side_dishes">Acompanhamentos</option>
-                            <option value="beef">Carnes</option>
-                            <option value="sauce">Molhos</option>
-                            <option value="bread">Pães</option>
-                            <option value="cheese">Queijos</option>
-                            <option value="salad">Saladas</option>
+                            <option value="water">Águas</option>
+                            <option value="beer">Cervejas</option>
+                            <option value="soda">Refrigerantes</option>
+                            <option value="juice">Sucos</option>
                         </select>
                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
-                            Por favor, selecione uma categoria para o ingrediente.
+                            Por favor, selecione uma categoria para a bebida.
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="input-group col-md-4">
+                    <div class="input-group col-sm-12 col-md-4">
                         <label for="inputPrice">Preço unitário</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -82,18 +92,18 @@
                                 v-model="$v.selectedItem.price.$model"
                             type="number" class="form-control shadow-sm" id="inputPrice">
                             <div v-if="!$v.selectedItem.price.required" class="invalid-feedback">
-                                Por favor, insira um preço para o ingrediente.
+                                Por favor, insira um preço para a bebida.
                             </div>
                             <div v-if="!$v.selectedItem.price.decimal" class="invalid-feedback">
-                                Por favor, insira um preço válido para o ingrediente.
+                                Por favor, insira um preço válido para a bebida.
                             </div>
                             <div v-if="!$v.selectedItem.price.minValue || $v.selectedItem.price.maxValue" class="invalid-feedback">
-                                Por favor, insira um preço entre R$ 0,00 e R$ 1000,00 para o ingrediente.
+                                Por favor, insira um preço entre R$ 0,00 e R$ 1000,00 para a bebida.
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-sm-12 col-md-4">
                         <label for="inputState">Estado</label>
                         <select
                             v-model="$v.selectedItem.status.$model"
@@ -105,7 +115,7 @@
                             <option value="desactivated">Desativado</option>
                         </select>
                         <div v-if="!$v.selectedItem.status.required" class="invalid-feedback">
-                            Por favor, insira um estado para o ingrediente.
+                            Por favor, insira um estado para a bebida.
                         </div>
                     </div>
                 </div>
@@ -147,7 +157,8 @@ export default {
                 name: '',
                 category: '',
                 price: 0,
-                status: ''
+                status: '',
+                volume: 0
             },
 
             table: {

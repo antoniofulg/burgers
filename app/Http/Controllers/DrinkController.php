@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class DrinkController extends Controller
 {
+    private $attributeNames = [
+        'name' => 'nome',
+        'status' => 'estado',
+        'category' => 'categoria',
+        'price' => 'preço',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -39,6 +46,8 @@ class DrinkController extends Controller
             'price' => ['required', 'numeric'],
             'volume' => ['required', 'numeric']
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return [
@@ -102,6 +111,8 @@ class DrinkController extends Controller
             'price' => ['required', 'numeric'],
             'volume' => ['required', 'numeric', 'between:0,20000']
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return [

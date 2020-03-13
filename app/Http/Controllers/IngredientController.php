@@ -23,7 +23,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::orderBy('id', 'desc')->get();
+        $ingredients = Ingredient::orderBy('category', 'ASC')->orderBy('name', 'ASC')->get();
         return response()->json([
             'concluded' => true,
             'items' => $ingredients,
