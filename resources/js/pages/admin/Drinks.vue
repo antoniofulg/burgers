@@ -54,12 +54,20 @@
                     <div class="form-group col-sm-12 col-md-4">
                         <label for="inputVolume">Volume</label>
                         <div class="input-group mb-3">
-                            <input
+                            <money
                                 :class="{ 'is-invalid': $v.selectedItem.volume.$error}"
                                 v-model="$v.selectedItem.volume.$model"
-                            type="number" class="form-control shadow-sm" id="inputVolume">
-                            <div ref="invalid_volume" class="invalid-feedback">
-                                Por favor, insira o volume da bebida.
+                                v-bind="volume"
+                                class="form-control shadow-sm" id="inputVolume"
+                            />
+                             <div v-if="!$v.selectedItem.volume.required" class="invalid-feedback">
+                                Por favor, insira um volume para a bebida.
+                            </div>
+                            <div v-if="!$v.selectedItem.volume.decimal" class="invalid-feedback">
+                                Por favor, insira um volume válido para a bebida.
+                            </div>
+                            <div v-if="!$v.selectedItem.volume.minValue || !$v.selectedItem.volume.maxValue" class="invalid-feedback">
+                                Por favor, insira um volume entre 1 ml e 20.000 ml para a bebida.
                             </div>
                         </div>
                     </div>
@@ -84,20 +92,19 @@
                     <div class="input-group col-sm-12 col-md-4">
                         <label for="inputPrice">Preço unitário</label>
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">R$</span>
-                            </div>
-                            <input
+                            <money
                                 :class="{'is-invalid': $v.selectedItem.price.$error}"
                                 v-model="$v.selectedItem.price.$model"
-                            type="number" class="form-control shadow-sm" id="inputPrice">
+                                v-bind="money"
+                                class="form-control shadow-sm" id="inputPrice"
+                            />
                             <div v-if="!$v.selectedItem.price.required" class="invalid-feedback">
                                 Por favor, insira um preço para a bebida.
                             </div>
                             <div v-if="!$v.selectedItem.price.decimal" class="invalid-feedback">
                                 Por favor, insira um preço válido para a bebida.
                             </div>
-                            <div v-if="!$v.selectedItem.price.minValue || $v.selectedItem.price.maxValue" class="invalid-feedback">
+                            <div v-if="!$v.selectedItem.price.minValue || !$v.selectedItem.price.maxValue" class="invalid-feedback">
                                 Por favor, insira um preço entre R$ 0,00 e R$ 1000,00 para a bebida.
                             </div>
                         </div>
@@ -130,6 +137,7 @@ import ItemsList from "../../components/cruds/ItemsList"
 import ItemForm from "../../components/cruds/ItemForm"
 import Toast from "../../mixins/toasts"
 import Crud from "../../mixins/crud"
+import { Money } from 'v-money'
 import { required, decimal, maxValue, minValue } from "vuelidate/lib/validators"
 
 export default {
@@ -137,6 +145,7 @@ export default {
         AdminTemplate,
         ItemForm,
         ItemsList,
+        Money,
     },
 
     computed: {
@@ -146,7 +155,22 @@ export default {
     },
 
     data () {
-        return {            
+        return {      
+            money: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'R$ ',
+                precision: 2,
+                masked: false
+            },
+
+            volume: {
+                thousands: '.',
+                suffix: ' ml',
+                precision: 0,
+                masked: false
+            },
+
             request: {
                 item: 'Drinks',
                 errorMessage: 'Não foi possível obter as bebidas!'
@@ -158,7 +182,7 @@ export default {
                 category: '',
                 price: 0,
                 status: '',
-                volume: 0
+                volume: 1
             },
 
             table: {
@@ -204,6 +228,10 @@ export default {
     },
 
     methods: {
+        showValue() {
+            console.log(this.selectedItem.price)
+        },
+        
         categoryName(category) {
             if (category ===  'beer') {
                 return 'Cervejas'
@@ -230,7 +258,7 @@ export default {
                     name: '',
                     category: '',
                     price: 0,
-                    volume: 0,
+                    volume: 1,
                     status: '',
                 }
             }
@@ -267,7 +295,7 @@ export default {
                 required,
                 decimal,
                 maxValue: maxValue(20000),
-                minValue: minValue(0),
+                minValue: minValue(1),
             },
         }
     },
