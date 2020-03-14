@@ -6,8 +6,6 @@ import Burguers from '../pages/admin/Burguers'
 import Dashboard from '../pages/admin/Dashboard'
 //Categories
 import Categories from '../pages/admin/Categories'
-import CategoryAdd from '../pages/admin/CategoryAdd'
-import CategoryUpdate from '../pages/admin/CategoryUpdate'
 //Drinks
 import Drinks from '../pages/admin/Drinks'
 //Ingredients
@@ -84,23 +82,6 @@ const routes = [
         path: '/categorias',
         component: Categories,
         name: 'admin.categories',
-        props: true,
-        meta: {
-            admin: true
-        }
-    },
-    {
-        path: '/categorias/nova',
-        component: CategoryAdd,
-        name: 'admin.categories.add',
-        meta: {
-            admin: true
-        }
-    },
-    {
-        path: '/categorias/atualizar/:id',
-        component: CategoryUpdate,
-        name: 'admin.categories.update',
         props: true,
         meta: {
             admin: true

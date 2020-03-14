@@ -213,11 +213,7 @@ export default {
         }
     },
 
-    methods: {
-        showValue() {
-            console.log(this.selectedItem.price)
-        },
-        
+    methods: {       
         categoryName(category) {
             if (category ===  'beer') {
                 return 'Cervejas'
