@@ -14,8 +14,6 @@ import Ingredients from '../pages/admin/Ingredients'
 import Orders from '../pages/admin/Orders'
 //Snacks
 import Snacks from '../pages/admin/Snacks'
-import SnackAdd from '../pages/admin/SnackAdd'
-import SnackUpdate from '../pages/admin/SnackUpdate'
 import Users from '../pages/admin/Users'
 
 const routes = [
@@ -117,24 +115,6 @@ const routes = [
         path: '/lanches',
         component: Snacks,
         name: 'admin.snacks',
-        props: true,
-        meta: {
-            admin: true
-        }
-    },
-    {
-        path: '/lanches/novo',
-        component: SnackAdd,
-        name: 'admin.snacks.add',
-        props: true,
-        meta: {
-            admin: true
-        }
-    },
-    {
-        path: '/lanches/atualizar/:id',
-        component: SnackUpdate,
-        name: 'admin.snacks.update',
         props: true,
         meta: {
             admin: true

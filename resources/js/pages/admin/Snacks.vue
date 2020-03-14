@@ -246,8 +246,6 @@ export default {
             console.log(error.response)
             this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
         }
-
-        console.log(this.$store.getters.getSnacks)
     },
 
     validations: {

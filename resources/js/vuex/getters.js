@@ -13,6 +13,11 @@ const getters = {
         return state.users
     },
 
+    // Burguers
+    getBurguers: state => {
+        return state.burguers
+    },
+
     // Categories
     getCategories: state => {
         return state.categories
