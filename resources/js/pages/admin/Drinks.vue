@@ -135,8 +135,9 @@
 import AdminTemplate from "../../layouts/AdminTemplate"
 import ItemsList from "../../components/cruds/ItemsList"
 import ItemForm from "../../components/cruds/ItemForm"
-import Toast from "../../mixins/toasts"
 import Crud from "../../mixins/crud"
+import Masked from "../../mixins/masked"
+import Toast from "../../mixins/toasts"
 import { Money } from 'v-money'
 import { required, decimal, maxValue, minValue } from "vuelidate/lib/validators"
 
@@ -156,21 +157,6 @@ export default {
 
     data () {
         return {      
-            money: {
-                decimal: ',',
-                thousands: '.',
-                prefix: 'R$ ',
-                precision: 2,
-                masked: false
-            },
-
-            volume: {
-                thousands: '.',
-                suffix: ' ml',
-                precision: 0,
-                masked: false
-            },
-
             request: {
                 item: 'Drinks',
                 errorMessage: 'Não foi possível obter as bebidas!'
@@ -272,7 +258,7 @@ export default {
         },
     },
 
-    mixins: [Crud, Toast],
+    mixins: [Crud, Masked, Toast],
 
     validations: {
         selectedItem: {
