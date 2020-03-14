@@ -41,6 +41,10 @@ export default {
         Modal
     },
 
+    created() {
+        console.log(this.item)
+    },
+
     props: ['invalid', 'item', 'title']
 }
 </script>

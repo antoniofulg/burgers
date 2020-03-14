@@ -2,124 +2,138 @@
     <admin-template>
         <div class="container mt-5">
 
-            <h1>Lanches <span data-toggle="modal" data-target="#help"><i class="fas fa-question-circle text-info pointer"></i></span></h1>
-            <hr>
+            <items-list v-show="!form"
+                :itemsList="itemsList"
+                :filter="filter"
+                :firstLoad="firstLoad"
+                :table="table"
+                @deleteItem="deleteItem"
+                @selectItem="selectItem"
+                @updateStatus="updateStatus"
+                @showItem="showItem"
+            >
+                <h1>Lanches</h1>
+                <hr>
 
-            <div class="row">     
-                <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
-                    <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar lanches">
-                    <div class="input-group-append">
-                        <button :disabled="!filter" @click="filter = ''" class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-broom"></i> Limpar</button>
+                <div class="row">     
+                    <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
+                        <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
+                        <div class="input-group-append">
+                            <button :disabled="!filter" @click="filter = ''" class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-broom"></i> Limpar</button>
+                        </div>
+                    </form>
+                    <div class="col-md-4">
+                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo lanche</button>
+                    </div> 
+                </div>
+
+                <hr>
+            </items-list>
+
+            <item-form
+                v-if="form"
+                :item="selectedItem"
+                :invalid="$v.$invalid"
+                title="lanche"
+                @deleteItem="deleteItem(selectedItem)"
+                @insertItem="insertItem(selectedItem)"
+                @updateItem="updateItem(selectedItem)"
+                @resetItem="resetItem"
+            >
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-8">
+                        <label for="name">Nome</label>
+                        <input
+                            :class="{'is-invalid': $v.selectedItem.name.$error}"
+                            v-model="$v.selectedItem.name.$model"
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batata frita (200g) ..." id="name">
+                        <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
+                            Por favor, insira um nome para o lanche.
+                        </div>
                     </div>
-                </form>
-                <div class="col-md-4">
-                    <router-link tag="button" :to="{name: 'admin.snacks.add'}" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Novo lanche</router-link>
-                </div> 
-            </div>
-
-            <hr>
-
-            <spinner v-if="$root.loading"></spinner>
-            <div v-else class="table-responsive">
-                <b-table
-                    :filter="filter"
-                    class="shadow-sm"
-                    bordered
-                    hover
-                    small
-                    striped
-                    head-variant="dark"
-                    :items="itemsList"
-                :fields="table.fields">
-                    <template v-slot:cell(status)="status">
-                         <button
-                            :class="{
-                                'btn-success': status.value === 'avaliable',
-                                'btn-warning': status.value === 'unavaliable',
-                                'btn-danger': status.value === 'desactivated'
-                            }" class="btn btn-sm rounded-pill btn-block shadow-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{statusName(status.value)}}
-                        </button>
-                        <div class="dropdown-menu">
-                            <button @click="updateStatus(status.item, 'avaliable')" v-if="status.value != 'avaliable'" class="dropdown-item"><i class="mr-1 fas fa-check-circle"></i> Disponível</button>
-                            <button @click="updateStatus(status.item, 'unavaliable')" v-if="status.value != 'unavaliable'" class="dropdown-item"><i class="mr-1 fas fa-hourglass-half"></i> Indisponível</button>
-                            <button @click="updateStatus(status.item, 'desactivated')" v-if="status.value != 'desactivated'" class="dropdown-item"><i class="mr-1 fas fa-ban"></i> Desativado</button>
+                    <div class="form-group col-sm-12 col-md-4">
+                        <label for="category">Categoria</label>
+                        <select
+                            :class="{'is-invalid': $v.selectedItem.category.id.$error}"
+                            v-model="$v.selectedItem.category.id.$model"
+                        class="custom-select shadow-sm" id="category">
+                            <option disabled value="" selected>Selecione uma categoria</option>
+                            <option v-for="category in categoriesList" :key="category.id" :value="category.id">{{category.name}}</option>
+                        </select>
+                        <div v-if="!$v.selectedItem.category.id.required" class="invalid-feedback">
+                            Por favor, selecione uma categoria para o lanche.
                         </div>
-                    </template>
-                    <template v-slot:cell(actions)="row">
-                        <div class="d-flex justify-content-center">
-                            <button @click="editItem(row.item)" class="btn btn-primary btn-sm rounded-pill shadow-sm">
-                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-pen"></i> Editar</span>                            
-                                <span class="d-block d-sm-block d-md-block d-lg-none"><i class="fas fa-pen"></i></span>                            
-                            </button>
-                            <button @click="deleteTarget = row.item" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-sm rounded-pill shadow-sm">
-                                <span class="d-none d-sm-none d-md-none d-lg-block pr-4 pl-4"><i class="fas fa-trash"></i> Apagar</span>
-                                <span class="d-block-sm-block d-md-block d-lg-none"><i class="fas fa-trash"></i></span>
-                            </button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <label for="description">Descrição</label>
+                        <input
+                            v-model="$v.selectedItem.description.$model"
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batatas fritas com molho..." id="description">
+                        <div v-if="!$v.selectedItem.description.required" class="invalid-feedback">
+                            Por favor, informe uma descrição com pelo menos 5 letras para o lanche.
                         </div>
-                    </template>
-                </b-table>
-            </div>
-
-            <modal id="delete" title="Confirme sua ação!">
-                <template v-slot:body>
-                    <strong>Você realmente deseja apagar este lanche?</strong>
-                    <span class="d-block"><strong>Nome: </strong> {{deleteTarget.name}}</span> 
-                    <span class="d-block"><strong>Categoria: </strong> {{deleteTarget.category.name}}</span> 
-                    <span class="d-block"><strong>Estado: </strong> {{statusName(deleteTarget.status)}}</span>
-                    <span class="d-block"><strong>Preço: </strong> {{priceName(deleteTarget.price)}}</span>
-                </template>
-                <template v-slot:action>
-                    <button @click="deleteItem(deleteTarget)" type="button" class="btn btn-danger" data-dismiss="modal"><i class="mr-1 fas fa-trash"></i> Confirmar exclusão</button>
-                </template>
-            </modal>
-            <modal id="help" title="Acompanhamentos">
-                <template v-slot:body>
-                    <ul class="pl-3">
-                        <li class="text-justify">
-                            <h5><strong>Nome:</strong></h5> Campo sintetizado para a descrição do lanche cadastrado.
-                        </li>
-                        <hr>
-                        <li class="text-justify">
-                            <h5><strong>Categoria:</strong></h5> Campo para categorizar o tipo de lanche. Facilitando a busca pelo lanche desejado.
-                        </li>
-                        <hr>
-                        <li class="text-justify">
-                            <h5><strong>Preço unitário:</strong></h5> Campo referente ao preço do lanche caso o cliente deseje adicioná-lo ao hamburguer durante o seu pedido.
-                        </li>
-                        <hr>
-                        <li class="text-justify">
-                            <h5><strong>Estado:</strong></h5> Refere-se à disponibilidade do lanche.
-                            <ul>
-                                <li>
-                                    <strong>Disponível</strong>: ele é mostrado no cardápio como disponível para que o cliente o adicione ao pedido.
-                                </li>
-                                <li>
-                                    <strong>Indisponível</strong>: ele é mostrado no cardápio como indisponível. O cliente não poderá adicionar o lanche ao pedido.
-                                </li>
-                                <li>
-                                    <strong>Desativado</strong>: O lanche não é mostrado ao cliente.
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </template>
-            </modal>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group col-sm-12 col-md-4">
+                        <label for="inputPrice">Preço unitário</label>
+                        <div class="input-group mb-3">
+                            <money
+                                :class="{'is-invalid': $v.selectedItem.price.$error}"
+                                v-model="$v.selectedItem.price.$model"
+                                v-bind="money"
+                                class="form-control shadow-sm" id="inputPrice"
+                            />
+                            <div v-if="!$v.selectedItem.price.required" class="invalid-feedback">
+                                Por favor, insira um preço para o lanche.
+                            </div>
+                            <div v-if="!$v.selectedItem.price.decimal" class="invalid-feedback">
+                                Por favor, insira um preço válido para o lanche.
+                            </div>
+                            <div v-if="!$v.selectedItem.price.minValue || !$v.selectedItem.price.maxValue" class="invalid-feedback">
+                                Por favor, insira um preço entre R$ 0,00 e R$ 1000,00 para o lanche.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-4">
+                        <label for="inputState">Estado</label>
+                        <select
+                            v-model="$v.selectedItem.status.$model"
+                            :class="{'is-invalid': $v.selectedItem.status.$error}"
+                        id="inputState" class="form-control shadow-sm">
+                            <option disabled value="" selected>Selecione um estado</option>
+                            <option value="avaliable">Disponível</option>
+                            <option value="unavaliable">Indisponível</option>
+                            <option value="desactivated">Desativado</option>
+                        </select>
+                        <div v-if="!$v.selectedItem.status.required" class="invalid-feedback">
+                            Por favor, insira um estado para o lanche.
+                        </div>
+                    </div>
+                </div>
+            </item-form>
         </div>
     </admin-template>
 </template>
 
 <script>
-import { required } from "vuelidate/lib/validators"
-import AdminTemplate from '../../layouts/AdminTemplate'
-import Modal from '../../components/Modal'
+import AdminTemplate from "../../layouts/AdminTemplate"
+import ItemsList from "../../components/cruds/ItemsList"
+import ItemForm from "../../components/cruds/ItemForm"
+import Crud from "../../mixins/crud"
+import { money } from "../../mixins/masked"
 import Toast from "../../mixins/toasts"
-import Requests from "../../mixins/indexRequests"
+import { Money } from 'v-money'
+import { required, decimal, maxValue, minLength, minValue } from "vuelidate/lib/validators"
 
 export default {
     components: {
         AdminTemplate,
-        Modal
+        ItemForm,
+        ItemsList,
+        Money,
     },
 
     computed: {
@@ -127,36 +141,39 @@ export default {
             return `/api/snacks`
         },
 
-        itemsList() {
-            return this.$store.getters.getSnacks
+        categoriesList()  {
+            return this.$store.getters.getCategories
         }
     },
 
-    created () {
-        console.log(this.$store.getters.getToken)
-    },
-
     data () {
-        return {
-            deleteTarget: {
-                category: {
-                    name: ''
-                }
-            },
-
-            editRequest: {
-                name: 'admin.snacks.update'
-            },
-            
-            filter: null,
-
-            getRequest: {
-                setItems: 'setSnacks',
+        return {      
+            request: {
+                item: 'Snacks',
                 errorMessage: 'Não foi possível obter os lanches!'
+            },
+
+            selectedItem: {
+                id: null,
+                name: '',
+                description: '',
+                category: {
+                    id: '',
+                },
+                price: 0,
+                status: '',
             },
 
             table: {
                 fields: [
+                    {
+                        key: 'category',
+                        label: 'Categoria',
+                        formatter: (value) => {
+                            return value.name
+                        },
+                        sortable: true,
+                    },
                     {
                         key: 'name',
                         label: 'Nome',
@@ -175,50 +192,87 @@ export default {
                         key: 'price',
                         label: 'Preço unitário',
                         formatter: (value) => {
-                            return this.priceName(value)
+                            return this.priceTemplate(value)
                         },
                         sortable: true
-                    },
-                    {
-                        key: 'category',
-                        label: 'Categoria',
-                        formatter: (value) => {
-                            return value.name
-                        },
-                        sortable: true,
                     },
                     {
                         key: 'status',
                         label: 'Estado',
                         sortable: true
                     },
-                    {
-                        key: 'actions',
-                        label: 'Ações'
-                    }
                 ],
             },
         }
     },
 
     methods: {
-        payload (item, status) {
-            return {
-                name: item.name,
-                description: item.description,
-                price: item.price,
-                status: status,
-                category: item.category
+        payload (item = null) {
+            if (item) {
+                return {
+                    name: item.name,
+                    description: item.description,
+                    category_id: item.category.id,
+                    price: item.price,
+                    volume: item.volume,
+                    status: item.status,
+                }
+            } else {
+                return {
+                    name: '',
+                    description: '',
+                    category: {
+                        id: '',
+                    },
+                    price: 0,
+                    volume: 1,
+                    status: '',
+                }
             }
         },
     },
 
-    mixins: [Toast, Requests],
+    mixins: [Crud, money, Toast],
+
+    async mounted() {
+        try {
+            const response = await axios.get(`/api/categories`, this.headers)
+            if (response.data.concluded) {
+                this.$store.commit('setCategories', response.data.items)
+            } else {
+                this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
+            }
+        } catch (error) {
+            console.log(error.response)
+            this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+        }
+
+        console.log(this.$store.getters.getSnacks)
+    },
+
+    validations: {
+        selectedItem: {
+            name: {
+                required
+            },
+            description: {
+                minLength: minLength(5),
+            },
+            category: {
+                id: {
+                    required
+                }
+            },
+            price: {
+                required,
+                decimal,
+                maxValue: maxValue(1000),
+                minValue: minValue(0),
+            },
+            status: {
+                required
+            },
+        }
+    },
 }
 </script>
-
-<style scoped>
-    .pointer {
-        cursor: pointer;
-    }
-</style>

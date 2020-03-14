@@ -46,7 +46,7 @@
                         <input
                             :class="{'is-invalid': $v.selectedItem.name.$error}"
                             v-model="$v.selectedItem.name.$model"
-                        type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi (100g)" id="name">
+                        type="text" class="form-control shadow-sm" placeholder="Ex.: Suco de ..." id="name">
                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
                             Por favor, insira um nome para a bebida.
                         </div>
@@ -85,7 +85,7 @@
                             <option value="soda">Refrigerantes</option>
                             <option value="juice">Sucos</option>
                         </select>
-                        <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
+                        <div v-if="!$v.selectedItem.category.required" class="invalid-feedback">
                             Por favor, selecione uma categoria para a bebida.
                         </div>
                     </div>

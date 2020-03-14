@@ -48,7 +48,7 @@
                             v-model="$v.selectedItem.name.$model"
                         type="text" class="form-control shadow-sm" placeholder="Ex.: Batatas fritas" id="name">
                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
-                            Por favor, insira um nome para a bebida.
+                            Por favor, insira um nome para a categoria.
                         </div>
                     </div>
                     <div class="form-group col-sm-12 col-md-8">
@@ -58,7 +58,7 @@
                             v-model="$v.selectedItem.description.$model"
                         type="text" class="form-control shadow-sm" placeholder="Ex.: Batatas fritas com molho..." id="description">
                         <div v-if="!$v.selectedItem.description.required" class="invalid-feedback">
-                            Por favor, insira um nome para a bebida.
+                            Por favor, insira uma descrição para a categoria.
                         </div>
                     </div>
                 </div>

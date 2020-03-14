@@ -65,7 +65,7 @@
                             <option value="cheese">Queijos</option>
                             <option value="salad">Saladas</option>
                         </select>
-                        <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
+                        <div v-if="!$v.selectedItem.category.required" class="invalid-feedback">
                             Por favor, selecione uma categoria para o ingrediente.
                         </div>
                     </div>

@@ -38,7 +38,7 @@ export default {
     methods: {
         async deleteItem(item) {
             try {
-                let response = await axios.delete(`${this.endpoint}/${item.id}`, this.headers)
+                const response = await axios.delete(`${this.endpoint}/${item.id}`, this.headers)
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
                     this.getItems()
@@ -58,8 +58,7 @@ export default {
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
                     this.getItems()
-                    this.form = false
-                    this.selectedItem = this.payload()
+                    this.resetItem()
                 } else {
                     this.warningToast('Ação não concluída!', response.data.message)
                 }
@@ -122,8 +121,7 @@ export default {
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
                     this.getItems()
-                    this.form = false
-                    this.selectedItem = this.payload()
+                    this.resetItem()
                 } else {
                     console.log(response.data)
                     this.warningToast('Ação não concluída!', response.data.message)
