@@ -231,7 +231,7 @@ export default {
             this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
         }
 
-        console.log(this.$store.getters.getIngredients)
+        // console.log(this.$store.getters.getIngredients)
         console.log(this.$store.getters.getToken)
     },
 
