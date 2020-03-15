@@ -43,7 +43,7 @@ class IngredientController extends Controller
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'category' => ['required', 'in:bread,blend,cheese,salad,side_dishes'],
+            'category' => ['required', 'in:bread,beef,cheese,salad,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
 
@@ -106,7 +106,7 @@ class IngredientController extends Controller
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
-            'category' => ['required', 'in:bread,blend,cheese,salad,sauce,side_dishes'],
+            'category' => ['required', 'in:bread,beef,cheese,salad,sauce,side_dishes'],
             'price' => ['required', 'numeric']
         ]);
 

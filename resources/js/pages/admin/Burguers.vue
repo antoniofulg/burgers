@@ -232,6 +232,7 @@ export default {
         }
 
         console.log(this.$store.getters.getIngredients)
+        console.log(this.$store.getters.getToken)
     },
 
     validations: {

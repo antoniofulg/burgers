@@ -22,7 +22,7 @@ class Category extends Model
     ];
 
     public function snacks() {
-        return $this->hasMany('App\Snack', 'category_id');
+        return $this->hasMany('App\Snack', 'id');
     }
 
     public function getSnacksCountAttribute() {

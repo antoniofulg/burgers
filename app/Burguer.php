@@ -23,11 +23,15 @@ class Burguer extends Model
         return $this->created_at->format('H:i:s d/m/Y');
     }
 
-    public function ingredients() {
-        $this->belongsToMany('App\Ingredient');
+    public function getIngredientsAttribute() {
+        return $this->ingredients();
     }
 
-    public function orders() {
-        $this->belongsToMany('App\Order');
+    public function ingredients() {
+        return $this->hasMany('App\IngredientBurguer')->get();
     }
+
+//     public function orders() {
+//         return $this->belongsToMany('App\Order');
+//     }
 }
