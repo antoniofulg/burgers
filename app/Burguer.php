@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Burguer extends Model
 {
     use SoftDeletes;
+
+    protected $appends = ['ingredients'];
     
     protected $fillable = [
         'name', 'status', 'price'

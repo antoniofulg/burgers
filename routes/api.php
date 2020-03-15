@@ -20,6 +20,7 @@ Route::post('/register', 'AuthController@register');
 Route::middleware(['auth:api'])->group(function() {
     //Logout
     Route::post('/logout', 'AuthController@logout');
+    Route::apiResource('/burguers', 'BurguerController');
     Route::apiResource('/categories', 'CategoryController');
     Route::apiResource('/drinks', 'DrinkController');
     Route::apiResource('/ingredients', 'IngredientController');

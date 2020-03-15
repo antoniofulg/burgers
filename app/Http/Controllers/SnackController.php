@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class SnackController extends Controller
 {
+    protected $attributeNames = [
+        'name' => 'nome',
+        'status' => 'estado',
+        'category' => 'categoria',
+        'price' => 'preço',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -38,6 +45,8 @@ class SnackController extends Controller
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
             'price' => ['required', 'numeric']
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return [
@@ -100,6 +109,8 @@ class SnackController extends Controller
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
             'price' => ['required', 'numeric']
         ]);
+
+        $validation->setAttributeNames($this->attributeNames);
     
         if($validation->fails()){
             return [

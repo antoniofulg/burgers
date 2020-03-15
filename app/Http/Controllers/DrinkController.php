@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class DrinkController extends Controller
 {
-    private $attributeNames = [
+    protected $attributeNames = [
         'name' => 'nome',
         'status' => 'estado',
         'category' => 'categoria',

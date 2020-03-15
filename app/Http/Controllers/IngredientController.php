@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class IngredientController extends Controller
 {
 
-    private $attributeNames = [
+    protected $attributeNames = [
         'name' => 'nome',
         'status' => 'estado',
         'category' => 'categoria',
