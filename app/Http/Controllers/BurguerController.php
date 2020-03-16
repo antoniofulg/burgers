@@ -134,32 +134,42 @@ class BurguerController extends Controller
         
         $updated = [];
 
+        // Pega os ids dos ingredientes vinculados ao hambúrguer
+        foreach ($burguer->ingredients as $ingredient) {
+            if ($ingredient->id) {
+                array_push($updated, $ingredient->id);
+            }
+        }
+
+        // Verificar se o id o ingrediente será editado ou serão criado
         foreach ($request->ingredients as $ingredient) {
-            if ($ingredient['id']) {
-                $ingredient = IngredientBurguer::find($ingredient['id']);
-                if ($ingredient) {
-                    $ingredient->ingredient_id = $ingredient['ingredient_id'];
-                    $ingredient->category = $ingredient['category'];
-                    $ingredient->amount = $ingredient['amount'];
-                    $ingredient->save();
-                    array_push($updated, $ingredient['id']);
+            if (isset($ingredient['id'])) {
+                $ingredientBurguer = IngredientBurguer::find($ingredient['id']);
+                if ($ingredientBurguer) {
+                    $ingredientBurguer->ingredient_id = $ingredient['ingredient_id'];
+                    $ingredientBurguer->category = $ingredient['category'];
+                    $ingredientBurguer->amount = $ingredient['amount'];
+                    $ingredientBurguer->save();
+                    //Remover item atualizado da lista
+                    if (($key = array_search($ingredient['id'], $updated)) !== false) {
+                        unset($updated[$key]);
+                    }
                 }
             } else {
-                $burguer->ingredients()->save(
+                $burguer->ingredient()->save(
                     new IngredientBurguer([
                         'ingredient_id' => $ingredient['ingredient_id'] ? $ingredient['ingredient_id'] : null,
                         'category' => $ingredient['category'],
                         'amount' => $ingredient['amount'],
                     ])
                 );
-                $burguer->ingredients->save($ingredient);
             }
         }
 
-        return response()->json([
-            'updated' => $updated
-        ]);
-
+        // Ids que não foram utilizados, mas que estão vinculados ao hambúrguer, serão excluídos
+        foreach ($updated as $id) {
+            IngredientBurguer::find($id)->delete();
+        }
 
         return response()->json([
             'concluded' => true,
@@ -175,6 +185,19 @@ class BurguerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $burguer = Burguer::find($id);
+
+        if ($burguer) {
+            $burguer->delete();
+            return response()->json([
+                'concluded' => true,
+                'message' => 'Hambúrguer excluído com sucesso!'
+            ]);
+        }
+        
+        return response()->json([
+            'concluded' => false,
+            'message' => 'Hambúrguer não encontrado!'
+        ]);
     }
 }

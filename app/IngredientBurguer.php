@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class IngredientBurguer extends Model
 {
-    use SoftDeletes;
 
     protected $appends = ['name'];
 

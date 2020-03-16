@@ -20,7 +20,6 @@ class CreateIngredientBurguersTable extends Migration
             $table->enum('category', ['bread', 'beef', 'cheese', 'salad', 'sauce', 'side_dishes'])->nullable();
             $table->integer('amount');
             $table->timestamps();
-            $table->softDeletes();
 
             $table->foreign('burguer_id')->references('id')->on('burguers')->onDelete('cascade');
             $table->foreign('ingredient_id')->references('id')->on('ingredients');
