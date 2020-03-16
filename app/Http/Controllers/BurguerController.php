@@ -41,10 +41,6 @@ class BurguerController extends Controller
     {
         $data = $request->all();
 
-        // return response()->json([
-        //     "data" => $data
-        // ]);
-
         $validation = Validator::make($data, [
             'name' => ['required', 'string'],
             'status' => ['required', 'in:avaliable,unavaliable,desactivated'],
@@ -61,11 +57,21 @@ class BurguerController extends Controller
             ];
         }
 
-        Burguer::create([
+        $burguer = Burguer::create([
             'name' => $request->name,
             'status' => $request->status,
             'price' => $request->price,
         ]);
+
+        foreach ($request->ingredients as $ingredient) {
+            $burguer->ingredient()->save(
+                new IngredientBurguer([
+                    'ingredient_id' => $ingredient['ingredient_id'] ? $ingredient['ingredient_id'] : null,
+                    'category' => $ingredient['category'], 
+                    'amount' => $ingredient['amount'], 
+                ])
+            );
+        }
 
         return response()->json([
             'concluded' => true,
@@ -119,24 +125,41 @@ class BurguerController extends Controller
         }
 
         $burguer = Burguer::find($id);
-
-        // return response()->json([
-        //     "burguer" => $burguer,
-        //     "data" => $request->ingredients
-        // ]);
-
-        foreach ($request->ingredients as $key => $value) {
-            return response()->json([
-                "value" => $value,
-                "key" => $key
-            ]);
-        }
-
+        
         $burguer->name = $request->name;
         $burguer->status = $request->status;
         $burguer->price = $request->price;
-
+        
         $burguer->save();
+        
+        $updated = [];
+
+        foreach ($request->ingredients as $ingredient) {
+            if ($ingredient['id']) {
+                $ingredient = IngredientBurguer::find($ingredient['id']);
+                if ($ingredient) {
+                    $ingredient->ingredient_id = $ingredient['ingredient_id'];
+                    $ingredient->category = $ingredient['category'];
+                    $ingredient->amount = $ingredient['amount'];
+                    $ingredient->save();
+                    array_push($updated, $ingredient['id']);
+                }
+            } else {
+                $burguer->ingredients()->save(
+                    new IngredientBurguer([
+                        'ingredient_id' => $ingredient['ingredient_id'] ? $ingredient['ingredient_id'] : null,
+                        'category' => $ingredient['category'],
+                        'amount' => $ingredient['amount'],
+                    ])
+                );
+                $burguer->ingredients->save($ingredient);
+            }
+        }
+
+        return response()->json([
+            'updated' => $updated
+        ]);
+
 
         return response()->json([
             'concluded' => true,

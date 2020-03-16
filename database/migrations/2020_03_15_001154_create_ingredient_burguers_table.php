@@ -22,7 +22,7 @@ class CreateIngredientBurguersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('burguer_id')->references('id')->on('burguers');
+            $table->foreign('burguer_id')->references('id')->on('burguers')->onDelete('cascade');
             $table->foreign('ingredient_id')->references('id')->on('ingredients');
         });
     }

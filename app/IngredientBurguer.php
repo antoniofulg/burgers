@@ -9,7 +9,7 @@ class IngredientBurguer extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['ingredient_name'];
+    protected $appends = ['name'];
 
     protected $hidden = [
         'created_at', 'updated_at', 'deleted_at'
@@ -19,8 +19,8 @@ class IngredientBurguer extends Model
         'burguer_id', 'ingredient_id', 'category', 'amount'
     ];
 
-    public function getIngredientNameAttribute() {
-        return $this->ingredient()->name;
+    public function getNameAttribute() {
+        return $this->ingredient() ? $this->ingredient()->name : null;
     }
 
     public function ingredient() {

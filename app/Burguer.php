@@ -24,11 +24,11 @@ class Burguer extends Model
     }
 
     public function getIngredientsAttribute() {
-        return $this->ingredients();
+        return $this->ingredient()->get();
     }
 
-    public function ingredients() {
-        return $this->hasMany('App\IngredientBurguer')->get();
+    public function ingredient() {
+        return $this->hasMany('App\IngredientBurguer');
     }
 
 //     public function orders() {
