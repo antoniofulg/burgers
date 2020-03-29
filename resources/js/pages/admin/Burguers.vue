@@ -41,42 +41,16 @@
                 @resetItem="resetItem"
             >
                 <div class="form-row">
-                    <div class="form-group col-sm-12 col-md-8">
+                    <div class="form-group col-sm-12 col-md-4">
                         <label for="name">Nome</label>
                         <input
                             :class="{'is-invalid': $v.selectedItem.name.$error}"
                             v-model="$v.selectedItem.name.$model"
-                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batata frita (200g) ..." id="name">
+                        type="text" class="form-control shadow-sm" placeholder="X-Burguer" id="name">
                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
                             Por favor, insira um nome para o lanche.
                         </div>
                     </div>
-                    <div class="form-group col-sm-12 col-md-4">
-                        <label for="category">Categoria</label>
-                        <select
-                            :class="{'is-invalid': $v.selectedItem.category.id.$error}"
-                            v-model="$v.selectedItem.category.id.$model"
-                        class="custom-select shadow-sm" id="category">
-                            <option disabled value="" selected>Selecione uma categoria</option>
-                            <option v-for="category in categoriesList" :key="category.id" :value="category.id">{{category.name}}</option>
-                        </select>
-                        <div v-if="!$v.selectedItem.category.id.required" class="invalid-feedback">
-                            Por favor, selecione uma categoria para o lanche.
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-sm-12">
-                        <label for="description">Descrição</label>
-                        <input
-                            v-model="$v.selectedItem.description.$model"
-                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batatas fritas com molho..." id="description">
-                        <div v-if="!$v.selectedItem.description.required" class="invalid-feedback">
-                            Por favor, informe uma descrição com pelo menos 5 letras para o lanche.
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
                     <div class="input-group col-sm-12 col-md-4">
                         <label for="inputPrice">Preço unitário</label>
                         <div class="input-group mb-3">
@@ -113,6 +87,41 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-row">
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="ingredient">Tipo de ingrediente</label>
+                        <select class="custom-select shadow-sm" id="category">
+                            <option disabled value="" selected>Selecione uma categoria</option>
+                            <option value="side_dishes">Acompanhamentos</option>
+                            <option value="beef">Carnes</option>
+                            <option value="sauce">Molhos</option>
+                            <option value="bread">Pães</option>
+                            <option value="cheese">Queijos</option>
+                            <option value="salad">Saladas</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="ingredient">Ingrediente</label>
+                        <select class="custom-select shadow-sm" id="ingredient">
+                            <option disabled value="" selected>Selecione um ingrediente</option>
+                            <option value="null">Livre escolha</option>
+                            <option v-for="bread in getIngredientsByCategory('bread')" :key="bread.id" :value="bread.id">{{bread.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-2">
+                        <label for="amount">Quantidade</label>
+                        <input type="number" class="form-control shadow-sm" id="name">
+                        <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
+                            Por favor, insira uma quantidade para o ingrediente.
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 align-bottom">
+                        <button class="btn shadow-sm btn-danger btn-sm btn-block rounded-pill align-bottom"><i class="mr-1 fas fa-trash"></i> Remover ingrediente</button>
+                    </div>
+                </div>
             </item-form>
         </div>
     </admin-template>
@@ -141,9 +150,9 @@ export default {
             return `/api/burguers`
         },
 
-        snacksList()  {
+        ingredientList()  {
             return this.$store.getters.getIngredients
-        }
+        },
     },
 
     data () {
@@ -156,8 +165,13 @@ export default {
             selectedItem: {
                 id: null,
                 name: '',
-                description: '',
-                ingredients: {},
+                ingredients: [
+                    {
+                        ingredient_id: 1,
+                        category: 'bread',
+                        amount: 1,
+                    }
+                ],
                 price: 0,
                 status: '',
             },
@@ -170,10 +184,13 @@ export default {
                         sortable: true
                     },
                     {
-                        key: 'description',
-                        label: 'Descrição',
+                        key: 'ingredients',
+                        label: 'Ingredientes',
                         formatter: (value) => {
-                            return value ? value : 'Sem descrição'
+                            let list = value.map((val) => {
+                                return (val.amount > 1 ? ` ${val.amount}x ` : ' ') + (val.name ? val.name : this.categoryName(val.category))
+                            })
+                            return list.toString()
                         },
                         sortable: true,
                         sortByFormatted: true
@@ -197,6 +214,32 @@ export default {
     },
 
     methods: {
+        categoryName(category) {
+            if (category ===  'bread') {
+                return 'Pães'
+            } else if (category === 'beef') {
+                return 'Carnes'
+            } else if (category === 'cheese') {
+                return 'Queijos'
+            } else if (category === 'salad') {
+                return 'Saladas'
+            } else if (category === 'sauce') {
+                return 'Molhos'
+            } else if (category === 'side_dishes') {
+                return 'Acompanhamentos'
+            }
+        },
+
+        getIngredientsByCategory(category) {
+            const list = this.$store.getters.getIngredients.filter((val) => {
+                if (val.category === category) {
+                    return val 
+                }
+            })
+            console.log(list)
+            return list
+        },
+
         payload (item = null) {
             if (item) {
                 return {
@@ -208,7 +251,7 @@ export default {
             } else {
                 return {
                     name: '',
-                    ingredients: {},
+                    ingredients: [],
                     price: 0,
                     status: '',
                 }
