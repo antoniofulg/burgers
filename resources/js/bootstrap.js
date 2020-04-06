@@ -11,6 +11,8 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+    // Asset for SBAdmin2
+    require('@fortawesome/fontawesome-free/css/all.min.css');
 } catch (e) {}
 
 /**
