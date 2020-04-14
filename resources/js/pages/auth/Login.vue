@@ -1,63 +1,82 @@
 <template>
-    <div class="container pt-5 pb-5">
-        <div class="row align-middle d-flex justify-content-center">
-            <div class="col-sm-12 col-md-8 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form @submit.prevent>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input
-                                    :class="{'is-invalid': $v.email.$error}"
-                                    v-model="$v.email.$model"
-                                    type="email" class="form-control" id="email"/>
-                                <div v-if="!$v.email.required" class="invalid-feedback">
-                                    Por favor, preencha este campo.
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Bem-vindo de volta!</h1>
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input
+                                                :class="{'is-invalid': $v.email.$error}"
+                                                v-model="$v.email.$model"
+                                                type="email" class="form-control form-control-user" id="email"
+                                                placeholder="Insira seu endereço de e-mail"/>
+                                            <div v-if="!$v.email.required" class="invalid-feedback">
+                                                Por favor, preencha este campo.
+                                            </div>
+                                            <div v-if="!$v.email.email" class="invalid-feedback">
+                                                Por favor, preencha com um email válido.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Senha</label>
+                                            <input
+                                                :class="{'is-invalid': $v.password.$error}"
+                                                v-model="$v.password.$model"
+                                                type="password" class="form-control form-control-user" id="password"
+                                                 placeholder="Insira sua senha"/>
+                                            <div v-if="!$v.password.required" class="invalid-feedback">
+                                                Por favor, preencha este campo.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Lembrar email</label>
+                                            </div>
+                                        </div>
+                                        <button @click="login" :disabled="$v.$invalid" class="btn btn-primary btn-user btn-block">
+                                            <spinner :type="'submit'" v-if="$root.loading"></spinner>
+                                            <span v-else>Entrar</span>
+                                        </button>
+                                        <hr>
+                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Entre com o Google
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Entre com o Facebook
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="forgot-password.html">Esqueceu sua senha?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="register.html">Crie uma conta!</a>
+                                    </div>
                                 </div>
-                                <div v-if="!$v.email.email" class="invalid-feedback">
-                                    Por favor, preencha com um email válido.
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Senha</label>
-                                <input
-                                    :class="{'is-invalid': $v.password.$error}"
-                                    v-model="$v.password.$model"
-                                    type="password" class="form-control" id="password"/>
-                                <div v-if="!$v.password.required" class="invalid-feedback">
-                                    Por favor, preencha este campo.
-                                </div>
-                            </div>
-                            <button @click="login" :disabled="$v.$invalid" class="btn btn-success btn-block btn-large">
-                                <spinner :type="'submit'" v-if="$root.loading"></spinner>
-                                <span v-else>Entrar</span>
-                            </button>
-                        </form>
-                        <div class="form-row d-flex align-items-center mt-2">
-                            <div class="col-sm-6 d-flex justify-content-center">
-                                <div class="custom-control custom-checkbox">
-                                    <input class="custom-control-input" type="checkbox" id="autoSizingCheck">
-                                    <label class="custom-control-label" for="autoSizingCheck">
-                                        Lembrar credenciais
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 d-flex justify-content-center">
-                                <button class="btn btn-sm btn-outline-info">
-                                    Esqueci minha senha
-                                </button>
                             </div>
                         </div>
-                        <hr>
-                        <small id="emailHelp" class="form-text text-muted text-center mb-1">Não publicaremos nada em suas redes sociais!</small>
-                        <button class="btn btn-danger btn-block btn-large" disabled><i class="fab fa-google mr-2"></i>Entrar com o Google</button>
-                        <button class="btn btn-primary btn-block btn-large" disabled><i class="fab fa-facebook mr-2"></i>Entrar com o Facebook</button>
-                        <small class="form-text text-center text-muted mt-2 mb-2">ou</small>
-                        <router-link :to="{name: 'register'}" class="btn btn-secondary btn-block btn-large">Criar uma nova conta</router-link>
                     </div>
                 </div>
+
             </div>
+
         </div>
+
     </div>
 </template>
 

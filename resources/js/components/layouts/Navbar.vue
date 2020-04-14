@@ -14,9 +14,9 @@
               <i class="fas fa-user-circle"></i> {{user.name}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <router-link tag="a" exact :to="{name: 'profile'}" class="dropdown-item">Meu perfil</router-link>
+              <router-link tag="a" exact :to="{name: 'profile'}" class="dropdown-item">Meu perfil</router-link>
             <div class="dropdown-divider"></div>
-                <button @click="logout" class="dropdown-item" href="">Sair</button>
+            <button @click="logout" class="dropdown-item" href="">Sair</button>
             </div>
           </li>
         </ul>
