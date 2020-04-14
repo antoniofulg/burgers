@@ -1,6 +1,6 @@
 <template>
     <admin-template>
-        <div class="container mt-5">
+        <div class="container-fluid">
 
             <items-list v-show="!form"
                 :itemsList="itemsList"
@@ -14,7 +14,6 @@
             >
                 <h1>Bebidas</h1>
                 <hr>
-
                 <div class="row">     
                     <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
                         <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
@@ -23,7 +22,7 @@
                         </div>
                     </form>
                     <div class="col-md-4">
-                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Nova bebida</button>
+                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block"><i class="mr-1 fas fa-plus-circle"></i> Nova bebida</button>
                     </div> 
                 </div>
 
@@ -127,6 +126,7 @@
                     </div>
                 </div>
             </item-form>
+
         </div>
     </admin-template>
 </template>

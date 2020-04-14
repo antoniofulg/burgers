@@ -24,11 +24,16 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "5.12.0",
         "@fortawesome/fontawesome-svg-core": "^1.2.27",
         "@fortawesome/free-brands-svg-icons": "^5.12.1",
         "@fortawesome/free-regular-svg-icons": "^5.12.1",
         "@fortawesome/free-solid-svg-icons": "^5.12.1",
         "@fortawesome/vue-fontawesome": "^0.1.9",
+        "chart.js": "2.9.3",
+        "datatables.net-bs4": "1.10.20",
+        "jquery": "3.4.1",
+        "jquery.easing": "^1.4.1",
         "bootstrap-vue": "^2.4.2",
         "v-money": "^0.8.1",
         "vue-router": "^3.1.5",

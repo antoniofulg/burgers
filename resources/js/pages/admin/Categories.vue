@@ -1,6 +1,6 @@
 <template>
     <admin-template>
-        <div class="container mt-5">
+        <div class="container-fluid">
 
             <items-list v-show="!form"
                 :itemsList="itemsList"
@@ -23,7 +23,7 @@
                         </div>
                     </form>
                     <div class="col-md-4">
-                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Nova categoria</button>
+                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block"><i class="mr-1 fas fa-plus-circle"></i> Nova categoria</button>
                     </div> 
                 </div>
 
