@@ -11,6 +11,8 @@
         
         <!-- CSS Bootstrap -->
         <link rel="stylesheet" href="{{ asset('css/sb-admin-2/sb-admin-2.css')}}">
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     </head>
     <body>
         <div id="app">
@@ -24,5 +26,7 @@
         <script src="{{ asset('js/jquery/jquery.easing.min.js') }}"></script>
         
         <script src="{{ asset('js/sb-admin-2/sb-admin-2.js') }}"></script>
+
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     </body>
 </html>

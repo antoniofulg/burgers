@@ -1,6 +1,6 @@
 <template>
     <admin-template>
-        <div class="container mt-5">
+        <div class="col-12">
 
             <items-list v-show="!form"
                 :itemsList="itemsList"
@@ -12,18 +12,20 @@
                 @updateStatus="updateStatus"
                 @showItem="showItem"
             >
-                <h1>Bebidas</h1>
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Bebidas</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Ir para gráficos</a>
+                </div>
                 <hr>
-
                 <div class="row">     
                     <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
-                        <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar ingredientes">
+                        <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar bebidas">
                         <div class="input-group-append">
                             <button :disabled="!filter" @click="filter = ''" class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-broom"></i> Limpar</button>
                         </div>
                     </form>
                     <div class="col-md-4">
-                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block rounded-pill"><i class="mr-1 fas fa-plus-circle"></i> Nova bebida</button>
+                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block"><i class="mr-1 fas fa-plus-circle"></i> Nova bebida</button>
                     </div> 
                 </div>
 
@@ -127,6 +129,7 @@
                     </div>
                 </div>
             </item-form>
+
         </div>
     </admin-template>
 </template>
