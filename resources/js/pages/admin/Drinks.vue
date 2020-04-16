@@ -1,6 +1,10 @@
 <template>
     <admin-template>
-        <div class="col-12">
+        <div class="container-fluid">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Bebidas</h1>
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Ir para gráficos</a>
+            </div>
 
             <items-list v-show="!form"
                 :itemsList="itemsList"
@@ -12,24 +16,18 @@
                 @updateStatus="updateStatus"
                 @showItem="showItem"
             >
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Bebidas</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Ir para gráficos</a>
-                </div>
-                <hr>
                 <div class="row">     
                     <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
-                        <input v-model="filter" type="text" class="form-control shadow-sm" placeholder="Buscar bebidas">
+                        <input v-model="filter" type="text" class="form-control" placeholder="Buscar bebidas">
                         <div class="input-group-append">
-                            <button :disabled="!filter" @click="filter = ''" class="btn shadow-sm btn-outline-secondary" type="submit"><i class="fas fa-broom"></i> Limpar</button>
+                            <button :disabled="!filter" @click="filter = ''" class="btn btn-outline-secondary" type="submit"><i class="fas fa-broom"></i> Limpar</button>
                         </div>
                     </form>
                     <div class="col-md-4">
-                        <button @click="form = true" class="btn shadow-sm btn-primary btn-block"><i class="mr-1 fas fa-plus-circle"></i> Nova bebida</button>
+                        <button @click="form = true" class="btn btn-primary btn-block"><i class="mr-1 fas fa-plus-circle"></i> Nova bebida</button>
                     </div> 
                 </div>
 
-                <hr>
             </items-list>
 
             <item-form

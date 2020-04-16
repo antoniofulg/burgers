@@ -10,9 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         
         <!-- CSS Bootstrap -->
-        <link rel="stylesheet" href="{{ asset('css/sb-admin-2/sb-admin-2.css')}}">
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="{{ asset('css/app.css')}}">
     </head>
     <body>
         <div id="app">
@@ -21,12 +19,5 @@
 
         <!-- JS Import -->
         <script src="{{ asset('js/app.js') }}"></script>
-
-        <!-- Core plugin JavaScript -->
-        <script src="{{ asset('js/jquery/jquery.easing.min.js') }}"></script>
-        
-        <script src="{{ asset('js/sb-admin-2/sb-admin-2.js') }}"></script>
-
-        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     </body>
 </html>
