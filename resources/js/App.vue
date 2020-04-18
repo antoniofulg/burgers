@@ -1,13 +1,6 @@
 <template>
-  <main>
+  <div id="app">
+    <notifications></notifications>
     <router-view/>
-  </main>
+  </div>
 </template>
-
-<script>
-
-
-export default {
-  name: 'app',
-}
-</script>
