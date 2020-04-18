@@ -22,9 +22,9 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
         },
         {
-          path: '/icons',
-          name: 'icons',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
+          path: '/users',
+          name: 'users',
+          component: () => import(/* webpackChunkName: "demo" */ './views/Users.vue')
         },
         {
           path: '/profile',
@@ -32,8 +32,8 @@ export default new Router({
           component: () => import(/* webpackChunkName: "demo" */ './views/UserProfile.vue')
         },
         {
-          path: '/maps',
-          name: 'maps',
+          path: '/orders',
+          name: 'orders',
           component: () => import(/* webpackChunkName: "demo" */ './views/Maps.vue')
         },
         {

@@ -82,13 +82,42 @@
                 <!--Divider-->
                 <hr class="my-3">
                 <!--Heading-->
-                <h6 class="navbar-heading text-muted">Documentation</h6>
+                <h6 class="navbar-heading text-muted">Cardápio</h6>
+                <!--Navigation-->
+                <ul class="navbar-nav mb-md-3">
+                    <li class="nav-item">
+                      <sidebar-item :link="{name: 'Bebidas', icon: 'fas fa-beer mr-3 text-yellow', path: '/orders'}"/>
+                    </li>
+                    <li class="nav-item">
+                      <sidebar-item :link="{name: 'Categorias de lanches', icon: 'fas fa-poll-h mr-3 text-green', path: '/orders'}"/>
+                    </li>
+                    <li class="nav-item">
+                      <sidebar-item :link="{name: 'Lanches', icon: 'fas fa-pizza-slice mr-3 text-orange', path: '/orders'}"/>
+                    </li>
+                </ul>
+                <!--Divider-->
+                <hr class="my-3">
+                <!--Heading-->
+                <h6 class="navbar-heading text-muted">Hambúrguers</h6>
+                <!--Navigation-->
+                <ul class="navbar-nav mb-md-3">
+                    <li class="nav-item">
+                        <sidebar-item :link="{name: 'Ingredientes', icon: 'fas fa-bacon mr-3 text-blue', path: '/orders'}"/>
+                    </li>
+                    <li class="nav-item">
+                        <sidebar-item :link="{name: 'Hambúrguers', icon: 'fas fa-hamburger mr-3 text-orange', path: '/orders'}"/>
+                    </li>
+                </ul>
+                <!--Divider-->
+                <hr class="my-3">
+                <!--Heading-->
+                <h6 class="navbar-heading text-muted">Documentação</h6>
                 <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
                         <a class="nav-link"
                            href="https://demos.creative-tim.com/vue-argon-dashboard/documentation">
-                            <i class="ni ni-spaceship"></i> Getting started
+                            <i class="ni ni-spaceship"></i> Iniciando
                         </a>
                     </li>
                     <li class="nav-item">
@@ -100,7 +129,7 @@
                     <li class="nav-item">
                         <a class="nav-link"
                            href="https://demos.creative-tim.com/vue-argon-dashboard/documentation/components/alerts.html">
-                            <i class="ni ni-ui-04"></i> Components
+                            <i class="ni ni-ui-04"></i> Componentes
                         </a>
                     </li>
                 </ul>
