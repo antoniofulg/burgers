@@ -72,7 +72,7 @@
 </template>
 <script>
 import { required, email } from "vuelidate/lib/validators"
-import Toast from "../mixins/toasts"
+import Toast from "../../mixins/toasts"
 
 export default {
     computed: {

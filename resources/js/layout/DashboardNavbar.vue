@@ -57,6 +57,7 @@
         user: this.$store.getters.getUser
       };
     },
+    
     methods: {
       toggleSidebar() {
         this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);

@@ -111,18 +111,80 @@
     </div>
 </template>
 <script>
-  export default {
-    name: 'register',
-    data() {
-      return {
-        model: {
-          name: '',
-          email: '',
-          password: ''
+import { required, email, minLength, not, sameAs } from "vuelidate/lib/validators";
+import Toast from "../../mixins/toasts"
+
+export default {
+    computed: {
+        endpoint () {
+            return `/api/register`;
         }
-      }
+    },
+    
+    created() {
+        console.log(this.$store.getters.getUser)
+    },
+
+    data () {
+        return {
+            email: '',
+            email_unique: '',
+            password: '',
+            password_confirmation: '',
+            name: ''
+        }
+    },
+
+    methods: {
+        async register() {
+            try {
+                const response = await axios.post(this.endpoint, {
+                    email: this.email,
+                    password: this.password,
+                    password_confirmation: this.password_confirmation,
+                    name: this.name,
+                })
+
+                if (response.data.concluded) {
+                    this.$store.commit('setUser', response.data.user)
+                    sessionStorage.setItem('user', JSON.stringify(response.data.user))
+                    this.$router.push({name: 'profile'})
+                } else {
+                    this.warningToast('Ação não concluída!', response.data.message)
+                    for (let field in response.data.validation) {
+                        this.warningToast('Erro de validação!', response.data.validation[field])
+                    }
+                    this.email_unique = this.email
+                }
+            } catch (error) {   
+                console.log(error.response)
+                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
+            }
+        }
+    },
+
+    mixins: [Toast],
+
+    validations: {
+        name: {
+            required
+        },
+        email: {
+            required,
+            email,
+            not: not(sameAs('email_unique'))
+        },
+        password: {
+            required,
+            minLength: minLength(8)
+        },
+        password_confirmation: {
+            required,
+            minLength: minLength(8),
+            sameAsPassword: sameAs('password')
+        },
     }
-  }
+}
 </script>
 <style>
 </style>

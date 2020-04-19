@@ -7,6 +7,7 @@ export default {
       
     methods: {
         logout() {
+            console.log('vamos efetuar o login, primo')
             axios.post(`${this.endpoint}`, {}, {"headers":
                 {"authorization":`Bearer ${this.$store.getters.getToken}`}
             }).then(response => {
