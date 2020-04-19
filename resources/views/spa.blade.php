@@ -9,20 +9,14 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         
-        <!-- CSS Bootstrap -->
-        <link rel="stylesheet" href="{{ asset('css/sb-admin-2/sb-admin-2.css')}}">
+        <!-- Argon -->
+        <link rel="stylesheet" href="{{ asset('static/css/nucleo-icons.css') }}" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     </head>
     <body>
-        <div id="app">
-            <app></app>
-        </div>
+        <div id="app"></div>
 
         <!-- JS Import -->
-        <script src="{{ asset('js/app.js') }}"></script>
-
-        <!-- Core plugin JavaScript -->
-        <script src="{{ asset('js/jquery/jquery.easing.min.js') }}"></script>
-        
-        <script src="{{ asset('js/sb-admin-2/sb-admin-2.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
