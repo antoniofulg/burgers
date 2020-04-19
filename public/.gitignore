@@ -1,4 +1,5 @@
 css/
 fonts/
 img/
-js/
+js/app.js
+*.js
