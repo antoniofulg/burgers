@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <main>
     <router-view/>
   </main>
@@ -11,3 +12,10 @@ export default {
   name: 'app',
 }
 </script>
+=======
+  <div id="app">
+    <notifications></notifications>
+    <router-view/>
+  </div>
+</template>
+>>>>>>> admin_template

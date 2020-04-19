@@ -1,12 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
-    "/js/charts/Chart.min.js": "/js/charts/Chart.min.js",
-    "/js/datatables/dataTables.bootstrap4.min.js": "/js/datatables/dataTables.bootstrap4.min.js",
-    "/js/datatables/jquery.dataTables.min.js": "/js/datatables/jquery.dataTables.min.js",
-    "/js/jquery/jquery.easing.min.js": "/js/jquery/jquery.easing.min.js",
-    "/js/jquery/jquery.min.js": "/js/jquery/jquery.min.js",
-    "/css/sb-admin-2/sb-admin-2.css": "/css/sb-admin-2/sb-admin-2.css",
     "/css/app.css": "/css/app.css",
-    "/js/sb-admin-2/sb-admin-2.js": "/js/sb-admin-2/sb-admin-2.js",
-    "/css/datatables/dataTables.bootstrap4.min.css": "/css/datatables/dataTables.bootstrap4.min.css"
+    "/demo.js": "/demo.js",
+    "/vendors~demo.js": "/vendors~demo.js",
+    "/logo.png": "/logo.png"
 }
