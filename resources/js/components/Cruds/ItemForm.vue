@@ -1,15 +1,10 @@
 <template>
     <span>
         <div class="row">
-            <div class="col-sm-3 d-inline d-md-none align-middle">
-                <button @click.prevent="$emit('resetItem')" class="btn btn-secondary rounded-pill shadow-sm d-inline d-md-none mt-1"><i class="fas fa-undo-alt"></i> Voltar</button>
-            </div>
-            <div class="col-sm-9 col-md-12">
-                <p v-if="!item.id" class="h1 ml-1 mb-0">Cadastrar {{title}}</p>
-                <p v-else class="h1 ml-auto mb-0">Editar {{title}}</p>
+            <div class="col-sm-12 d-inline d-md-none align-middle">
+                <button @click.prevent="$emit('resetItem')" class="btn btn-block btn-secondary mb-3 mt-auto shadow-sm"><i class="mr-1 fas fa-undo-alt"></i> Voltar para  tabela</button>
             </div>
         </div>
-        <hr>
         <form @submit.prevent>
             <slot/>
             <hr>
