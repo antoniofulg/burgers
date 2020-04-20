@@ -75,13 +75,13 @@
                 <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                      <sidebar-item :link="{name: 'Bebidas', icon: 'fas fa-beer mr-3 text-yellow', path: '/orders'}"/>
+                      <sidebar-item :link="{name: 'Bebidas', icon: 'fas fa-beer mr-3 text-yellow', path: '/bebidas'}"/>
                     </li>
                     <li class="nav-item">
-                      <sidebar-item :link="{name: 'Categorias de lanches', icon: 'fas fa-poll-h mr-3 text-green', path: '/orders'}"/>
+                      <sidebar-item :link="{name: 'Categorias de lanches', icon: 'fas fa-poll-h mr-3 text-green', path: '/categorias-de-lanches'}"/>
                     </li>
                     <li class="nav-item">
-                      <sidebar-item :link="{name: 'Lanches', icon: 'fas fa-pizza-slice mr-3 text-orange', path: '/orders'}"/>
+                      <sidebar-item :link="{name: 'Lanches', icon: 'fas fa-pizza-slice mr-3 text-orange', path: '/lanches'}"/>
                     </li>
                 </ul>
                 <!--Divider-->
@@ -91,10 +91,10 @@
                 <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <sidebar-item :link="{name: 'Ingredientes', icon: 'fas fa-bacon mr-3 text-blue', path: '/orders'}"/>
+                        <sidebar-item :link="{name: 'Ingredientes', icon: 'fas fa-bacon mr-3 text-blue', path: '/ingredientes'}"/>
                     </li>
                     <li class="nav-item">
-                        <sidebar-item :link="{name: 'Hambúrguers', icon: 'fas fa-hamburger mr-3 text-orange', path: '/orders'}"/>
+                        <sidebar-item :link="{name: 'Hambúrguers', icon: 'fas fa-hamburger mr-3 text-orange', path: '/hamburguers'}"/>
                     </li>
                 </ul>
                 <!--Divider-->

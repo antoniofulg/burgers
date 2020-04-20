@@ -25,11 +25,11 @@
                     </div>
 
                     <template>
-                        <router-link to="/profile" class="dropdown-item">
+                        <router-link to="/perfil" class="dropdown-item">
                             <i class="ni ni-single-02"></i>
                             <span>Meu perfil</span>
                         </router-link>
-                        <router-link to="/users" class="dropdown-item">
+                        <router-link to="/usuarios" class="dropdown-item">
                             <i class="ni ni-settings-gear-65"></i>
                             <span>Opções</span>
                         </router-link>
