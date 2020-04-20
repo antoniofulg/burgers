@@ -54,7 +54,7 @@ export default [
       {
         path: '/ingredientes',
         name: 'ingredients',
-        component: () => import('../../views/Admin/Drinks.vue')
+        component: () => import('../../views/Admin/Ingredients.vue')
       },
       {
         path: '/hamburguers',

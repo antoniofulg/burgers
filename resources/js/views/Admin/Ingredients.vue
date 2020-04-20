@@ -68,7 +68,7 @@
                 <div class="col">
                     <div class="card shadow">
                         <div class="card-header bg-transparent">
-                            <h3 class="mb-0">Lanches</h3>
+                            <h3 class="mb-0">Ingredients</h3>
                         </div>
                         <div class="card-body">
                             <items-list v-show="!form"
@@ -83,13 +83,13 @@
                             >
                                 <div class="row">     
                                     <form @submit.prevent class="input-group col-md-8 mb-3 mb-md-0">
-                                        <input v-model="filter" type="text" class="form-control" placeholder="Buscar lanche">
+                                        <input v-model="filter" type="text" class="form-control" placeholder="Buscar ingredientes">
                                         <div class="input-group-append">
                                             <button :disabled="!filter" @click="filter = ''" class="btn btn-outline-info" type="submit"><i class="fas fa-broom"></i> Limpar</button>
                                         </div>
                                     </form>
                                     <div class="col-md-4">
-                                        <button @click="form = true" class="btn btn-primary btn-block"><i class="mr-1 fas fa-plus-circle"></i> Novo lanche</button>
+                                        <button @click="form = true" class="btn btn-primary btn-block"><i class="mr-1 fas fa-plus-circle"></i> Novo ingrediente</button>
                                     </div> 
                                 </div>
                             </items-list>
@@ -110,58 +110,54 @@
                                         <input
                                             :class="{'is-invalid': $v.selectedItem.name.$error}"
                                             v-model="$v.selectedItem.name.$model"
-                                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batata frita (200g) ..." id="name">
+                                        type="text" class="form-control shadow-sm" placeholder="Ex.: Blend de boi (100g)" id="name">
                                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
-                                            Por favor, insira um nome para o lanche.
+                                            Por favor, insira um nome para o ingrediente.
                                         </div>
                                     </div>
                                     <div class="form-group col-sm-12 col-md-4">
                                         <label for="category">Categoria</label>
                                         <select
-                                            :class="{'is-invalid': $v.selectedItem.category.id.$error}"
-                                            v-model="$v.selectedItem.category.id.$model"
+                                            :class="{'is-invalid': $v.selectedItem.category.$error}"
+                                            v-model="$v.selectedItem.category.$model"
                                         class="custom-select shadow-sm" id="category">
                                             <option disabled value="" selected>Selecione uma categoria</option>
-                                            <option v-for="category in categoriesList" :key="category.id" :value="category.id">{{category.name}}</option>
+                                            <option value="side_dishes">Acompanhamentos</option>
+                                            <option value="beef">Carnes</option>
+                                            <option value="sauce">Molhos</option>
+                                            <option value="bread">Pães</option>
+                                            <option value="cheese">Queijos</option>
+                                            <option value="salad">Saladas</option>
                                         </select>
-                                        <div v-if="!$v.selectedItem.category.id.required" class="invalid-feedback">
-                                            Por favor, selecione uma categoria para o lanche.
+                                        <div v-if="!$v.selectedItem.category.required" class="invalid-feedback">
+                                            Por favor, selecione uma categoria para o ingrediente.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-sm-12">
-                                        <label for="description">Descrição</label>
-                                        <input
-                                            v-model="$v.selectedItem.description.$model"
-                                        type="text" class="form-control shadow-sm" placeholder="Ex.: Batatas fritas com molho..." id="description">
-                                        <div v-if="!$v.selectedItem.description.required" class="invalid-feedback">
-                                            Por favor, informe uma descrição com pelo menos 5 letras para o lanche.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="input-group col-sm-12 col-md-4">
+                                    <div class="input-group col-md-4">
                                         <label for="inputPrice">Preço unitário</label>
                                         <div class="input-group mb-3">
-                                            <money
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">R$</span>
+                                            </div>
+                                            <input
                                                 :class="{'is-invalid': $v.selectedItem.price.$error}"
                                                 v-model="$v.selectedItem.price.$model"
-                                                v-bind="money"
-                                                class="form-control shadow-sm" id="inputPrice"
-                                            />
+                                            type="number" class="form-control shadow-sm" id="inputPrice">
                                             <div v-if="!$v.selectedItem.price.required" class="invalid-feedback">
-                                                Por favor, insira um preço para o lanche.
+                                                Por favor, insira um preço para o ingrediente.
                                             </div>
                                             <div v-if="!$v.selectedItem.price.decimal" class="invalid-feedback">
-                                                Por favor, insira um preço válido para o lanche.
+                                                Por favor, insira um preço válido para o ingrediente.
                                             </div>
-                                            <div v-if="!$v.selectedItem.price.minValue || !$v.selectedItem.price.maxValue" class="invalid-feedback">
-                                                Por favor, insira um preço entre R$ 0,00 e R$ 1000,00 para o lanche.
+                                            <div v-if="!$v.selectedItem.price.minValue || $v.selectedItem.price.maxValue" class="invalid-feedback">
+                                                Por favor, insira um preço entre R$ 0,00 e R$ 1000,00 para o ingrediente.
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12 col-md-4">
+
+                                    <div class="form-group col-md-4">
                                         <label for="inputState">Estado</label>
                                         <select
                                             v-model="$v.selectedItem.status.$model"
@@ -173,7 +169,7 @@
                                             <option value="desactivated">Desativado</option>
                                         </select>
                                         <div v-if="!$v.selectedItem.status.required" class="invalid-feedback">
-                                            Por favor, insira um estado para o lanche.
+                                            Por favor, insira um estado para o ingrediente.
                                         </div>
                                     </div>
                                 </div>
@@ -189,67 +185,50 @@
 <script>
     import ItemsList from "../../components/Cruds/ItemsList"
     import ItemForm from "../../components/Cruds/ItemForm"
-    import Crud from "../../mixins/crud"
-    import { money } from "../../mixins/masked"
     import Toast from "../../mixins/toasts"
-    import { Money } from 'v-money'
-    import { required, decimal, maxValue, minLength, minValue } from "vuelidate/lib/validators"
+    import Crud from "../../mixins/crud"
+    import { required, decimal, maxValue, minValue } from "vuelidate/lib/validators"
 
     export default {
         components: {
             ItemForm,
             ItemsList,
-            Money,
         },
+
 
         computed: {
             endpoint () {
-                return `/api/snacks`
+                return `/api/ingredients`
             },
-
-            categoriesList()  {
-                return this.$store.getters.getCategories
-            }
         },
 
         data () {
-            return {      
+            return {            
                 request: {
-                    item: 'Snacks',
-                    errorMessage: 'Não foi possível obter os lanches!'
+                    item: 'Ingredients',
+                    errorMessage: 'Não foi possível obter os ingredientes!'
                 },
 
                 selectedItem: {
                     id: null,
                     name: '',
-                    description: '',
-                    category: {
-                        id: '',
-                    },
+                    category: '',
                     price: 0,
-                    status: '',
+                    status: ''
                 },
 
                 table: {
                     fields: [
-                        {
-                            key: 'category',
-                            label: 'Categoria',
-                            formatter: (value) => {
-                                return value.name
-                            },
-                            sortable: true,
-                        },
                         {
                             key: 'name',
                             label: 'Nome',
                             sortable: true
                         },
                         {
-                            key: 'description',
-                            label: 'Descrição',
+                            key: 'category',
+                            label: 'Categoria',
                             formatter: (value) => {
-                                return value ? value : 'Sem descrição'
+                                return this.categoryName(value)
                             },
                             sortable: true,
                             sortByFormatted: true
@@ -266,66 +245,57 @@
                             key: 'status',
                             label: 'Estado',
                             sortable: true
-                        },
+                        }
                     ],
                 },
             }
         },
 
         methods: {
+            categoryName(category) {
+                if (category ===  'bread') {
+                    return 'Pães'
+                } else if (category === 'beef') {
+                    return 'Carnes'
+                } else if (category === 'cheese') {
+                    return 'Queijos'
+                } else if (category === 'salad') {
+                    return 'Saladas'
+                } else if (category === 'sauce') {
+                    return 'Molhos'
+                } else if (category === 'side_dishes') {
+                    return 'Acompanhamentos'
+                }
+            },
+
             payload (item = null) {
                 if (item) {
                     return {
                         name: item.name,
-                        description: item.description,
-                        category_id: item.category.id,
+                        category: item.category,
                         price: item.price,
-                        volume: item.volume,
                         status: item.status,
                     }
                 } else {
                     return {
                         name: '',
-                        description: '',
-                        category: {
-                            id: '',
-                        },
+                        category: '',
                         price: 0,
-                        volume: 1,
                         status: '',
                     }
                 }
             },
         },
 
-        mixins: [Crud, money, Toast],
-
-        async mounted() {
-            try {
-                const response = await axios.get(`/api/categories`, this.headers)
-                if (response.data.concluded) {
-                    this.$store.commit('setCategories', response.data.items)
-                } else {
-                    this.warningToast('Ação não concluída!', this.getRequest.errorMessage)
-                }
-            } catch (error) {
-                console.log(error.response)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
-            }
-        },
+        mixins: [Crud, Toast],
 
         validations: {
             selectedItem: {
                 name: {
                     required
                 },
-                description: {
-                    minLength: minLength(5),
-                },
                 category: {
-                    id: {
-                        required
-                    }
+                    required
                 },
                 price: {
                     required,
@@ -337,7 +307,7 @@
                     required
                 },
             }
-        }
+        },
     };
 </script>
 <style></style>
