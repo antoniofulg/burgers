@@ -3208,7 +3208,7 @@ var render = function() {
         "base-header",
         {
           staticClass: "pb-6 pb-8 pt-5 pt-md-8",
-          attrs: { type: "gradient-success" }
+          attrs: { type: "gradient-warning" }
         },
         [
           _c("div", { staticClass: "row" }, [
@@ -4532,7 +4532,7 @@ var render = function() {
           }
         },
         [
-          _c("span", { staticClass: "mask bg-gradient-success opacity-8" }),
+          _c("span", { staticClass: "mask bg-gradient-warning opacity-8" }),
           _vm._v(" "),
           _c(
             "div",
