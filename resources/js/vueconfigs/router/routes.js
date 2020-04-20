@@ -44,12 +44,12 @@ export default [
       {
         path: '/categorias-de-lanches',
         name: 'categories',
-        component: () => import('../../views/Admin/Drinks.vue')
+        component: () => import('../../views/Admin/Categories.vue')
       },
       {
         path: '/lanches',
         name: 'snacks',
-        component: () => import('../../views/Admin/Drinks.vue')
+        component: () => import('../../views/Admin/Snacks.vue')
       },
       {
         path: '/ingredientes',
@@ -61,26 +61,6 @@ export default [
         name: 'burguers',
         component: () => import('../../views/Admin/Drinks.vue')
       },
-    ]
-  },
-  {
-    path: '/',
-    redirect: 'login',
-    component: AuthLayout,
-    meta: {
-      guest: true
-    },
-    children: [
-      {
-        path: '/login',
-        name: 'login',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Auth/Login.vue')
-      },
-      {
-        path: '/register',
-        name: 'register',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Auth/Register.vue')
-      }
     ]
   },
   {
