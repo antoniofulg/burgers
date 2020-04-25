@@ -152,10 +152,10 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div v-for="(item, index) in selectedItem.ingredients" :key="index" class="form-row">
+                                <div v-for="(item, index) in selectedItem.ingredients" :key="index" class="form-row mb-4">
                                     <div class="col-sm-12 col-md-4">
                                         <label for="ingredient">Tipo de ingrediente</label>
-                                        <select v-model="item.category" class="custom-select shadow-sm" id="category">
+                                        <select v-model="item.category" @change="item.ingredient_id = null" class="custom-select shadow-sm" id="category">
                                             <option disabled value="" selected>Selecione uma categoria</option>
                                             <option value="side_dishes">Acompanhamentos</option>
                                             <option value="beef">Carnes</option>
@@ -170,7 +170,7 @@
                                         <select v-model="item.ingredient_id" class="custom-select shadow-sm" id="ingredient">
                                             <option disabled value="" selected>Selecione um ingrediente</option>
                                             <option value="null">Livre escolha</option>
-                                            <option v-for="bread in getIngredientsByCategory('bread')" :key="bread.id" :value="bread.id">{{bread.name}}</option>
+                                            <option v-for="ingredient in getIngredientsByCategory(item.category)" :key="ingredient.id" :value="ingredient.id">{{ingredient.name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-12 col-md-2">
@@ -180,10 +180,13 @@
                                             Por favor, insira uma quantidade para o ingrediente.
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-2 text-left text-bottom">
+                                    <div v-if="index > 0" class="col-sm-12 col-md-2 text-left text-bottom">
                                         <label>Opções</label>
-                                        <button class="btn shadow-sm btn-danger btn btn-block"><i class="mr-1 fas fa-trash"></i> Remover ingrediente</button>
+                                        <button @click="removeIngredient(index)" class="btn shadow-sm btn-danger btn btn-block"><i class="mr-1 fas fa-trash"></i> Remover ingrediente</button>
                                     </div>
+                                </div>
+                                <div class="text-center">
+                                    <button @click="addIngredient" class="btn shadow-sm btn-success btn"><i class="mr-1 fas fa-trash"></i> Adicionar ingrediente</button>
                                 </div>
                             </item-form>
                         </div>
@@ -210,7 +213,6 @@
             Money,
         },
 
-
         computed: {
             endpoint () {
                 return `/api/burguers`
@@ -234,9 +236,9 @@
                     name: '',
                     ingredients: [
                         {
-                            ingredient_id: 1,
-                            category: 'bread',
                             amount: 1,
+                            category: 'bread',
+                            ingredient_id: 1,
                         }
                     ],
                     price: 0,
@@ -281,6 +283,20 @@
         },
 
         methods: {
+            addIngredient() {
+                this.selectedItem.ingredients.push({
+                    amount: 1,
+                    category: '',
+                    ingredient_id: null,
+                })
+
+                console.log(this.selectedItem)
+            },
+
+            removeIngredient(index) {
+                this.selectedItem.ingredients.splice(index, 1)
+            },
+
             categoryName(category) {
                 if (category ===  'bread') {
                     return 'Pães'
@@ -303,7 +319,6 @@
                         return val 
                     }
                 })
-                console.log(list)
                 return list
             },
 
