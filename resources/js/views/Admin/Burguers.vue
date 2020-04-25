@@ -151,13 +151,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                </div>
                                 <hr>
-                                <div class="form-row">
+                                <div v-for="(item, index) in selectedItem.ingredients" :key="index" class="form-row">
                                     <div class="col-sm-12 col-md-4">
                                         <label for="ingredient">Tipo de ingrediente</label>
-                                        <select class="custom-select shadow-sm" id="category">
+                                        <select v-model="item.category" class="custom-select shadow-sm" id="category">
                                             <option disabled value="" selected>Selecione uma categoria</option>
                                             <option value="side_dishes">Acompanhamentos</option>
                                             <option value="beef">Carnes</option>
@@ -169,7 +167,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-4">
                                         <label for="ingredient">Ingrediente</label>
-                                        <select class="custom-select shadow-sm" id="ingredient">
+                                        <select v-model="item.ingredient_id" class="custom-select shadow-sm" id="ingredient">
                                             <option disabled value="" selected>Selecione um ingrediente</option>
                                             <option value="null">Livre escolha</option>
                                             <option v-for="bread in getIngredientsByCategory('bread')" :key="bread.id" :value="bread.id">{{bread.name}}</option>
@@ -177,13 +175,14 @@
                                     </div>
                                     <div class="col-sm-12 col-md-2">
                                         <label for="amount">Quantidade</label>
-                                        <input type="number" class="form-control shadow-sm" id="name">
+                                        <input v-model="item.amount" type="number" class="form-control shadow-sm" id="name">
                                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
                                             Por favor, insira uma quantidade para o ingrediente.
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-2 align-bottom">
-                                        <button class="btn shadow-sm btn-danger btn-sm btn-block rounded-pill align-bottom"><i class="mr-1 fas fa-trash"></i> Remover ingrediente</button>
+                                    <div class="col-sm-12 col-md-2 text-left text-bottom">
+                                        <label>Opções</label>
+                                        <button class="btn shadow-sm btn-danger btn btn-block"><i class="mr-1 fas fa-trash"></i> Remover ingrediente</button>
                                     </div>
                                 </div>
                             </item-form>
@@ -227,7 +226,7 @@
             return {      
                 request: {
                     item: 'Burguers',
-                    errorMessage: 'Não foi possível obter os hamburguers!'
+                    errorMessage: 'Não foi possível obter os hambúrguers!'
                 },
 
                 selectedItem: {
