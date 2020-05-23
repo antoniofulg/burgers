@@ -1,3 +1,5 @@
+import Loading from './loading'
+
 export default {
     computed: {
         endpoint () {
@@ -15,7 +17,9 @@ export default {
         },
 
         itemsList() {
-            return this.$store.getters[`get${this.request.item}`]
+            // Returning a local copy from items list
+            return JSON.parse(JSON.stringify(this.$store.getters[`get${this.request.item}`]))
+            // return this.$store.getters[`get${this.request.item}`]
         },
     },
 
@@ -38,6 +42,7 @@ export default {
     methods: {
         async deleteItem(item) {
             try {
+                this.isLoading = true
                 const response = await axios.delete(`${this.endpoint}/${item.id}`, this.headers)
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
@@ -50,10 +55,12 @@ export default {
                 console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
+            this.isLoading = false
         },
 
         async insertItem(item) {
             try {
+                this.isLoading = true
                 const response = await axios.post(`${this.endpoint}`, this.payload(item), this.headers)
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
@@ -66,10 +73,12 @@ export default {
                 console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
+            this.isLoading = false
         },
 
         async getItems() {
             try {
+                this.isLoading = true
                 const response = await axios.get(`${this.endpoint}`, this.headers)
                 console.log(response)
                 if (response.data.concluded) {
@@ -82,6 +91,7 @@ export default {
                 console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
+            this.isLoading = false
         },
 
         priceTemplate(price) {
@@ -117,6 +127,7 @@ export default {
 
         async updateItem(item) {
             try {
+                this.isLoading = true
                 const response = await axios.put(`${this.endpoint}/${item.id}`, this.payload(item), this.headers)
                 if (response.data.concluded) {
                     this.successToast('Ação concluída!', response.data.message)
@@ -130,6 +141,7 @@ export default {
                 console.log(error.response)
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
+            this.isLoading = false
         },
 
         async updateStatus(item, status) {
@@ -140,6 +152,8 @@ export default {
             this.updateItem(this.selectedItem)
         }
     },
+
+    mixins: [Loading],
 
     mounted () {
         this.getItems()

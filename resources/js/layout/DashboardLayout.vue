@@ -14,8 +14,8 @@
           }"
         />
 
-        <sidebar-item :link="{name: 'Usuários', icon: 'fas fa-users mr-3 text-yellow', path: '/users'}"/>
-        <sidebar-item :link="{name: 'Pedidos', icon: 'fas fa-shopping-cart mr-3 text-orange', path: '/orders'}"/>
+        <sidebar-item :link="{name: 'Usuários', icon: 'fas fa-users mr-3 text-yellow', path: '/usuarios'}"/>
+        <sidebar-item :link="{name: 'Pedidos', icon: 'fas fa-shopping-cart mr-3 text-orange', path: '/pedidos'}"/>
 
       </template>
     </side-bar>

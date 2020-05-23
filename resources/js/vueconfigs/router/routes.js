@@ -13,31 +13,54 @@ export default [
       {
         path: '/dashboard',
         name: 'dashboard',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Dashboard.vue'),
+        component: () => import('../../views/Dashboard.vue'),
       },
       {
-        path: '/users',
+        path: '/usuarios',
         name: 'users',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Users.vue')
+        component: () => import('../../views/Admin/Users.vue')
       },
       {
-        path: '/profile',
+        path: '/perfil',
         name: 'profile',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/UserProfile.vue')
+        component: () => import('../../views/UserProfile.vue')
       },
       {
-        path: '/orders',
+        path: '/pedidos',
         name: 'orders',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Maps.vue')
+        component: () => import('../../views/Maps.vue')
       },
       {
         path: '/tables',
         name: 'tables',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Tables.vue')
-      }
+        component: () => import('../../views/Tables.vue')
+      },
+      /** Menu */
+      {
+        path: '/bebidas',
+        name: 'drinks',
+        component: () => import('../../views/Admin/Drinks.vue')
+      },
+      {
+        path: '/categorias-de-lanches',
+        name: 'categories',
+        component: () => import('../../views/Admin/Categories.vue')
+      },
+      {
+        path: '/lanches',
+        name: 'snacks',
+        component: () => import('../../views/Admin/Snacks.vue')
+      },
+      {
+        path: '/ingredientes',
+        name: 'ingredients',
+        component: () => import('../../views/Admin/Ingredients.vue')
+      },
+      {
+        path: '/hamburguers',
+        name: 'burguers',
+        component: () => import('../../views/Admin/Burguers.vue')
+      },
     ]
   },
   {
@@ -51,12 +74,12 @@ export default [
       {
         path: '/login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Login.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../../views/Auth/Login.vue')
       },
       {
         path: '/register',
         name: 'register',
-        component: () => import(/* webpackChunkName: "demo" */ '../../views/Register.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../../views/Auth/Register.vue')
       }
     ]
   }

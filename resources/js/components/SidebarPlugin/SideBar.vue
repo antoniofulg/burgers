@@ -32,30 +32,19 @@
                             </div>
                         </a>
 
-                        <div class=" dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Welcome!</h6>
-                        </div>
                         <router-link to="/profile" class="dropdown-item">
                             <i class="ni ni-single-02"></i>
-                            <span>My profile</span>
+                            <span>Meu perfil</span>
                         </router-link>
                         <router-link to="/profile" class="dropdown-item">
                             <i class="ni ni-settings-gear-65"></i>
-                            <span>Settings</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>Activity</span>
-                        </router-link>
-                        <router-link to="/profile" class="dropdown-item">
-                            <i class="ni ni-support-16"></i>
-                            <span>Support</span>
+                            <span>Opções</span>
                         </router-link>
                         <div class="dropdown-divider"></div>
-                        <a href="#!" class="dropdown-item">
+                        <button @click="logout" class="dropdown-item">
                             <i class="ni ni-user-run"></i>
-                            <span>Logout</span>
-                        </a>
+                            <span>Sair</span>
+                        </button>
                     </base-dropdown>
                 </ul>
             </slot>
@@ -86,13 +75,13 @@
                 <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                      <sidebar-item :link="{name: 'Bebidas', icon: 'fas fa-beer mr-3 text-yellow', path: '/orders'}"/>
+                      <sidebar-item :link="{name: 'Bebidas', icon: 'fas fa-beer mr-3 text-yellow', path: '/bebidas'}"/>
                     </li>
                     <li class="nav-item">
-                      <sidebar-item :link="{name: 'Categorias de lanches', icon: 'fas fa-poll-h mr-3 text-green', path: '/orders'}"/>
+                      <sidebar-item :link="{name: 'Categorias de lanches', icon: 'fas fa-poll-h mr-3 text-green', path: '/categorias-de-lanches'}"/>
                     </li>
                     <li class="nav-item">
-                      <sidebar-item :link="{name: 'Lanches', icon: 'fas fa-pizza-slice mr-3 text-orange', path: '/orders'}"/>
+                      <sidebar-item :link="{name: 'Lanches', icon: 'fas fa-pizza-slice mr-3 text-orange', path: '/lanches'}"/>
                     </li>
                 </ul>
                 <!--Divider-->
@@ -102,10 +91,10 @@
                 <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <sidebar-item :link="{name: 'Ingredientes', icon: 'fas fa-bacon mr-3 text-blue', path: '/orders'}"/>
+                        <sidebar-item :link="{name: 'Ingredientes', icon: 'fas fa-bacon mr-3 text-blue', path: '/ingredientes'}"/>
                     </li>
                     <li class="nav-item">
-                        <sidebar-item :link="{name: 'Hambúrguers', icon: 'fas fa-hamburger mr-3 text-orange', path: '/orders'}"/>
+                        <sidebar-item :link="{name: 'Hambúrguers', icon: 'fas fa-hamburger mr-3 text-orange', path: '/hamburguers'}"/>
                     </li>
                 </ul>
                 <!--Divider-->
@@ -139,6 +128,8 @@
 </template>
 <script>
   import NavbarToggleButton from '../NavbarToggleButton'
+  /** mixins */
+  import logout from '../../mixins/logout'
 
   export default {
     name: 'sidebar',
@@ -174,6 +165,7 @@
       if (this.$sidebar.showSidebar) {
         this.$sidebar.showSidebar = false;
       }
-    }
+    },
+    mixins: [logout]
   };
 </script>
