@@ -1,5 +1,8 @@
 <template>
     <div class="row justify-content-center">
+        <loading :active.sync="isLoading" 
+        :can-cancel="false" 
+        :is-full-page="true"></loading>
         <div class="col-lg-5 col-md-7">
             <div class="card bg-secondary shadow border-0">
                 <div class="card-header bg-transparent pb-5">

@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["demo"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[5],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Auth/Login.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
+/* harmony import */ var _mixins_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/loading */ "./resources/js/mixins/loading.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -92,6 +93,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -120,13 +124,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                _context.next = 3;
+                _this.isLoading = true;
+                _context.next = 4;
                 return axios.post(_this.endpoint, {
                   email: _this.email,
                   password: _this.password
                 });
 
-              case 3:
+              case 4:
                 response = _context.sent;
 
                 if (response.data.concluded) {
@@ -148,26 +153,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.dangerToast('Não foi possível realizar o login', response.data.message);
                 }
 
-                _context.next = 11;
+                _context.next = 12;
                 break;
 
-              case 7:
-                _context.prev = 7;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0.response);
 
                 _this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
 
-              case 11:
+              case 12:
+                _this.isLoading = false;
+
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee, null, [[0, 8]]);
       }))();
     }
   },
-  mixins: [_mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_loading__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
   validations: {
     email: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
@@ -201,6 +209,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -431,159 +442,174 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-lg-5 col-md-7" }, [
-      _c("div", { staticClass: "card bg-secondary shadow border-0" }, [
-        _vm._m(0),
+  return _c(
+    "div",
+    { staticClass: "row justify-content-center" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": false,
+          "is-full-page": true
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-5 col-md-7" }, [
+        _c("div", { staticClass: "card bg-secondary shadow border-0" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body px-lg-5 py-lg-5" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "form",
+              { attrs: { role: "form" } },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.$v.email.$model,
+                        expression: "$v.email.$model"
+                      }
+                    ],
+                    staticClass: "form-control form-control-user",
+                    class: { "is-invalid": _vm.$v.email.$error },
+                    attrs: {
+                      type: "email",
+                      id: "email",
+                      placeholder: "Insira seu endereço de e-mail"
+                    },
+                    domProps: { value: _vm.$v.email.$model },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.$v.email, "$model", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  !_vm.$v.email.required
+                    ? _c("div", { staticClass: "invalid-feedback" }, [
+                        _vm._v(
+                          "\n                            Por favor, preencha este campo.\n                        "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.$v.email.email
+                    ? _c("div", { staticClass: "invalid-feedback" }, [
+                        _vm._v(
+                          "\n                            Por favor, preencha com um email válido.\n                        "
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Senha")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.$v.password.$model,
+                        expression: "$v.password.$model"
+                      }
+                    ],
+                    staticClass: "form-control form-control-user",
+                    class: { "is-invalid": _vm.$v.password.$error },
+                    attrs: {
+                      type: "password",
+                      id: "password",
+                      placeholder: "Insira sua senha"
+                    },
+                    domProps: { value: _vm.$v.password.$model },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.$v.password, "$model", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  !_vm.$v.password.required
+                    ? _c("div", { staticClass: "invalid-feedback" }, [
+                        _vm._v(
+                          "\n                            Por favor, preencha este campo.\n                        "
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c(
+                  "base-checkbox",
+                  { staticClass: "custom-control-alternative" },
+                  [
+                    _c("span", { staticClass: "text-muted" }, [
+                      _vm._v("Lembrar-me")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "text-center" },
+                  [
+                    _c(
+                      "base-button",
+                      {
+                        staticClass: "my-4",
+                        attrs: { disabled: _vm.$v.$invalid, type: "primary" },
+                        on: { click: _vm.login }
+                      },
+                      [_c("span", [_vm._v("Entrar")])]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body px-lg-5 py-lg-5" }, [
-          _vm._m(1),
+        _c("div", { staticClass: "row mt-3" }, [
+          _vm._m(2),
           _vm._v(" "),
           _c(
-            "form",
-            { attrs: { role: "form" } },
+            "div",
+            { staticClass: "col-6 text-right" },
             [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.$v.email.$model,
-                      expression: "$v.email.$model"
-                    }
-                  ],
-                  staticClass: "form-control form-control-user",
-                  class: { "is-invalid": _vm.$v.email.$error },
-                  attrs: {
-                    type: "email",
-                    id: "email",
-                    placeholder: "Insira seu endereço de e-mail"
-                  },
-                  domProps: { value: _vm.$v.email.$model },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.$v.email, "$model", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                !_vm.$v.email.required
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(
-                        "\n                            Por favor, preencha este campo.\n                        "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                !_vm.$v.email.email
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(
-                        "\n                            Por favor, preencha com um email válido.\n                        "
-                      )
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "password" } }, [_vm._v("Senha")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.$v.password.$model,
-                      expression: "$v.password.$model"
-                    }
-                  ],
-                  staticClass: "form-control form-control-user",
-                  class: { "is-invalid": _vm.$v.password.$error },
-                  attrs: {
-                    type: "password",
-                    id: "password",
-                    placeholder: "Insira sua senha"
-                  },
-                  domProps: { value: _vm.$v.password.$model },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.$v.password, "$model", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                !_vm.$v.password.required
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(
-                        "\n                            Por favor, preencha este campo.\n                        "
-                      )
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
               _c(
-                "base-checkbox",
-                { staticClass: "custom-control-alternative" },
-                [
-                  _c("span", { staticClass: "text-muted" }, [
-                    _vm._v("Lembrar-me")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "text-center" },
-                [
-                  _c(
-                    "base-button",
-                    {
-                      staticClass: "my-4",
-                      attrs: { disabled: _vm.$v.$invalid, type: "primary" },
-                      on: { click: _vm.login }
-                    },
-                    [
-                      _vm.$root.loading
-                        ? _c("spinner", { attrs: { type: "submit" } })
-                        : _c("span", [_vm._v("Entrar")])
-                    ],
-                    1
-                  )
-                ],
-                1
+                "router-link",
+                { staticClass: "text-light", attrs: { to: "/register" } },
+                [_c("small", [_vm._v("Criar uma nova conta")])]
               )
             ],
             1
           )
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row mt-3" }, [
-        _vm._m(2),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-6 text-right" },
-          [
-            _c(
-              "router-link",
-              { staticClass: "text-light", attrs: { to: "/register" } },
-              [_c("small", [_vm._v("Criar uma nova conta")])]
-            )
-          ],
-          1
-        )
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -668,267 +694,285 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-lg-5 col-md-7" }, [
-      _c("div", { staticClass: "card bg-secondary shadow border-0" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body px-lg-5 py-lg-5" }, [
-          _vm._m(1),
+  return _c(
+    "div",
+    { staticClass: "row justify-content-center" },
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": false,
+          "is-full-page": true
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-5 col-md-7" }, [
+        _c("div", { staticClass: "card bg-secondary shadow border-0" }, [
+          _vm._m(0),
           _vm._v(" "),
-          _c("form", { attrs: { role: "form" } }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.$v.name.$model,
-                    expression: "$v.name.$model"
-                  }
-                ],
-                staticClass: "form-control",
-                class: { "is-invalid": _vm.$v.name.$error },
-                attrs: { type: "text", id: "name" },
-                domProps: { value: _vm.$v.name.$model },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.$v.name, "$model", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              !_vm.$v.name.required
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Por favor, preencha este campo.\n                        "
-                    )
-                  ])
-                : _vm._e()
-            ]),
+          _c("div", { staticClass: "card-body px-lg-5 py-lg-5" }, [
+            _vm._m(1),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.$v.email.$model,
-                    expression: "$v.email.$model"
-                  }
-                ],
-                staticClass: "form-control",
-                class: { "is-invalid": _vm.$v.email.$error },
-                attrs: { type: "email", id: "email" },
-                domProps: { value: _vm.$v.email.$model },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+            _c("form", { attrs: { role: "form" } }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "name" } }, [_vm._v("Nome")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.name.$model,
+                      expression: "$v.name.$model"
                     }
-                    _vm.$set(_vm.$v.email, "$model", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              !_vm.$v.email.required
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Por favor, preencha este campo.\n                        "
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.$v.email.email
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Por favor, preencha com um email válido.\n                        "
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.$v.email.not
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Este email já está sendo utilizado.\n                        "
-                    )
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "password" } }, [_vm._v("Senha")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.$v.password.$model,
-                    expression: "$v.password.$model"
-                  }
-                ],
-                staticClass: "form-control",
-                class: { "is-invalid": _vm.$v.password.$error },
-                attrs: { type: "password", id: "password" },
-                domProps: { value: _vm.$v.password.$model },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.$v.name.$error },
+                  attrs: { type: "text", id: "name" },
+                  domProps: { value: _vm.$v.name.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.$v.name, "$model", $event.target.value)
                     }
-                    _vm.$set(_vm.$v.password, "$model", $event.target.value)
                   }
-                }
-              }),
-              _vm._v(" "),
-              !_vm.$v.password.required
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Por favor, preencha este campo.\n                        "
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.$v.password.minLength
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Este campo deve ter pelo menos " +
-                        _vm._s(_vm.$v.password.$params.minLength.min) +
-                        " caracteres.\n                        "
-                    )
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "password_confirmation" } }, [
-                _vm._v("Confirmar senha")
+                }),
+                _vm._v(" "),
+                !_vm.$v.name.required
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Por favor, preencha este campo.\n                        "
+                      )
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.$v.password_confirmation.$model,
-                    expression: "$v.password_confirmation.$model"
-                  }
-                ],
-                staticClass: "form-control",
-                class: { "is-invalid": _vm.$v.password_confirmation.$error },
-                attrs: { type: "password", id: "password_confirmation" },
-                domProps: { value: _vm.$v.password_confirmation.$model },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.email.$model,
+                      expression: "$v.email.$model"
                     }
-                    _vm.$set(
-                      _vm.$v.password_confirmation,
-                      "$model",
-                      $event.target.value
-                    )
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.$v.email.$error },
+                  attrs: { type: "email", id: "email" },
+                  domProps: { value: _vm.$v.email.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.$v.email, "$model", $event.target.value)
+                    }
                   }
-                }
-              }),
+                }),
+                _vm._v(" "),
+                !_vm.$v.email.required
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Por favor, preencha este campo.\n                        "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.email.email
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Por favor, preencha com um email válido.\n                        "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.email.not
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Este email já está sendo utilizado.\n                        "
+                      )
+                    ])
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              !_vm.$v.password_confirmation.required
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Por favor, preencha este campo.\n                        "
-                    )
-                  ])
-                : _vm._e(),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "password" } }, [_vm._v("Senha")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.password.$model,
+                      expression: "$v.password.$model"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.$v.password.$error },
+                  attrs: { type: "password", id: "password" },
+                  domProps: { value: _vm.$v.password.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.$v.password, "$model", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                !_vm.$v.password.required
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Por favor, preencha este campo.\n                        "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.password.minLength
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Este campo deve ter pelo menos " +
+                          _vm._s(_vm.$v.password.$params.minLength.min) +
+                          " caracteres.\n                        "
+                      )
+                    ])
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              !_vm.$v.password_confirmation.sameAs
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Este campo precisa coincidir com o campo senha.\n                        "
-                    )
-                  ])
-                : _vm._e(),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "password_confirmation" } }, [
+                  _vm._v("Confirmar senha")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.password_confirmation.$model,
+                      expression: "$v.password_confirmation.$model"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.$v.password_confirmation.$error },
+                  attrs: { type: "password", id: "password_confirmation" },
+                  domProps: { value: _vm.$v.password_confirmation.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.$v.password_confirmation,
+                        "$model",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                !_vm.$v.password_confirmation.required
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Por favor, preencha este campo.\n                        "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.password_confirmation.sameAs
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Este campo precisa coincidir com o campo senha.\n                        "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.$v.password_confirmation.minLength
+                  ? _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                            Este campo deve ter pelo menos " +
+                          _vm._s(
+                            _vm.$v.password_confirmation.$params.minLength.min
+                          ) +
+                          " caracteres.\n                        "
+                      )
+                    ])
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              !_vm.$v.password_confirmation.minLength
-                ? _c("div", { staticClass: "invalid-feedback" }, [
-                    _vm._v(
-                      "\n                            Este campo deve ter pelo menos " +
-                        _vm._s(
-                          _vm.$v.password_confirmation.$params.minLength.min
-                        ) +
-                        " caracteres.\n                        "
+              _c("div", { staticClass: "row my-4" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-12" },
+                  [
+                    _c(
+                      "base-checkbox",
+                      { staticClass: "custom-control-alternative" },
+                      [
+                        _c("span", { staticClass: "text-muted" }, [
+                          _vm._v("Eu concordo com os "),
+                          _c("a", { attrs: { href: "#!" } }, [
+                            _vm._v("Termos de Uso")
+                          ])
+                        ])
+                      ]
                     )
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row my-4" }, [
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-12" },
+                { staticClass: "text-center" },
                 [
                   _c(
-                    "base-checkbox",
-                    { staticClass: "custom-control-alternative" },
-                    [
-                      _c("span", { staticClass: "text-muted" }, [
-                        _vm._v("Eu concordo com os "),
-                        _c("a", { attrs: { href: "#!" } }, [
-                          _vm._v("Termos de Uso")
-                        ])
-                      ])
-                    ]
+                    "base-button",
+                    {
+                      staticClass: "my-4",
+                      attrs: { disabled: _vm.$v.$invalid, type: "primary" },
+                      on: { click: _vm.register }
+                    },
+                    [_vm._v("Criar conta")]
                   )
                 ],
                 1
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "text-center" },
-              [
-                _c(
-                  "base-button",
-                  {
-                    staticClass: "my-4",
-                    attrs: { disabled: _vm.$v.$invalid, type: "primary" },
-                    on: { click: _vm.register }
-                  },
-                  [_vm._v("Criar conta")]
-                )
-              ],
-              1
-            )
+            ])
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row mt-3" }, [
-        _vm._m(2),
+        ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-6 text-right" },
-          [
-            _c(
-              "router-link",
-              { staticClass: "text-light", attrs: { to: "/login" } },
-              [_c("small", [_vm._v("Já possui uma conta?")])]
-            )
-          ],
-          1
-        )
+        _c("div", { staticClass: "row mt-3" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-6 text-right" },
+            [
+              _c(
+                "router-link",
+                { staticClass: "text-light", attrs: { to: "/login" } },
+                [_c("small", [_vm._v("Já possui uma conta?")])]
+              )
+            ],
+            1
+          )
+        ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -989,6 +1033,35 @@ var staticRenderFns = [
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/loading.js":
+/*!****************************************!*\
+  !*** ./resources/js/mixins/loading.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      isLoading: false,
+      fullPage: true
+    };
+  },
+  components: {
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
+  }
+});
 
 /***/ }),
 
