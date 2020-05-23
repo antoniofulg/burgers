@@ -152,10 +152,10 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div v-for="(item, index) in selectedItem.ingredients" :key="index" class="form-row mb-4">
+                                <div v-for="(item, index) in $v.selectedItem.ingredients.$each.$iter" :key="index" class="form-row mb-4">
                                     <div class="col-sm-12 col-md-4">
-                                        <label for="ingredient">Tipo de ingrediente</label>
-                                        <select v-model="item.category" @change="item.ingredient_id = null" class="custom-select shadow-sm" id="category">
+                                        <label :for="`category-${index}`">Tipo de ingrediente</label>
+                                        <select v-model="item.category.$model" class="custom-select shadow-sm" :id="`category-${index}`">
                                             <option disabled value="" selected>Selecione uma categoria</option>
                                             <option value="side_dishes">Acompanhamentos</option>
                                             <option value="beef">Carnes</option>
@@ -166,16 +166,16 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-12 col-md-4">
-                                        <label for="ingredient">Ingrediente</label>
-                                        <select v-model="item.ingredient_id" class="custom-select shadow-sm" id="ingredient">
+                                        <label :for="`ingredient-${index}`">Ingrediente</label>
+                                        <select v-model="item.ingredient_id.$model" class="custom-select shadow-sm" :id="`ingredient-${index}`">
                                             <option disabled value="" selected>Selecione um ingrediente</option>
                                             <option value="null">Livre escolha</option>
-                                            <option v-for="ingredient in getIngredientsByCategory(item.category)" :key="ingredient.id" :value="ingredient.id">{{ingredient.name}}</option>
+                                            <option v-for="ingredient in getIngredientsByCategory(item.category.$model)" :key="ingredient.id" :value="ingredient.id">{{ingredient.name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-12 col-md-2">
-                                        <label for="amount">Quantidade</label>
-                                        <input v-model="item.amount" type="number" class="form-control shadow-sm" id="name">
+                                        <label :for="`amount-${index}`">Quantidade</label>
+                                        <input v-model="item.amount.$model" type="number" class="form-control shadow-sm" :id="`amount-${index}`">
                                         <div v-if="!$v.selectedItem.name.required" class="invalid-feedback">
                                             Por favor, insira uma quantidade para o ingrediente.
                                         </div>
@@ -186,7 +186,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button @click="addIngredient" class="btn shadow-sm btn-success btn"><i class="mr-1 fas fa-trash"></i> Adicionar ingrediente</button>
+                                    <button @click="addIngredient" class="btn shadow-sm btn-success btn"><i class="mr-1 fas fa-plus"></i> Adicionar ingrediente</button>
                                 </div>
                             </item-form>
                         </div>
@@ -289,8 +289,6 @@
                     category: '',
                     ingredient_id: null,
                 })
-
-                console.log(this.selectedItem)
             },
 
             removeIngredient(index) {
@@ -333,7 +331,13 @@
                 } else {
                     return {
                         name: '',
-                        ingredients: [],
+                        ingredients: [
+                            {
+                                amount: 1,
+                                category: 'bread',
+                                ingredient_id: 1,
+                            }
+                        ],
                         price: 0,
                         status: '',
                     }
@@ -356,8 +360,6 @@
                 this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
 
-            // console.log(this.$store.getters.getIngredients)
-            console.log(this.$store.getters.getToken)
         },
 
         validations: {
@@ -365,12 +367,17 @@
                 name: {
                     required
                 },
-                description: {
-                    minLength: minLength(5),
-                },
-                category: {
-                    id: {
-                        required
+                ingredients: {
+                    $each: {
+                        amount: {
+                            required,
+                        },
+                        category: {
+                            required
+                        },
+                        ingredient_id: {
+                            required
+                        }
                     }
                 },
                 price: {

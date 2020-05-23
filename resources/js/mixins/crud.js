@@ -15,7 +15,9 @@ export default {
         },
 
         itemsList() {
-            return this.$store.getters[`get${this.request.item}`]
+            // Returning a local copy from items list
+            return JSON.parse(JSON.stringify(this.$store.getters[`get${this.request.item}`]))
+            // return this.$store.getters[`get${this.request.item}`]
         },
     },
 
