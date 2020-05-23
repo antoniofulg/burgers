@@ -3,7 +3,7 @@ require('./fontawesome');
 
 import Vue from 'vue'
 import App from './App.vue'
-import store from './vuex'
+import store from './vueconfigs/vuex'
 import router from './vueconfigs/router'
 import Vuelidate from 'vuelidate'
 import { BootstrapVue } from 'bootstrap-vue'
