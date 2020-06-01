@@ -37,7 +37,7 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link nav-link-icon" to="/profile">
+                        <router-link class="nav-link nav-link-icon" to="/cardapio">
                             <i class="ni ni-collection"></i>
                             <span class="nav-link-inner--text">Cardápio</span>
                         </router-link>

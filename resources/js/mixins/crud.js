@@ -1,4 +1,5 @@
 import Loading from './loading'
+import PriceTemplate from './priceTemplate'
 
 export default {
     computed: {
@@ -94,13 +95,6 @@ export default {
             this.isLoading = false
         },
 
-        priceTemplate(price) {
-            return price > 0 ? `R$ ${price.toLocaleString('pt-BR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })}` : 'Grátis'
-        },
-
         resetItem() {
             this.form = false
             this.selectedItem = this.payload()
@@ -153,7 +147,7 @@ export default {
         }
     },
 
-    mixins: [Loading],
+    mixins: [Loading, PriceTemplate],
 
     mounted () {
         this.getItems()

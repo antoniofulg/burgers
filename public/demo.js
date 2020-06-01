@@ -13,8 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/toasts */ "./resources/js/mixins/toasts.js");
-/* harmony import */ var _mixins_loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/loading */ "./resources/js/mixins/loading.js");
+/* harmony import */ var _mixins_loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/loading */ "./resources/js/mixins/loading.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -97,7 +96,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     endpoint: function endpoint() {
@@ -150,10 +148,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     }
                   });
                 } else {
-                  _this.dangerToast('Não foi possível realizar o login', response.data.message);
+                  console.log(response.data.message);
                 }
 
-                _context.next = 12;
+                _context.next = 11;
                 break;
 
               case 8:
@@ -161,12 +159,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context.t0 = _context["catch"](0);
                 console.log(_context.t0.response);
 
-                _this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!');
-
-              case 12:
+              case 11:
                 _this.isLoading = false;
 
-              case 13:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -175,7 +171,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   },
-  mixins: [_mixins_loading__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_toasts__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_loading__WEBPACK_IMPORTED_MODULE_2__["default"]],
   validations: {
     email: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],

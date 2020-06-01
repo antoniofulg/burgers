@@ -207,7 +207,7 @@
     import ItemForm from "../../components/Cruds/ItemForm"
     import Crud from "../../mixins/crud"
     import Masked from "../../mixins/masked"
-    import Toast from "../../mixins/toasts"
+    import VolumeTemplate from '../../mixins/volumeTemplate'
     import { Money } from 'v-money'
     import { required, decimal, maxValue, minValue } from "vuelidate/lib/validators"
 
@@ -268,7 +268,7 @@
                             key: 'volume',
                             label: 'Volume',
                             formatter: (value) => {
-                                return this.volumeName(value)
+                                return this.volumeTemplate(value)
                             },
                             sortable: true
                         },
@@ -314,16 +314,9 @@
                     }
                 }
             },
-
-            volumeName(volume) {
-                return volume >= 1000 ? `${(volume / 1000).toLocaleString('pt-BR', {
-                    minimumFractionDigits: 1,
-                    maximumFractionDigits: 3
-                })} L` : `${volume} ml`
-            },
         },
 
-        mixins: [Crud, Masked, Toast],
+        mixins: [Crud, Masked, VolumeTemplate],
 
         validations: {
             selectedItem: {
