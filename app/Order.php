@@ -19,8 +19,8 @@ class Order extends Model
     /*Importa atributos custom para o retorno padrao do model*/
     protected $appends = [];
 
-    public function burguers() {
-        return $this->BelongsToMany('App\Burguer');
+    public function burgers() {
+        return $this->BelongsToMany('App\Burger');
     }
 
     public function drinks() {

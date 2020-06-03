@@ -52,7 +52,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        $validation = Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'access_level' => ['required', 'in:customer,attendant,admin,master']
+        ]);
+
+        if($validation->fails()){
+            return response()->json([
+                'concluded' => false,
+                'message' => 'Não foi possível editar o usuário',
+                'validation' => $validation->errors()
+            ]);
+        }
+
+        $user = User::find($id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->access_level = $request->access_level;
+
+        $user->save();
+
+        return response()->json([
+            'concluded' => true,
+            'message' => 'Usuário atualizado sucesso!',
+        ]);
     }
 
     /**

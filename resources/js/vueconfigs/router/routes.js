@@ -1,5 +1,6 @@
 import DashboardLayout from '../../layout/DashboardLayout'
 import AuthLayout from '../../layout/AuthLayout'
+import CustomerLayout from '../../layout/CustomerLayout'
 
 export default [
   {
@@ -58,8 +59,8 @@ export default [
       },
       {
         path: '/hamburguers',
-        name: 'burguers',
-        component: () => import('../../views/Admin/Burguers.vue')
+        name: 'burgers',
+        component: () => import('../../views/Admin/Burgers.vue')
       },
     ]
   },
@@ -80,6 +81,23 @@ export default [
         path: '/register',
         name: 'register',
         component: () => import(/* webpackChunkName: "demo" */ '../../views/Auth/Register.vue')
+      }
+    ]
+  },
+  {
+    path: '/',
+    redirect: 'menu',
+    component: CustomerLayout,
+    children: [
+      {
+        path: '/cardapio',
+        name: 'menu',
+        component: () => import('../../views/Customer/Menu.vue')
+      },
+      {
+        path: '/menu2',
+        name: 'menu2',
+        component: () => import('../../views/Customer/Menu.vue')
       }
     ]
   }

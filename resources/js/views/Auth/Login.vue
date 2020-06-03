@@ -74,7 +74,6 @@
 </template>
 <script>
 import { required, email } from "vuelidate/lib/validators"
-import Toast from "../../mixins/toasts"
 import Loading from '../../mixins/loading'
 
 export default {
@@ -107,27 +106,18 @@ export default {
                 if (response.data.concluded) {
                     this.$store.commit('setUser', response.data.user)
                     sessionStorage.setItem('user', JSON.stringify(response.data.user))
-                    this.$router.push({name: 'dashboard',
-                        params: {
-                            toast: {
-                                type: 'success',
-                                title: 'Ação não concluída!',
-                                message: response.data.message
-                            }
-                        }
-                    })
+                    this.$router.push({name: 'dashboard'})
                 } else {
-                    this.dangerToast('Não foi possível realizar o login', response.data.message)
+                    console.log(response.data.message)
                 }
             } catch (error) {
                 console.log(error.response)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
             this.isLoading = false 
         },
     },
 
-    mixins: [Loading, Toast],
+    mixins: [Loading],
 
     validations: {
        email: {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 
 /*
@@ -17,14 +18,19 @@ use Illuminate\Http\Request;
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
 
+//Menu routes
+Route::get('/menu', 'MenuController@index');
+
+//Admin routes
 Route::middleware(['auth:api'])->group(function() {
     //Logout
     Route::post('/logout', 'AuthController@logout');
-    Route::apiResource('/burguers', 'BurguerController');
+    Route::apiResource('/burgers', 'BurgerController');
     Route::apiResource('/categories', 'CategoryController');
     Route::apiResource('/drinks', 'DrinkController');
     Route::apiResource('/ingredients', 'IngredientController');
     Route::apiResource('/snacks', 'SnackController');
+    Route::apiResource('/users', 'UserController')->except(['store', 'show', 'destroy']);
     // Route::apiResource('/questions.answers', 'Api\AnswersController')->except('index');
     // Route::post('/questions/{question}/vote', 'Api\VoteQuestionController');
     // Route::post('/answers/{answer}/vote', 'Api\VoteAnswerController');
