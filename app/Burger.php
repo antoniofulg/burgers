@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Burguer extends Model
+class Burger extends Model
 {
     use SoftDeletes;
 
@@ -28,7 +28,7 @@ class Burguer extends Model
     }
 
     public function ingredient() {
-        return $this->hasMany('App\IngredientBurguer');
+        return $this->hasMany('App\IngredientBurger');
     }
 
 //     public function orders() {

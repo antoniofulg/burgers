@@ -59,8 +59,8 @@ export default [
       },
       {
         path: '/hamburguers',
-        name: 'burguers',
-        component: () => import('../../views/Admin/Burguers.vue')
+        name: 'burgers',
+        component: () => import('../../views/Admin/Burgers.vue')
       },
     ]
   },

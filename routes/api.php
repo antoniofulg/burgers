@@ -25,7 +25,7 @@ Route::get('/menu', 'MenuController@index');
 Route::middleware(['auth:api'])->group(function() {
     //Logout
     Route::post('/logout', 'AuthController@logout');
-    Route::apiResource('/burguers', 'BurguerController');
+    Route::apiResource('/burgers', 'BurgerController');
     Route::apiResource('/categories', 'CategoryController');
     Route::apiResource('/drinks', 'DrinkController');
     Route::apiResource('/ingredients', 'IngredientController');

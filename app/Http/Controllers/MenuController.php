@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Burguer;
+use App\Burger;
 use App\Category;
 use App\Drink;
 use App\Ingredient;
@@ -18,14 +18,14 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $burguers = Burguer::all();
+        $burgers = Burger::all();
         $ingredients = Ingredient::all();
         $categories = Category::with('snacks')->get();
         $drinks = Drink::all();
 
         return response()->json([
             'concluded' => true,
-            'burguers' => $burguers,
+            'burgers' => $burgers,
             'ingredients' => $ingredients,
             'categories' => $categories,
             'drinks' => $drinks

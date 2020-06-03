@@ -7,9 +7,9 @@ const mutations = {
         state.users = n
     },
 
-    // Burguers
-    setBurguers(state, n) {
-        state.burguers = n
+    // Burgers
+    setBurgers(state, n) {
+        state.burgers = n
     },
 
     // Categories

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOptionBurguerOrderTable extends Migration
+class CreateOptionBurgerOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateOptionBurguerOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('option_burguer_order', function (Blueprint $table) {
-            $table->unsignedBigInteger('burguer_order_id');
-            $table->unsignedBigInteger('burguer_id');
+        Schema::create('option_burger_order', function (Blueprint $table) {
+            $table->unsignedBigInteger('burger_order_id');
+            $table->unsignedBigInteger('burger_id');
             $table->unsignedBigInteger('order_id');
             $table->enum('option', ['add', 'remove']);
             $table->timestamps();
 
-            $table->primary(['burguer_order_id', 'burguer_id', 'order_id'], 'option_burguer_order_primary');
-            $table->foreign('burguer_order_id')->references('id')->on('burguer_order');
-            $table->foreign('burguer_id')->references('id')->on('burguers');
+            $table->primary(['burger_order_id', 'burger_id', 'order_id'], 'option_burger_order_primary');
+            $table->foreign('burger_order_id')->references('id')->on('burger_order');
+            $table->foreign('burger_id')->references('id')->on('burgers');
             $table->foreign('order_id')->references('id')->on('orders');
         });
     }
@@ -34,6 +34,6 @@ class CreateOptionBurguerOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('option_burguer_order');
+        Schema::dropIfExists('option_burger_order');
     }
 }

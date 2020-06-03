@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBurguersTable extends Migration
+class CreateBurgersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBurguersTable extends Migration
      */
     public function up()
     {
-        Schema::create('burguers', function (Blueprint $table) {
+        Schema::create('burgers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->enum('status', ['avaliable', 'unavaliable', 'desactivated']); //Status do hamburguer, se está disponível / indisponível / ou se não deve aparecer no cardápio;
@@ -30,6 +30,6 @@ class CreateBurguersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('burguers');
+        Schema::dropIfExists('burgers');
     }
 }

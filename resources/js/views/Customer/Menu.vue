@@ -7,22 +7,22 @@
             <div class="card bg-secondary shadow border-0">
                 <div class="card-header bg-transparent pb-5">
                     <div class="h2 mt-2 mb-3">Hamburguers</div>
-                    <ul v-for="(burguer, burguer_index) in burguersList" :key="'burguer-'+burguer_index" class="list-group">
+                    <ul v-for="(burger, burger_index) in burgersList" :key="'burger-'+burger_index" class="list-group">
                         <li class="list-group-item">
                             <h3 class="mb-0">
-                                {{burguer.name}} <span class="badge badge-success">{{burguer.status}}</span>
+                                {{burger.name}} <span class="badge badge-success">{{burger.status}}</span>
                             </h3>
                             <div class="row">
                                 <div class="col-8">
                                     <p class="text-muted mb-0">
-                                        {{ingredientsFormatter(burguer.ingredients)}}
+                                        {{ingredientsFormatter(burger.ingredients)}}
                                     </p>
                                 </div>
                                 <div class="col-4">
                                     <button class="btn btn-primary"></button>
                                 </div>
                             </div>
-                            <p class="mb-0">{{priceTemplate(burguer.price)}}</p>
+                            <p class="mb-0">{{priceTemplate(burger.price)}}</p>
                         </li>
                     </ul>
                     <hr>
@@ -103,8 +103,8 @@ export default {
             return `/api/menu`
         },
 
-        burguersList() {
-            return JSON.parse(JSON.stringify(this.$store.getters[`getBurguers`]))
+        burgersList() {
+            return JSON.parse(JSON.stringify(this.$store.getters[`getBurgers`]))
         },
 
         ingredientsList() {
@@ -154,7 +154,7 @@ export default {
                 const response = await axios.get(`${this.endpoint}`, this.headers)
                 console.log(response)
                 if (response.data.concluded) {
-                    this.$store.commit(`setBurguers`, response.data.burguers)
+                    this.$store.commit(`setBurgers`, response.data.burgers)
                     this.$store.commit(`setIngredients`, response.data.ingredients)
                     this.$store.commit(`setCategories`, response.data.categories)
                     this.$store.commit(`setDrinks`, response.data.drinks)

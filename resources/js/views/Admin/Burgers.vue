@@ -218,7 +218,7 @@
 
         computed: {
             endpoint () {
-                return `/api/burguers`
+                return `/api/burgers`
             },
 
             ingredientList()  {
@@ -230,7 +230,7 @@
         data () {
             return {      
                 request: {
-                    item: 'Burguers',
+                    item: 'Burgers',
                     errorMessage: 'Não foi possível obter os hambúrguers!'
                 },
 

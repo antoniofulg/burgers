@@ -115,7 +115,7 @@
 </template>
 <script>
 import { required, email, minLength, not, sameAs } from "vuelidate/lib/validators";
-import Toast from "../../mixins/toasts"
+import Loading from '../../mixins/loading'
 
 export default {
     computed: {
@@ -141,6 +141,7 @@ export default {
     methods: {
         async register() {
             try {
+                this.isLoading = true
                 const response = await axios.post(this.endpoint, {
                     email: this.email,
                     password: this.password,
@@ -151,22 +152,18 @@ export default {
                 if (response.data.concluded) {
                     this.$store.commit('setUser', response.data.user)
                     sessionStorage.setItem('user', JSON.stringify(response.data.user))
-                    this.$router.push({name: 'profile'})
+                    this.$router.push({name: 'dashboard'})
                 } else {
-                    this.warningToast('Ação não concluída!', response.data.message)
-                    for (let field in response.data.validation) {
-                        this.warningToast('Erro de validação!', response.data.validation[field])
-                    }
                     this.email_unique = this.email
                 }
             } catch (error) {   
                 console.log(error.response)
-                this.dangerToast('Ação não concluída!', 'Não foi possível resposta do servidor!')
             }
+            this.isLoading = false 
         }
     },
 
-    mixins: [Toast],
+    mixins: [Loading],
 
     validations: {
         name: {

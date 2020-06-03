@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Burguer;
-use App\IngredientBurguer;
+use App\Burger;
+use App\IngredientBurger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class BurguerController extends Controller
+class BurgerController extends Controller
 {
 
     protected $attributeNames = [
@@ -23,11 +23,11 @@ class BurguerController extends Controller
      */
     public function index()
     {
-        $burguer = Burguer::all();
+        $burger = Burger::all();
         
         return response()->json([
             'concluded' => true,
-            'items' => $burguer
+            'items' => $burger
         ]);
     }
 
@@ -57,15 +57,15 @@ class BurguerController extends Controller
             ];
         }
 
-        $burguer = Burguer::create([
+        $burger = Burger::create([
             'name' => $request->name,
             'status' => $request->status,
             'price' => $request->price,
         ]);
 
         foreach ($request->ingredients as $ingredient) {
-            $burguer->ingredient()->save(
-                new IngredientBurguer([
+            $burger->ingredient()->save(
+                new IngredientBurger([
                     'ingredient_id' => $ingredient['ingredient_id'] ? $ingredient['ingredient_id'] : null,
                     'category' => $ingredient['category'], 
                     'amount' => $ingredient['amount'], 
@@ -124,18 +124,18 @@ class BurguerController extends Controller
             ];
         }
 
-        $burguer = Burguer::find($id);
+        $burger = Burger::find($id);
         
-        $burguer->name = $request->name;
-        $burguer->status = $request->status;
-        $burguer->price = $request->price;
+        $burger->name = $request->name;
+        $burger->status = $request->status;
+        $burger->price = $request->price;
         
-        $burguer->save();
+        $burger->save();
         
         $updated = [];
 
         // Pega os ids dos ingredientes vinculados ao hambúrguer
-        foreach ($burguer->ingredients as $ingredient) {
+        foreach ($burger->ingredients as $ingredient) {
             if ($ingredient->id) {
                 array_push($updated, $ingredient->id);
             }
@@ -144,20 +144,20 @@ class BurguerController extends Controller
         // Verificar se o id o ingrediente será editado ou serão criado
         foreach ($request->ingredients as $ingredient) {
             if (isset($ingredient['id'])) {
-                $ingredientBurguer = IngredientBurguer::find($ingredient['id']);
-                if ($ingredientBurguer) {
-                    $ingredientBurguer->ingredient_id = $ingredient['ingredient_id'];
-                    $ingredientBurguer->category = $ingredient['category'];
-                    $ingredientBurguer->amount = $ingredient['amount'];
-                    $ingredientBurguer->save();
+                $ingredientBurger = IngredientBurger::find($ingredient['id']);
+                if ($ingredientBurger) {
+                    $ingredientBurger->ingredient_id = $ingredient['ingredient_id'];
+                    $ingredientBurger->category = $ingredient['category'];
+                    $ingredientBurger->amount = $ingredient['amount'];
+                    $ingredientBurger->save();
                     //Remover item atualizado da lista
                     if (($key = array_search($ingredient['id'], $updated)) !== false) {
                         unset($updated[$key]);
                     }
                 }
             } else {
-                $burguer->ingredient()->save(
-                    new IngredientBurguer([
+                $burger->ingredient()->save(
+                    new IngredientBurger([
                         'ingredient_id' => $ingredient['ingredient_id'] ? $ingredient['ingredient_id'] : null,
                         'category' => $ingredient['category'],
                         'amount' => $ingredient['amount'],
@@ -168,7 +168,7 @@ class BurguerController extends Controller
 
         // Ids que não foram utilizados, mas que estão vinculados ao hambúrguer, serão excluídos
         foreach ($updated as $id) {
-            IngredientBurguer::find($id)->delete();
+            IngredientBurger::find($id)->delete();
         }
 
         return response()->json([
@@ -185,10 +185,10 @@ class BurguerController extends Controller
      */
     public function destroy($id)
     {
-        $burguer = Burguer::find($id);
+        $burger = Burger::find($id);
 
-        if ($burguer) {
-            $burguer->delete();
+        if ($burger) {
+            $burger->delete();
             return response()->json([
                 'concluded' => true,
                 'message' => 'Hambúrguer excluído com sucesso!'

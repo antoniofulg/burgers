@@ -13,9 +13,9 @@ const getters = {
         return state.users
     },
 
-    // Burguers
-    getBurguers: state => {
-        return state.burguers
+    // Burgers
+    getBurgers: state => {
+        return state.burgers
     },
 
     // Categories
